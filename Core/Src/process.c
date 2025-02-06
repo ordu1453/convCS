@@ -82,6 +82,18 @@ void errProcess()
 	if (GetHandlerStepFlag())
 	{
 		errorHandler_step();
+		if (errorHandler_Signals.underVoltage)
+		{
+			SetErrorCode(UNDERVOLTAGE_ERROR);
+		}
+		if (errorHandler_Signals.overCurrent)
+		{
+			SetErrorCode(OVERCURRENT_ERROR);
+		}
+		if (errorHandler_Signals.readyState)
+		{
+			SetErrorCode(NO_ERROR);
+		}
 	}
 }
 

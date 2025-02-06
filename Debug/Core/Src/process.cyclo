@@ -3,7 +3,7 @@
 ../Core/Src/process.c:46:6:sensProcess	1
 ../Core/Src/process.c:52:6:commProcess	1
 ../Core/Src/process.c:58:6:ledProcess	3
-../Core/Src/process.c:79:6:errProcess	2
-../Core/Src/process.c:89:6:modeReset	1
-../Core/Src/process.c:101:6:pwmStart	1
-../Core/Src/process.c:108:6:pwmStop	1
+../Core/Src/process.c:79:6:errProcess	5
+../Core/Src/process.c:101:6:modeReset	1
+../Core/Src/process.c:113:6:pwmStart	1
+../Core/Src/process.c:120:6:pwmStop	1
