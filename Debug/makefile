@@ -61,8 +61,8 @@ all: main-build
 main-build: Converter_Control_System.elf secondary-outputs
 
 # Tool invocations
-Converter_Control_System.elf Converter_Control_System.map: $(OBJS) $(USER_OBJS) C:\Users\aordu\Desktop\ТМХ\STM32\STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Converter_Control_System.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\aordu\Desktop\ТМХ\STM32\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Converter_Control_System.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Converter_Control_System.elf Converter_Control_System.map: $(OBJS) $(USER_OBJS) C:\Users\aordu\Desktop\ТМХ\Преобразователь\CSS\STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Converter_Control_System.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\aordu\Desktop\ТМХ\Преобразователь\CSS\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Converter_Control_System.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

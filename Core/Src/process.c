@@ -31,8 +31,7 @@ void calcProcess()
 		}
 		else if (GetModeFlag() == CHARGE)
 		{
-			//ChargeDuty_step();
-			//TODO Add ChargeDuty.h and ChargeDuty.c files, then uncomment ChargeDuty_Step()
+			ChargeDuty_step();
 			lastMode = CHARGE;
 		}
 		else if (GetModeFlag() == NO_MODE)
@@ -79,7 +78,11 @@ void ledProcess()
 
 void errProcess()
 {
-	//TODO Add error processing procedures according to errorHandler.c file
+	//TODO Add a timer for setting handler flag
+	if (GetHandlerStepFlag())
+	{
+		errorHandler_step();
+	}
 }
 
 
@@ -88,7 +91,10 @@ void modeReset() //Integrator value reset function
 	rtDW.DischargeIntegrator_DSTATE = 0;
 	rtDW.DischargeIntegrator1_DSTATE = 0;
 
-	//TODO Add integrator reset for charge mode also
+	rtDW1.ChargeIntegrator_DSTATE = 0;
+	rtDW1.ChargeIntegrator1_DSTATE = 0;
+
+	//TODO What else should be reseted in the case of mode change?
 }
 
 
@@ -103,6 +109,8 @@ void pwmStop()
 {
 	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+
+	//TODO Should we set duty to zero in case of pwm stopping?
 }
 
 

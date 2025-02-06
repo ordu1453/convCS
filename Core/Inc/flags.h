@@ -15,6 +15,9 @@
 void SetStepFlag(void);
 uint8_t GetStepFlag(void);
 
+void SetHandlerStepFlag(void);
+uint8_t GetHandlerStepFlag(void);
+
 void SetModeFlag(uint8_t mode);
 uint8_t GetModeFlag(void);
 

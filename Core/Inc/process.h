@@ -11,6 +11,8 @@
 #include "main.h"
 #include "flags.h"
 #include "DischargeDuty.h"
+#include "ChargeDuty.h"
+#include "errorHandler.h"
 
 
 #define NO_MODE 0

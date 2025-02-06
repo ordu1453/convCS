@@ -28,7 +28,9 @@ Core/Src/process.o: ../Core/Src/process.c ../Core/Inc/process.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h \
  ../Core/Inc/flags.h \
- C:/Users/aordu/Desktop/ТМХ/STM32/Drivers/Simulink/DischargeDuty.h
+ C:/Users/aordu/Desktop/ТМХ/Преобразователь/CSS/Drivers/Simulink/DischargeDuty.h \
+ C:/Users/aordu/Desktop/ТМХ/Преобразователь/CSS/Drivers/Simulink/ChargeDuty.h \
+ C:/Users/aordu/Desktop/ТМХ/Преобразователь/CSS/Drivers/Simulink/errorHandler.h
 ../Core/Inc/process.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -60,4 +62,6 @@ Core/Src/process.o: ../Core/Src/process.c ../Core/Inc/process.h \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h:
 ../Core/Inc/flags.h:
-C:/Users/aordu/Desktop/ТМХ/STM32/Drivers/Simulink/DischargeDuty.h:
+C:/Users/aordu/Desktop/ТМХ/Преобразователь/CSS/Drivers/Simulink/DischargeDuty.h:
+C:/Users/aordu/Desktop/ТМХ/Преобразователь/CSS/Drivers/Simulink/ChargeDuty.h:
+C:/Users/aordu/Desktop/ТМХ/Преобразователь/CSS/Drivers/Simulink/errorHandler.h:

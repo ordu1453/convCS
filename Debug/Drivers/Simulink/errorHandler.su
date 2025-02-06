@@ -1,0 +1,2 @@
+../Drivers/Simulink/errorHandler.c:25:6:errorHandler_step	16	static
+../Drivers/Simulink/errorHandler.c:75:6:errorHandler_initialize	4	static

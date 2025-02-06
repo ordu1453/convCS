@@ -48,14 +48,14 @@ void DischargeDuty_step(void)
     *  DiscreteIntegrator: '<S1>/DischargeIntegrator'
     *  Gain: '<S1>/Gain1'
     */
-   rtb_PICurrentOutput_d = 5.0 * rtb_ErrorVoltage +
+   rtb_PICurrentOutput_d = 5 * rtb_ErrorVoltage +
      rtDW.DischargeIntegrator_DSTATE;
 
    /* Saturate: '<S1>/DischargeSaturation' */
-   if (rtb_PICurrentOutput_d > 5000.0) {
-     rtb_PICurrentOutput_d = 5000.0;
-   } else if (rtb_PICurrentOutput_d < 0.0) {
-     rtb_PICurrentOutput_d = 0.0;
+   if (rtb_PICurrentOutput_d > 5000) {
+     rtb_PICurrentOutput_d = 5000;
+   } else if (rtb_PICurrentOutput_d < 0) {
+     rtb_PICurrentOutput_d = 0;
    }
 
    /* End of Saturate: '<S1>/DischargeSaturation' */
@@ -72,12 +72,12 @@ void DischargeDuty_step(void)
    u0 = 20.0 * rtb_CurrentError + rtDW.DischargeIntegrator1_DSTATE;
 
    /* Saturate: '<S1>/DischargeSaturation1' */
-   if (u0 > 62259.0) {
+   if (u0 > 62259) {
      /* Outport: '<Root>/Target Duty' */
-     DischargeDuty_Signals.TargetDuty = 62259.0;
-   } else if (u0 < 3277.0) {
+     DischargeDuty_Signals.TargetDuty = 62259;
+   } else if (u0 < 3277) {
      /* Outport: '<Root>/Target Duty' */
-     DischargeDuty_Signals.TargetDuty = 3277.0;
+     DischargeDuty_Signals.TargetDuty = 3277;
    } else {
      /* Outport: '<Root>/Target Duty' */
      DischargeDuty_Signals.TargetDuty = u0;
@@ -107,11 +107,11 @@ void DischargeDuty_step(void)
    /* Update for DiscreteIntegrator: '<S1>/DischargeIntegrator' incorporates:
     *  Gain: '<S1>/Gain2'
     */
-   rtDW.DischargeIntegrator_DSTATE += 150.0 * rtb_ErrorVoltage * 0.0001;
-   if (rtDW.DischargeIntegrator_DSTATE > 5200.0) {
-     rtDW.DischargeIntegrator_DSTATE = 5200.0;
-   } else if (rtDW.DischargeIntegrator_DSTATE < -5200.0) {
-     rtDW.DischargeIntegrator_DSTATE = -5200.0;
+   rtDW.DischargeIntegrator_DSTATE += 150 * rtb_ErrorVoltage * 0.0001;
+   if (rtDW.DischargeIntegrator_DSTATE > 5200) {
+     rtDW.DischargeIntegrator_DSTATE = 5200;
+   } else if (rtDW.DischargeIntegrator_DSTATE < -5200) {
+     rtDW.DischargeIntegrator_DSTATE = -5200;
    }
 
    /* End of Update for DiscreteIntegrator: '<S1>/DischargeIntegrator' */
@@ -119,21 +119,16 @@ void DischargeDuty_step(void)
    /* Update for DiscreteIntegrator: '<S1>/DischargeIntegrator1' incorporates:
     *  Gain: '<S1>/Gain4'
     */
-   rtDW.DischargeIntegrator1_DSTATE += 150.0 * rtb_CurrentError * 0.0001;
-   if (rtDW.DischargeIntegrator1_DSTATE > 52000.0) {
-     rtDW.DischargeIntegrator1_DSTATE = 52000.0;
-   } else if (rtDW.DischargeIntegrator1_DSTATE < -52000.0) {
-     rtDW.DischargeIntegrator1_DSTATE = -52000.0;
+   rtDW.DischargeIntegrator1_DSTATE += 150 * rtb_CurrentError * 0.0001;
+   if (rtDW.DischargeIntegrator1_DSTATE > 52000) {
+     rtDW.DischargeIntegrator1_DSTATE = 52000;
+   } else if (rtDW.DischargeIntegrator1_DSTATE < -52000) {
+     rtDW.DischargeIntegrator1_DSTATE = -52000;
    }
 
    /* End of Update for DiscreteIntegrator: '<S1>/DischargeIntegrator1' */
  }
 
- /* Model initialize function */
- void DischargeDuty_initialize(void)
- {
-   /* (no initialization code required) */
- }
 
  /*
   * File trailer for generated code.

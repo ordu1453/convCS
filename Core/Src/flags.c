@@ -10,11 +10,15 @@
 
 
 static volatile uint8_t stepFlag = 0;
+static volatile uint8_t handlerStepFlag = 0;
 static volatile uint8_t modeFlag = 0;
 static volatile uint8_t ledFlag = 0;
 
+
+
 static volatile uint8_t errorCode = 0;
 
+//TODO Unify setStepFlag functions in one function for readability
 
 void SetStepFlag(void) {
     stepFlag = 1;
@@ -69,4 +73,14 @@ uint8_t GetErrorCode(void)
 }
 
 
+void SetHandlerStepFlag(void) {
+	handlerStepFlag = 1;
+}
+
+
+uint8_t GetHandlerStepFlag(void) {
+    uint8_t buf_flag = handlerStepFlag;
+    handlerStepFlag = 0;
+    return buf_flag;
+}
 
