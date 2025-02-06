@@ -25,6 +25,7 @@ void SetLedFlag(void);
 uint8_t GetLedFlag(void);
 
 void SetErrorCode(uint8_t Error);
+void ResetErrorCode(void);
 uint8_t GetErrorCode(void);
 
 

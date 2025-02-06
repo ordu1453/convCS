@@ -12,7 +12,7 @@ static volatile uint8_t lastMode = NO_MODE;
 
 void initProcess()
 {
-	//TODO Add initialization for system
+	//TODO Add initialization for system if needed
 }
 
 
@@ -64,13 +64,11 @@ void ledProcess()
 		{
 			toggleLedGreen();
 			resetLedRed();
-			pwmStart();
 		}
 		else
 		{
 			toggleLedRed();
 			resetLedGreen();
-			pwmStop();
 		}
 	}
 }
@@ -85,14 +83,16 @@ void errProcess()
 		if (errorHandler_Signals.underVoltage)
 		{
 			SetErrorCode(UNDERVOLTAGE_ERROR);
+			pwmStop();
 		}
 		if (errorHandler_Signals.overCurrent)
 		{
 			SetErrorCode(OVERCURRENT_ERROR);
+			pwmStop();
 		}
 		if (errorHandler_Signals.readyState)
 		{
-			SetErrorCode(NO_ERROR);
+			ResetErrorCode();
 		}
 	}
 }

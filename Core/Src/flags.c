@@ -14,8 +14,6 @@ static volatile uint8_t handlerStepFlag = 0;
 static volatile uint8_t modeFlag = 0;
 static volatile uint8_t ledFlag = 0;
 
-
-
 static volatile uint8_t errorCode = 0;
 
 //TODO Unify setStepFlag functions in one function for readability
@@ -63,6 +61,12 @@ void SetErrorCode(uint8_t Error)
 {
 	errorCode &= ~(1 << Error);
     errorCode |= (1 << Error);
+}
+
+
+void ResetErrorCode(void)
+{
+	errorCode = 0;
 }
 
 
