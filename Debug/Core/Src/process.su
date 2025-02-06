@@ -1,0 +1,9 @@
+../Core/Src/process.c:13:6:initProcess	4	static
+../Core/Src/process.c:19:6:calcProcess	8	static
+../Core/Src/process.c:47:6:sensProcess	4	static
+../Core/Src/process.c:53:6:commProcess	4	static
+../Core/Src/process.c:59:6:ledProcess	8	static
+../Core/Src/process.c:80:6:errProcess	4	static
+../Core/Src/process.c:86:6:modeReset	4	static
+../Core/Src/process.c:95:6:pwmStart	8	static
+../Core/Src/process.c:102:6:pwmStop	8	static

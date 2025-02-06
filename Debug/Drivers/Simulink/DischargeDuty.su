@@ -1,0 +1,2 @@
+../Drivers/Simulink/DischargeDuty.c:32:6:DischargeDuty_step	4	static
+../Drivers/Simulink/DischargeDuty.c:133:7:DischargeDuty_initialize	4	static
