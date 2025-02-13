@@ -28,5 +28,11 @@ void SetErrorCode(uint8_t Error);
 void ResetErrorCode(void);
 uint8_t GetErrorCode(void);
 
+void SetDebugStepFlag(void);
+uint8_t GetDebugStepFlag(void);
+
+void SetPWMFlag(void);
+void ResetPWMFlag(void);
+uint8_t GetPWMFlag(void);
 
 #endif /* INC_FLAGS_H_ */

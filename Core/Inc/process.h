@@ -15,6 +15,7 @@
 #include "errorHandler.h"
 
 
+
 #define NO_MODE 0
 #define DISCHARGE 1
 #define CHARGE 2
@@ -39,6 +40,9 @@
 #define UNDERVOLTAGE_ERROR 2
 #define NO_ERROR 0
 
+#define PWM_ON 1
+#define PWM_OFF 0
+
 extern TIM_HandleTypeDef htim1;
 
 void initProcess(void);
@@ -47,6 +51,7 @@ void sensProcess(void);
 void commProcess(void);
 void ledProcess(void);
 void errProcess(void);
+void debugProcess(void);
 
 void modeReset(void);
 void pwmStop(void);

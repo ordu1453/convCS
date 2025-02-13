@@ -13,6 +13,8 @@ static volatile uint8_t stepFlag = 0;
 static volatile uint8_t handlerStepFlag = 0;
 static volatile uint8_t modeFlag = 0;
 static volatile uint8_t ledFlag = 0;
+static volatile uint8_t debugStepFlag = 0;
+static volatile uint8_t PWMFlag = 0;
 
 static volatile uint8_t errorCode = 0;
 
@@ -86,5 +88,31 @@ uint8_t GetHandlerStepFlag(void) {
     uint8_t buf_flag = handlerStepFlag;
     handlerStepFlag = 0;
     return buf_flag;
+}
+
+void SetDebugStepFlag(void) {
+	debugStepFlag = 1;
+}
+
+
+uint8_t GetDebugStepFlag(void) {
+    uint8_t buf_flag = debugStepFlag;
+    debugStepFlag = 0;
+    return buf_flag;
+}
+
+
+void SetPWMFlag(void) {
+	PWMFlag = 1;
+}
+
+
+void ResetPWMFlag(void) {
+	PWMFlag = 0;
+}
+
+
+uint8_t GetPWMFlag(void) {
+    return PWMFlag;
 }
 

@@ -6,9 +6,15 @@
  */
 
 #include "process.h"
+#include "stdio.h"
 
 
 static volatile uint8_t lastMode = NO_MODE;
+static
+
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+extern UART_HandleTypeDef huart3;
+
 
 void initProcess()
 {
@@ -18,12 +24,13 @@ void initProcess()
 
 void calcProcess()
 {
-	if (lastMode != GetModeFlag())
-	{
-		modeReset();
-	}
+
 	if (GetStepFlag())
 	{
+		if (lastMode != GetModeFlag())
+		{
+			modeReset();
+		}
 		if (GetModeFlag() == DISCHARGE)
 		{
 			DischargeDuty_step();
@@ -98,6 +105,58 @@ void errProcess()
 }
 
 
+void debugProcess()
+{
+	//TODO Create interrupt and corresponding flag specific to debugProcess
+	if (GetDebugStepFlag())
+	{
+		uint8_t mode = GetModeFlag();
+		uint8_t error = GetErrorCode();
+		uint8_t pwm = GetPWMFlag();
+
+		switch(mode)
+		{
+		case DISCHARGE:
+			printf("MODE_D   ");
+			break;
+		case CHARGE:
+			printf("MODE_C   ");
+			break;
+		case NO_MODE:
+			printf("MODE_N   ");
+			break;
+		}
+
+		switch(error)
+		{
+		case UNDERVOLTAGE_ERROR:
+			printf("ERR_UNDRV   ");
+			break;
+		case OVERCURRENT_ERROR:
+			printf("ERR_OVRCUR   ");
+			break;
+		case NO_ERROR:
+			printf("ERR_NOERR   ");
+			break;
+		}
+
+
+		switch(pwm)
+		{
+		case PWM_ON:
+			printf("PWM_ON   ");
+			break;
+		case PWM_OFF:
+			printf("PWM_OFF   ");
+			break;
+		}
+
+		printf("\n\r");
+
+	}
+}
+
+
 void modeReset() //Integrator value reset function
 {
 	rtDW.DischargeIntegrator_DSTATE = 0;
@@ -112,6 +171,7 @@ void modeReset() //Integrator value reset function
 
 void pwmStart()
 {
+	SetPWMFlag();
 
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
@@ -121,6 +181,8 @@ void pwmStart()
 
 void pwmStop()
 {
+	ResetErrorCode();
+
 	HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
 
@@ -129,3 +191,20 @@ void pwmStop()
 
 
 
+
+
+
+
+/**
+  * @brief  Retargets the C library printf function to the USART.
+  *   None
+  * @retval None
+  */
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
