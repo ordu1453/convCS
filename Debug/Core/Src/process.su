@@ -3,7 +3,7 @@
 ../Core/Src/process.c:46:6:sensProcess	4	static
 ../Core/Src/process.c:52:6:commProcess	4	static
 ../Core/Src/process.c:58:6:ledProcess	8	static
-../Core/Src/process.c:79:6:errProcess	8	static
-../Core/Src/process.c:104:6:modeReset	4	static
-../Core/Src/process.c:116:6:pwmStart	8	static
-../Core/Src/process.c:123:6:pwmStop	8	static
+../Core/Src/process.c:77:6:errProcess	8	static
+../Core/Src/process.c:101:6:modeReset	4	static
+../Core/Src/process.c:113:6:pwmStart	8	static
+../Core/Src/process.c:122:6:pwmStop	8	static

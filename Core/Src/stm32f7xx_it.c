@@ -230,7 +230,8 @@ void TIM7_IRQHandler(void)
 
 /* USER CODE BEGIN 1 */
 
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
 	if(htim->Instance == TIM6)
 	{
 		SetStepFlag();

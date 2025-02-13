@@ -19,13 +19,21 @@
 #define DISCHARGE 1
 #define CHARGE 2
 
-#define toggleLedGreen() GPIOB->ODR ^= (1 << 0)
-#define toggleLedBlue() GPIOB->ODR ^= (1 << 7)
-#define toggleLedRed() GPIOB->ODR ^= (1 << 14)
+//#define toggleLedGreen() GPIOB->ODR ^= (1 << 0)
+//#define toggleLedBlue() GPIOB->ODR ^= (1 << 7)
+//#define toggleLedRed() GPIOB->ODR ^= (1 << 14)
 
-#define resetLedGreen() GPIOB->ODR &= ~(1 << 0)
-#define resetLedBlue() GPIOB->ODR &= ~(1 << 7)
-#define resetLedRed() GPIOB->ODR &= ~(1 << 14)
+//#define resetLedGreen() GPIOB->ODR &= ~(1 << 0)
+//#define resetLedBlue() GPIOB->ODR &= ~(1 << 7)
+//#define resetLedRed() GPIOB->ODR &= ~(1 << 14)
+
+#define ledGreenOn() TIM3->CCR3 = 9830
+#define ledBlueOn()	TIM4->CCR2 = 9830
+#define ledRedOn() TIM12->CCR1 = 9830
+
+#define ledGreenOff() TIM3->CCR3 = 0
+#define ledBlueOff() TIM4->CCR2 = 0
+#define ledRedOff() TIM12->CCR1 = 0
 
 #define OVERCURRENT_ERROR 1
 #define UNDERVOLTAGE_ERROR 2

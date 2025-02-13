@@ -59,16 +59,16 @@ void ledProcess()
 {
 	if (GetLedFlag())
 	{
-		toggleLedBlue();
+		ledBlueOn();
 		if (GetErrorCode() == NO_ERROR)
 		{
-			toggleLedGreen();
-			resetLedRed();
+			ledGreenOn();
+			ledRedOff();
 		}
 		else
 		{
-			toggleLedRed();
-			resetLedGreen();
+			ledRedOn();
+			ledGreenOff();
 		}
 	}
 }
@@ -112,8 +112,10 @@ void modeReset() //Integrator value reset function
 
 void pwmStart()
 {
+
 	HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+
 }
 
 
