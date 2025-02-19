@@ -38,6 +38,7 @@
 
 #define OVERCURRENT_ERROR 1
 #define UNDERVOLTAGE_ERROR 2
+#define MODE_ERROR 3
 #define NO_ERROR 0
 
 #define PWM_ON 1

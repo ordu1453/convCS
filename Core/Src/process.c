@@ -10,9 +10,9 @@
 
 
 static volatile uint8_t lastMode = NO_MODE;
-static
 
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+
 extern UART_HandleTypeDef huart3;
 
 
@@ -45,6 +45,11 @@ void calcProcess()
 		{
 			//TODO Add some functionality here
 			lastMode = NO_MODE;
+		}
+		else
+		{
+			//TODO Add mode error flag to flag.c file
+			SetErrorCode(MODE_ERROR);
 		}
 	}
 }
@@ -124,6 +129,9 @@ void debugProcess()
 			break;
 		case NO_MODE:
 			printf("MODE_N   ");
+			break;
+		default:
+			printf("MODE_ERROR   ");
 			break;
 		}
 
