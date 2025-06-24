@@ -51,7 +51,7 @@ void calcProcess(void);
 void sensProcess(void);
 void commProcess(void);
 void ledProcess(void);
-void errProcess(void);
+int errProcess(void);
 void debugProcess(void);
 
 void modeReset(void);

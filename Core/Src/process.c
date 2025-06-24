@@ -61,9 +61,19 @@ void sensProcess()
 }
 
 
-void commProcess()
+void sendCAN_Process()
 {
 	//TODO Add CAN communication and others if needed
+}
+
+void readCAN_Process()
+{
+	//TODO Add CAN communication and others if needed
+}
+
+void prechargeProcess()
+{
+	//TODO Add relay switching process
 }
 
 
@@ -86,7 +96,7 @@ void ledProcess()
 }
 
 
-void errProcess()
+int errProcess()
 {
 	//TODO Add a timer for setting handler flag
 	if (GetHandlerStepFlag())
@@ -96,16 +106,20 @@ void errProcess()
 		{
 			SetErrorCode(UNDERVOLTAGE_ERROR);
 			pwmStop();
+			return 1;
 		}
 		if (errorHandler_Signals.overCurrent)
 		{
 			SetErrorCode(OVERCURRENT_ERROR);
 			pwmStop();
+			return 1;
 		}
 		if (errorHandler_Signals.readyState)
 		{
 			ResetErrorCode();
+			return 0;
 		}
+		return 1;
 	}
 }
 
@@ -115,6 +129,7 @@ void debugProcess()
 	//TODO Create interrupt and corresponding flag specific to debugProcess
 	if (GetDebugStepFlag())
 	{
+
 		uint8_t mode = GetModeFlag();
 		uint8_t error = GetErrorCode();
 		uint8_t pwm = GetPWMFlag();
@@ -196,10 +211,6 @@ void pwmStop()
 
 	//TODO Should we set duty to zero in case of pwm stopping?
 }
-
-
-
-
 
 
 
