@@ -9,8 +9,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
--include Drivers/Simulink/subdir.mk
--include Drivers/STM32F7xx_HAL_Driver/Src/subdir.mk
+-include Drivers/STM32G4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
@@ -35,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Converter_Control_System
+BUILD_ARTIFACT_NAME := converter-cs
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Converter_Control_System.elf \
+converter-cs.elf \
 
 MAP_FILES += \
-Converter_Control_System.map \
+converter-cs.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Converter_Control_System.list \
+converter-cs.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: Converter_Control_System.elf secondary-outputs
+main-build: converter-cs.elf secondary-outputs
 
 # Tool invocations
-Converter_Control_System.elf Converter_Control_System.map: $(OBJS) $(USER_OBJS) C:\Users\aordu\Desktop\ТМХ\Преобразователь\CSS\STM32F767ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Converter_Control_System.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\aordu\Desktop\ТМХ\Преобразователь\CSS\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Converter_Control_System.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+converter-cs.elf converter-cs.map: $(OBJS) $(USER_OBJS) C:\Users\ordum\Документы\STM32CubeWorkspace\converter-cs\STM32G473CBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "converter-cs.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ordum\Документы\STM32CubeWorkspace\converter-cs\STM32G473CBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="converter-cs.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -71,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Converter_Control_System.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Converter_Control_System.list"
+converter-cs.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "converter-cs.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) Converter_Control_System.elf Converter_Control_System.list Converter_Control_System.map default.size.stdout
+	-$(RM) converter-cs.elf converter-cs.list converter-cs.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

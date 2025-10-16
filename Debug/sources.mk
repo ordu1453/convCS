@@ -24,6 +24,5 @@ C_DEPS :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
-Drivers/STM32F7xx_HAL_Driver/Src \
-Drivers/Simulink \
+Drivers/STM32G4xx_HAL_Driver/Src \
 

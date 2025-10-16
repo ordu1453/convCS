@@ -27,7 +27,7 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f7xx_hal.h"
+#include "stm32g4xx_hal.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -59,34 +59,30 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define USER_BTN_Pin GPIO_PIN_13
-#define USER_BTN_GPIO_Port GPIOC
-#define LD1_GREEN_Pin GPIO_PIN_0
-#define LD1_GREEN_GPIO_Port GPIOB
-#define H8_ERR_Pin GPIO_PIN_12
-#define H8_ERR_GPIO_Port GPIOF
-#define H1_ERR_Pin GPIO_PIN_13
-#define H1_ERR_GPIO_Port GPIOF
-#define H2_ERR_Pin GPIO_PIN_14
-#define H2_ERR_GPIO_Port GPIOF
-#define H3_ERR_Pin GPIO_PIN_15
-#define H3_ERR_GPIO_Port GPIOF
-#define H4_ERR_Pin GPIO_PIN_0
-#define H4_ERR_GPIO_Port GPIOG
-#define H5_ERR_Pin GPIO_PIN_1
-#define H5_ERR_GPIO_Port GPIOG
-#define H6_ERR_Pin GPIO_PIN_7
-#define H6_ERR_GPIO_Port GPIOE
-#define H7_ERR_Pin GPIO_PIN_8
-#define H7_ERR_GPIO_Port GPIOE
-#define LD3_RED_Pin GPIO_PIN_14
-#define LD3_RED_GPIO_Port GPIOB
-#define RELAY_GATE_Pin GPIO_PIN_9
-#define RELAY_GATE_GPIO_Port GPIOD
-#define LD2_BLUE_Pin GPIO_PIN_7
-#define LD2_BLUE_GPIO_Port GPIOB
-#define TEST_Pin GPIO_PIN_0
-#define TEST_GPIO_Port GPIOE
+#define LED1_Pin GPIO_PIN_14
+#define LED1_GPIO_Port GPIOC
+#define LED2_Pin GPIO_PIN_15
+#define LED2_GPIO_Port GPIOC
+#define H1_Pin GPIO_PIN_4
+#define H1_GPIO_Port GPIOA
+#define H2_Pin GPIO_PIN_5
+#define H2_GPIO_Port GPIOA
+#define H3_Pin GPIO_PIN_6
+#define H3_GPIO_Port GPIOA
+#define H4_Pin GPIO_PIN_7
+#define H4_GPIO_Port GPIOA
+#define RELAY_GATE_Pin GPIO_PIN_10
+#define RELAY_GATE_GPIO_Port GPIOA
+#define H5_Pin GPIO_PIN_4
+#define H5_GPIO_Port GPIOB
+#define H6_Pin GPIO_PIN_5
+#define H6_GPIO_Port GPIOB
+#define H7_Pin GPIO_PIN_6
+#define H7_GPIO_Port GPIOB
+#define H8_Pin GPIO_PIN_7
+#define H8_GPIO_Port GPIOB
+#define USER_BTN_Pin GPIO_PIN_9
+#define USER_BTN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
