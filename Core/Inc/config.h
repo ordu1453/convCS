@@ -69,5 +69,11 @@ STATE_DISCHARGE = 4
 #define ERR_IGBT_DRIVER 0x08
 
 
+// Коэффициенты преобразования ADC -> физические величины
+#define ADC_TO_CURRENT_COEFF_IN    0.1f    // мА/единицу ADC, подставь своё значение
+#define ADC_TO_CURRENT_COEFF_OUT   0.1f
+#define ADC_TO_CURRENT_COEFF_CHOKE 0.1f
+#define ADC_TO_VOLTAGE_COEFF_IN    1.0f    // мВ/единицу ADC, подставь своё значение
+#define ADC_TO_VOLTAGE_COEFF_OUT   1.0f
 
 #endif /* INC_CONFIG_H_ */

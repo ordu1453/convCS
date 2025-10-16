@@ -1,8 +1,5 @@
 Core/Src/converter.o: ../Core/Src/converter.c ../Core/Inc/converter.h \
- ../Core/Inc/config.h ../Core/Inc/sensor.h ../Core/Inc/types.h \
- ../Core/Inc/diag.h ../Core/Inc/pid.h ../Core/Inc/pwmHandler.h \
- ../Core/Inc/precharge.h ../Core/Inc/pwm.h ../Core/Inc/config.h \
- ../Core/Inc/types.h ../Core/Inc/can.h ../Core/Inc/main.h \
+ ../Core/Inc/config.h ../Core/Inc/sensor.h ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
@@ -35,19 +32,13 @@ Core/Src/converter.o: ../Core/Src/converter.c ../Core/Inc/converter.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
- ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h
+ ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
+ ../Core/Inc/types.h ../Core/Inc/diag.h ../Core/Inc/pid.h \
+ ../Core/Inc/pwmHandler.h ../Core/Inc/precharge.h ../Core/Inc/pwm.h \
+ ../Core/Inc/config.h ../Core/Inc/types.h ../Core/Inc/can.h
 ../Core/Inc/converter.h:
 ../Core/Inc/config.h:
 ../Core/Inc/sensor.h:
-../Core/Inc/types.h:
-../Core/Inc/diag.h:
-../Core/Inc/pid.h:
-../Core/Inc/pwmHandler.h:
-../Core/Inc/precharge.h:
-../Core/Inc/pwm.h:
-../Core/Inc/config.h:
-../Core/Inc/types.h:
-../Core/Inc/can.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
@@ -82,3 +73,12 @@ Core/Src/converter.o: ../Core/Src/converter.c ../Core/Inc/converter.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
+../Core/Inc/types.h:
+../Core/Inc/diag.h:
+../Core/Inc/pid.h:
+../Core/Inc/pwmHandler.h:
+../Core/Inc/precharge.h:
+../Core/Inc/pwm.h:
+../Core/Inc/config.h:
+../Core/Inc/types.h:
+../Core/Inc/can.h:
