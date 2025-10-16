@@ -53,13 +53,6 @@ uint8_t hasErr = diagCheck(s, &errMask);
 globalErrorMask = errMask;
 
 
-// precharge
-if(state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
-{
-prechargeStart();
-}
-
-
 // mode change -> reset pid
 if((uint32_t)state != lastMode)
 {
@@ -86,5 +79,13 @@ float measurement = (float)s->currentOutput_mA;
 float dt = ((float)CONTROL_DT_MS)/1000.0f;
 float duty = pidUpdate(&currentPid, setpoint, measurement, dt);
 pwmSetDuty((uint32_t)duty);
+
+}
+
+
+// precharge
+if(state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
+{
+prechargeStart();
 }
 }

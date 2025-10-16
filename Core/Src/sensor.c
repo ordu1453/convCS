@@ -10,7 +10,7 @@ extern ADC_HandleTypeDef hadc1;
 
 void sensorInit(void)
 {
-HAL_ADC_Start(&hadc1); // Старт ADC без DMA
+HAL_ADC_Start(&hadc1);
 }
 
 
