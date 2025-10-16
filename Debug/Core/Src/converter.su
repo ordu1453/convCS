@@ -1,0 +1,2 @@
+../Core/Src/converter.c:30:6:converterInit	16	static
+../Core/Src/converter.c:48:6:converterProcess	64	static

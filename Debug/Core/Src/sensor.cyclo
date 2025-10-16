@@ -1,0 +1,4 @@
+../Core/Src/sensor.c:22:6:sensorInit	2
+../Core/Src/sensor.c:29:6:sensorStartADC	1
+../Core/Src/sensor.c:37:6:sensorPoll	1
+../Core/Src/sensor.c:75:23:sensorGetValues	1

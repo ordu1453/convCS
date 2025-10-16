@@ -1,0 +1,4 @@
+../Core/Src/sensor.c:22:6:sensorInit	16	static
+../Core/Src/sensor.c:29:6:sensorStartADC	8	static
+../Core/Src/sensor.c:37:6:sensorPoll	16	static
+../Core/Src/sensor.c:75:23:sensorGetValues	4	static

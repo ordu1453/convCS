@@ -1,0 +1,2 @@
+../Core/Src/pwmHandler.c:14:6:pwmHandlerInit	1
+../Core/Src/pwmHandler.c:20:6:pwmHandlerProcess	2
