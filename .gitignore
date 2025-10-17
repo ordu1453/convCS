@@ -14,3 +14,8 @@ Debug/Core/Src/pwm.cyclo
 Debug/Core/Src/pwm.o
 Debug/Core/Src/pwm.su
 Debug/Core/Src/sensor.o
+Debug/Core/Src/converter.su
+Debug/Core/Src/pid.cyclo
+Debug/Core/Src/pid.d
+Debug/Core/Src/pid.o
+Debug/Core/Src/pid.su

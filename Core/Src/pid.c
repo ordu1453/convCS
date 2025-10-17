@@ -8,30 +8,73 @@
 
 #include "pid.h"
 
-
-void pidInit(PID_t* pid, float kp, float ki, float kd, float outMin, float outMax)
+// =======================
+// --- Одиночный ПИ ---
+// =======================
+void piInit(PIController_t* pi, float kp, float ki, float dt, float outMin, float outMax)
 {
-pid->kp=kp; pid->ki=ki; pid->kd=kd;
-pid->integrator=0.0f; pid->prevError=0.0f;
-pid->outputMin=outMin; pid->outputMax=outMax;
+    pi->kp = kp;
+    pi->ki = ki;
+    pi->dt = dt;
+    pi->outMin = outMin;
+    pi->outMax = outMax;
+    pi->integral = 0.0f;
+    pi->output = 0.0f;
 }
 
-
-float pidUpdate(PID_t* pid, float setpoint, float measurement, float dt)
+float piUpdate(PIController_t* pi, float setpoint, float measurement)
 {
-float error = setpoint - measurement;
-pid->integrator += error * dt;
-float derivative = (error - pid->prevError)/dt;
-float out = pid->kp*error + pid->ki*pid->integrator + pid->kd*derivative;
-if(out > pid->outputMax) out = pid->outputMax;
-if(out < pid->outputMin) out = pid->outputMin;
-pid->prevError = error;
-return out;
+    float error = setpoint - measurement;
+    pi->integral += error * pi->ki * pi->dt;
+
+    // Антивиндап
+    if (pi->integral > pi->outMax) pi->integral = pi->outMax;
+    else if (pi->integral < pi->outMin) pi->integral = pi->outMin;
+
+    float output = pi->kp * error + pi->integral;
+
+    // Ограничение выхода
+    if (output > pi->outMax) output = pi->outMax;
+    else if (output < pi->outMin) output = pi->outMin;
+
+    pi->output = output;
+    return output;
 }
 
-
-void pidReset(PID_t* pid)
+void piReset(PIController_t* pi)
 {
-pid->integrator = 0.0f;
-pid->prevError = 0.0f;
+    pi->integral = 0.0f;
+    pi->output = 0.0f;
+}
+
+// ================================
+// --- Составной ПИ-регулятор ---
+// ================================
+void pi2Init(PI2Controller_t* pi2,
+             float kp_v, float ki_v,
+             float kp_i, float ki_i,
+             float dt, float inMin, float inMax,
+			 float outMin, float outMax)
+{
+    piInit(&pi2->voltageLoop, kp_v, ki_v, dt, inMin, inMax);
+    piInit(&pi2->currentLoop, kp_i, ki_i, dt, outMin, outMax);
+}
+
+float pi2Update(PI2Controller_t* pi2,
+                float voltageSet, float voltageMeas,
+                float currentMeas)
+{
+    // Внешний контур (напряжение) формирует целевой ток
+    float currentRef = piUpdate(&pi2->voltageLoop, voltageSet, voltageMeas);
+
+    // Внутренний контур (ток) управляет выходом (ШИМ)
+    float duty = piUpdate(&pi2->currentLoop, currentRef, currentMeas);
+
+    return duty;
+}
+
+void pi2Reset(PI2Controller_t* pi2)
+{
+    piReset(&pi2->voltageLoop);
+    piReset(&pi2->currentLoop);
 }
