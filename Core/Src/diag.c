@@ -38,10 +38,10 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
     *errorMask = ERR_NONE;
 
     // --- Проверка токов ---
-    if (sensorValues->currentInput > I_MAX ||
-        sensorValues->currentInput < -I_MAX ||
-        sensorValues->currentOutput > I_MAX ||
-        sensorValues->currentOutput < -I_MAX ||
+    if (sensorValues->currentIn > I_MAX ||
+        sensorValues->currentIn < -I_MAX ||
+        sensorValues->currentOut > I_MAX ||
+        sensorValues->currentOut < -I_MAX ||
         sensorValues->currentChoke > I_MAX ||
         sensorValues->currentChoke < -I_MAX)
     {

@@ -13,8 +13,8 @@
 
 
 typedef struct {
-int32_t currentInput;
-int32_t currentOutput;
+int32_t currentIn;
+int32_t currentOut;
 int32_t currentChoke;
 int32_t voltageIn;
 int32_t voltageOut;

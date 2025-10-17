@@ -75,7 +75,7 @@ pwmSetDuty((uint32_t)duty);
 else if(state == STATE_DISCHARGE)
 {
 float setpoint = -1000.0f; // for example
-float measurement = (float)s->currentOutput;
+float measurement = (float)s->currentOut;
 float dt = ((float)CONTROL_DT_MS)/1000.0f;
 float duty = pidUpdate(&currentPid, setpoint, measurement, dt);
 pwmSetDuty((uint32_t)duty);

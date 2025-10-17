@@ -36,8 +36,8 @@ HAL_ADC_Stop(&hadc1);
 
 
 // Преобразование ADC -> реальные значения
-currentValues.currentInput    = (float)rawValues[0] * ADC_TO_CURRENT_COEFF_IN;
-currentValues.currentOutput   = (float)rawValues[1] * ADC_TO_CURRENT_COEFF_OUT;
+currentValues.currentIn    = (float)rawValues[0] * ADC_TO_CURRENT_COEFF_IN;
+currentValues.currentOut   = (float)rawValues[1] * ADC_TO_CURRENT_COEFF_OUT;
 currentValues.currentChoke    = (float)rawValues[2] * ADC_TO_CURRENT_COEFF_CHOKE;
 currentValues.voltageIn    = (float)rawValues[3] * ADC_TO_VOLTAGE_COEFF_IN;
 currentValues.voltageOut   = (float)rawValues[4] * ADC_TO_VOLTAGE_COEFF_OUT;
