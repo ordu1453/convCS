@@ -31,7 +31,7 @@ float piUpdate(PIController_t* pi, float setpoint, float measurement)
     if (pi->integral > pi->outMax) pi->integral = pi->outMax;
     else if (pi->integral < pi->outMin) pi->integral = pi->outMin;
 
-    float output = pi->kp * error + pi->integral;
+    uint16_t output = pi->kp * error + pi->integral;
 
     // Ограничение выхода
     if (output > pi->outMax) output = pi->outMax;
@@ -68,7 +68,7 @@ float pi2Update(PI2Controller_t* pi2,
     float currentRef = piUpdate(&pi2->voltageLoop, voltageSet, voltageMeas);
 
     // Внутренний контур (ток) управляет выходом (ШИМ)
-    float duty = piUpdate(&pi2->currentLoop, currentRef, currentMeas);
+    uint16_t duty = piUpdate(&pi2->currentLoop, currentRef, currentMeas);
 
     return duty;
 }
