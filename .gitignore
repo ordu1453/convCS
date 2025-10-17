@@ -3,3 +3,14 @@ Debug/Core/Src/converter.o
 Debug/Core/Src/pwm.cyclo
 Debug/Core/Src/pwm.o
 Debug/Core/Src/pwm.su
+Debug/converter-cs.map
+Debug/Core/Src/can.o
+Debug/Core/Src/converter.o
+Debug/Core/Src/diag.cyclo
+Debug/Core/Src/diag.d
+Debug/Core/Src/diag.o
+Debug/Core/Src/diag.su
+Debug/Core/Src/pwm.cyclo
+Debug/Core/Src/pwm.o
+Debug/Core/Src/pwm.su
+Debug/Core/Src/sensor.o

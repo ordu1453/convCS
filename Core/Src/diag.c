@@ -10,23 +10,19 @@
 #include "config.h"
 #include "main.h"
 
-// --- Внутренние константы ---
-#define DRIVER_FAULT_PIN_COUNT 8  // количество входов от IGBT-драйверов
+#define DRIVER_FAULT_PIN_COUNT 4  // количество входов от IGBT-драйверов (один полумост)
 
-// Пины драйверов (пример — подставь свои)
 static const uint16_t driverFaultPins[DRIVER_FAULT_PIN_COUNT] = {
     GPIO_PIN_4,
     GPIO_PIN_5,
     GPIO_PIN_6,
     GPIO_PIN_7,
-    GPIO_PIN_5,
-    GPIO_PIN_5,
-    GPIO_PIN_6,
-    GPIO_PIN_7
 };
 
-// Порт драйверов (если все на одном, иначе сделаем массив)
-#define DRIVER_FAULT_GPIO GPIOB
+#define DRIVER_FAULT_GPIOA GPIOA
+#define DRIVER_FAULT_GPIOB GPIOB
+
+
 
 
 
@@ -65,7 +61,15 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 
     // --- Проверка ошибок от IGBT-драйверов ---
     for (uint8_t i = 0; i < DRIVER_FAULT_PIN_COUNT; i++) {
-        if (HAL_GPIO_ReadPin(DRIVER_FAULT_GPIO, driverFaultPins[i]) == GPIO_PIN_SET) {
+        if (HAL_GPIO_ReadPin(DRIVER_FAULT_GPIOA, driverFaultPins[i]) == GPIO_PIN_SET) {
+            *errorMask |= ERR_IGBT_DRIVER;
+            hasError = 1;
+            break; // можно выйти сразу при первой ошибке
+        }
+    }
+
+    for (uint8_t i = 0; i < DRIVER_FAULT_PIN_COUNT; i++) {
+        if (HAL_GPIO_ReadPin(DRIVER_FAULT_GPIOB, driverFaultPins[i]) == GPIO_PIN_SET) {
             *errorMask |= ERR_IGBT_DRIVER;
             hasError = 1;
             break; // можно выйти сразу при первой ошибке
@@ -74,7 +78,3 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 
     return hasError;
 }
-
-//*errorMask = err;
-//return (err != ERR_NONE) ? 1 : 0;
-//}
