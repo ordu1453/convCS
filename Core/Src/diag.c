@@ -8,6 +8,26 @@
 
 #include "diag.h"
 #include "config.h"
+#include "main.h"
+
+// --- Внутренние константы ---
+#define DRIVER_FAULT_PIN_COUNT 8  // количество входов от IGBT-драйверов
+
+// Пины драйверов (пример — подставь свои)
+static const uint16_t driverFaultPins[DRIVER_FAULT_PIN_COUNT] = {
+    GPIO_PIN_4,
+    GPIO_PIN_5,
+    GPIO_PIN_6,
+    GPIO_PIN_7,
+    GPIO_PIN_5,
+    GPIO_PIN_5,
+    GPIO_PIN_6,
+    GPIO_PIN_7
+};
+
+// Порт драйверов (если все на одном, иначе сделаем массив)
+#define DRIVER_FAULT_GPIO GPIOB
+
 
 
 void diagInit(void)
@@ -16,30 +36,45 @@ void diagInit(void)
 }
 
 
-uint8_t diagCheck(const SensorValues_t* s, uint32_t* errorMask)
+uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 {
-uint32_t err=ERR_NONE;
+    uint8_t hasError = 0;
+    *errorMask = ERR_NONE;
 
+    // --- Проверка токов ---
+    if (sensorValues->currentInput > I_MAX ||
+        sensorValues->currentInput < -I_MAX ||
+        sensorValues->currentOutput > I_MAX ||
+        sensorValues->currentOutput < -I_MAX ||
+        sensorValues->currentChoke > I_MAX ||
+        sensorValues->currentChoke < -I_MAX)
+    {
+        *errorMask |= ERR_OVERCURRENT;
+        hasError = 1;
+    }
 
-if(s->voltageIn_mV > (uint32_t)(VBUS_MAX*1000.0f)) err |= ERR_OVERVOLTAGE;
-if(s->voltageIn_mV < (uint32_t)(VBUS_MIN*1000.0f)) err |= ERR_UNDERVOLTAGE;
+    // --- Проверка напряжений ---
+    if (sensorValues->voltageIn > VBUS_MAX ||
+        sensorValues->voltageIn < VBUS_MIN ||
+        sensorValues->voltageOut > VBUS_MAX ||
+        sensorValues->voltageOut < VBUS_MIN)
+    {
+        *errorMask |= ERR_OVERVOLTAGE;
+        hasError = 1;
+    }
 
+    // --- Проверка ошибок от IGBT-драйверов ---
+    for (uint8_t i = 0; i < DRIVER_FAULT_PIN_COUNT; i++) {
+        if (HAL_GPIO_ReadPin(DRIVER_FAULT_GPIO, driverFaultPins[i]) == GPIO_PIN_SET) {
+            *errorMask |= ERR_IGBT_DRIVER;
+            hasError = 1;
+            break; // можно выйти сразу при первой ошибке
+        }
+    }
 
-if(s->voltageOut_mV > (uint32_t)(VBUS_MAX*1000.0f)) err |= ERR_OVERVOLTAGE;
-if(s->voltageOut_mV < (uint32_t)(VBUS_MIN*1000.0f)) err |= ERR_UNDERVOLTAGE;
-
-
-if( (abs(s->currentInput_mA) > (int32_t)(I_MAX*1000.0f)) ||
-(abs(s->currentOutput_mA) > (int32_t)(I_MAX*1000.0f)) ||
-(abs(s->currentChoke_mA) > (int32_t)(I_MAX*1000.0f)) )
-{
-err |= ERR_OVERCURRENT;
+    return hasError;
 }
 
-
-// TODO: check IGBT-driver status pins if available and set ERR_IGBT_DRIVER
-
-
-*errorMask = err;
-return (err != ERR_NONE) ? 1 : 0;
-}
+//*errorMask = err;
+//return (err != ERR_NONE) ? 1 : 0;
+//}

@@ -48,9 +48,9 @@ data[0] = (uint8_t)state;
 data[1] = (uint8_t)(errorMask & 0xFF);
 
 
-int16_t vin = (int16_t)(s->voltageIn_mV / 100);
-int16_t vout = (int16_t)(s->voltageOut_mV / 100);
-int16_t iL = (int16_t)(s->currentChoke_mA / 100);
+int16_t vin = (int16_t)(s->voltageIn / 100);
+int16_t vout = (int16_t)(s->voltageOut / 100);
+int16_t iL = (int16_t)(s->currentChoke / 100);
 
 
 memcpy(&data[2], &vin, 2);

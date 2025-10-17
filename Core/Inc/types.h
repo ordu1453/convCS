@@ -13,11 +13,11 @@
 
 
 typedef struct {
-int32_t currentInput_mA;
-int32_t currentOutput_mA;
-int32_t currentChoke_mA;
-int32_t voltageIn_mV;
-int32_t voltageOut_mV;
+int32_t currentInput;
+int32_t currentOutput;
+int32_t currentChoke;
+int32_t voltageIn;
+int32_t voltageOut;
 } SensorValues_t;
 
 

@@ -13,8 +13,6 @@
 extern TIM_HandleTypeDef htim1; // configured for PWM
 
 
-
-
 void pwmSetDuty(uint32_t duty)
 {
 uint32_t arr = htim1.Instance->ARR;

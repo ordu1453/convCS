@@ -66,7 +66,7 @@ if(state == STATE_CHARGE)
 {
 // Example: setpoint could come from CAN. Here placeholder
 float setpoint = 1000.0f; // mV or other unit depending on design
-float measurement = (float)s->voltageOut_mV;
+float measurement = (float)s->voltageOut;
 // dt in seconds
 float dt = ((float)CONTROL_DT_MS)/1000.0f;
 float duty = pidUpdate(&currentPid, setpoint, measurement, dt);
@@ -75,7 +75,7 @@ pwmSetDuty((uint32_t)duty);
 else if(state == STATE_DISCHARGE)
 {
 float setpoint = -1000.0f; // for example
-float measurement = (float)s->currentOutput_mA;
+float measurement = (float)s->currentOutput;
 float dt = ((float)CONTROL_DT_MS)/1000.0f;
 float duty = pidUpdate(&currentPid, setpoint, measurement, dt);
 pwmSetDuty((uint32_t)duty);
