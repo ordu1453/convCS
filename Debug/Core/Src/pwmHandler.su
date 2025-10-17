@@ -1,2 +1,0 @@
-../Core/Src/pwmHandler.c:14:6:pwmHandlerInit	8	static
-../Core/Src/pwmHandler.c:20:6:pwmHandlerProcess	16	static

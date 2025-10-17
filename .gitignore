@@ -20,3 +20,7 @@ Debug/Core/Src/pid.d
 Debug/Core/Src/pid.o
 Debug/Core/Src/pid.su
 Debug/Core/Src/precharge.o
+Debug/Core/Src/converter.cyclo
+Debug/Core/Src/pwmHandler.cyclo
+Debug/Core/Src/pwmHandler.o
+Debug/Core/Src/pwmHandler.su
