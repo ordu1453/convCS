@@ -13,7 +13,7 @@
 
 // Example: use GPIO pin PA5 to drive relay
 #define PRECHARGE_GPIO_Port GPIOA
-#define PRECHARGE_Pin GPIO_PIN_5
+#define PRECHARGE_Pin GPIO_PIN_10 // Relay gate gpio port
 
 
 static uint8_t prechargeDone = 0;

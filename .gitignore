@@ -19,3 +19,4 @@ Debug/Core/Src/pid.cyclo
 Debug/Core/Src/pid.d
 Debug/Core/Src/pid.o
 Debug/Core/Src/pid.su
+Debug/Core/Src/precharge.o
