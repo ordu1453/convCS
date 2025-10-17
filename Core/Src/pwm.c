@@ -29,7 +29,7 @@ return htim1.Instance->ARR;
 }
 
 
-void pwmStart(void)
+void pwmEnable(void)
 {
 	if (currentPWMState == STATE_DISABLE)
 	{
@@ -43,7 +43,7 @@ void pwmStart(void)
 
 }
 
-void pwmStop(void)
+void pwmDisable(void)
 {
 	if (currentPWMState == STATE_ENABLE)
 	{
