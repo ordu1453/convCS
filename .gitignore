@@ -25,3 +25,12 @@ Debug/Core/Src/pwmHandler.cyclo
 Debug/Core/Src/pwmHandler.o
 Debug/Core/Src/pwmHandler.su
 Debug/Core/Src/pwm.d
+Debug/converter-cs.elf
+Debug/converter-cs.list
+Debug/Core/Src/main.o
+Debug/Core/Src/stm32g4xx_hal_msp.cyclo
+Debug/Core/Src/stm32g4xx_hal_msp.o
+Debug/Core/Src/stm32g4xx_hal_msp.su
+Debug/Core/Src/stm32g4xx_it.cyclo
+Debug/Core/Src/stm32g4xx_it.o
+Debug/Core/Src/stm32g4xx_it.su

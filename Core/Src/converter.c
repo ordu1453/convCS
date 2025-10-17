@@ -95,4 +95,6 @@ if(state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
 		currentState = STATE_INIT;
 	}
 	}
+
+canPublishTelemetry(currentState, errMask,  s);
 }
