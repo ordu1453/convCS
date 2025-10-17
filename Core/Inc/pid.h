@@ -23,7 +23,7 @@ typedef struct {
     float integral;
     float outMin;
     float outMax;
-    float output;
+    unsigned int output;
 } PIController_t;
 
 /*
@@ -92,7 +92,7 @@ typedef struct {
 // Функции одиночного ПИ-регулятора
 // -------------------------------
 void piInit(PIController_t* pi, float kp, float ki, float dt, float outMin, float outMax);
-float piUpdate(PIController_t* pi, float setpoint, float measurement);
+unsigned int piUpdate(PIController_t* pi, float setpoint, float measurement);
 void piReset(PIController_t* pi);
 
 // -------------------------------
@@ -104,7 +104,7 @@ void pi2Init(PI2Controller_t* pi2,
              float dt, float inMin, float inMax,
 			 float outMin, float outMax);
 
-float pi2Update(PI2Controller_t* pi2,
+unsigned int pi2Update(PI2Controller_t* pi2,
                 float voltageSet, float voltageMeas,
                 float currentMeas);
 

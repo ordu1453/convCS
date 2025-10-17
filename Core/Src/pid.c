@@ -19,10 +19,10 @@ void piInit(PIController_t* pi, float kp, float ki, float dt, float outMin, floa
     pi->outMin = outMin;
     pi->outMax = outMax;
     pi->integral = 0.0f;
-    pi->output = 0.0f;
+    pi->output = 0u;
 }
 
-float piUpdate(PIController_t* pi, float setpoint, float measurement)
+unsigned int piUpdate(PIController_t* pi, float setpoint, float measurement)
 {
     float error = setpoint - measurement;
     pi->integral += error * pi->ki * pi->dt;
@@ -31,7 +31,7 @@ float piUpdate(PIController_t* pi, float setpoint, float measurement)
     if (pi->integral > pi->outMax) pi->integral = pi->outMax;
     else if (pi->integral < pi->outMin) pi->integral = pi->outMin;
 
-    uint16_t output = pi->kp * error + pi->integral;
+    unsigned int output = pi->kp * error + pi->integral;
 
     // Ограничение выхода
     if (output > pi->outMax) output = pi->outMax;
@@ -60,15 +60,15 @@ void pi2Init(PI2Controller_t* pi2,
     piInit(&pi2->currentLoop, kp_i, ki_i, dt, outMin, outMax);
 }
 
-float pi2Update(PI2Controller_t* pi2,
+unsigned int pi2Update(PI2Controller_t* pi2,
                 float voltageSet, float voltageMeas,
                 float currentMeas)
 {
     // Внешний контур (напряжение) формирует целевой ток
-    float currentRef = piUpdate(&pi2->voltageLoop, voltageSet, voltageMeas);
+    unsigned int currentRef = piUpdate(&pi2->voltageLoop, voltageSet, voltageMeas);
 
     // Внутренний контур (ток) управляет выходом (ШИМ)
-    uint16_t duty = piUpdate(&pi2->currentLoop, currentRef, currentMeas);
+    unsigned int duty = piUpdate(&pi2->currentLoop, currentRef, currentMeas);
 
     return duty;
 }
