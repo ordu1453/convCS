@@ -51,13 +51,20 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 
     // --- Проверка напряжений ---
     if (sensorValues->voltageIn > VBUS_MAX ||
-        sensorValues->voltageIn < VBUS_MIN ||
-        sensorValues->voltageOut > VBUS_MAX ||
-        sensorValues->voltageOut < VBUS_MIN)
+        sensorValues->voltageOut > VBUS_MAX )
     {
         *errorMask |= ERR_OVERVOLTAGE;
         hasError = 1;
     }
+
+    // --- Проверка напряжений ---
+    if (sensorValues->voltageIn < VBUS_MIN ||
+        sensorValues->voltageOut < VBUS_MIN)
+    {
+        *errorMask |= ERR_UNDERVOLTAGE;
+        hasError = 1;
+    }
+
 
     // --- Проверка ошибок от IGBT-драйверов ---
     for (uint8_t i = 0; i < DRIVER_FAULT_PIN_COUNT; i++) {
