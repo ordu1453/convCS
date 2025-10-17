@@ -11,11 +11,6 @@
 #include "diag.h"
 
 
-void pwmHandlerInit(void)
-{
-pwmInit();
-}
-
 
 void pwmHandlerProcess(uint32_t errorMask)
 {

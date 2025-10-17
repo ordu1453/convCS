@@ -31,7 +31,6 @@ void converterInit(void)
 {
 sensorInit();
 diagInit();
-pwmHandlerInit();
 prechargeInit();
 
 
