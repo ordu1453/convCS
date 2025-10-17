@@ -45,13 +45,10 @@ void pwmEnable(void)
 
 void pwmDisable(void)
 {
-	if (currentPWMState == STATE_ENABLE)
-	{
     // Останавливаем PWM
     HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
     HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
     HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
     HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
     currentPWMState = STATE_DISABLE;
-	}
 }
