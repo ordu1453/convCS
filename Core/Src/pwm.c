@@ -13,12 +13,6 @@
 extern TIM_HandleTypeDef htim1; // configured for PWM
 
 
-void pwmInit(void)
-{
-// TIM1 presumed configured via CubeMX in PWM mode
-HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
-}
 
 
 void pwmSetDuty(uint32_t duty)
@@ -36,15 +30,20 @@ return htim1.Instance->ARR;
 }
 
 
-void pwmDisable(void)
+void pwmStart(void)
 {
-HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
-HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
+    // Включаем PWM
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
 }
 
-
-void pwmEnable(void)
+void pwmStop(void)
 {
-HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+    // Останавливаем PWM
+    HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+    HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+    HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
+    HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
 }
