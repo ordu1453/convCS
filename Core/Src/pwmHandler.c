@@ -12,13 +12,13 @@
 
 
 
-void pwmHandlerProcess(uint32_t errorMask)
+void pwmHandlerProcess(uint8_t hasError, SystemState_t state)
 {
-if(errorMask != ERR_NONE)
+if(hasError)
 {
 pwmDisable();
 }
-else
+else if (state == STATE_CHARGE || state == STATE_DISCHARGE)
 {
 pwmEnable();
 }

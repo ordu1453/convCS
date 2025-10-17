@@ -22,8 +22,7 @@
 
 
 static PIController_t currentPid;
-static SystemState_t currentState = STATE_IDLE;
-static PWMState_t currentPWMState = STATE_DISABLE;
+static SystemState_t currentState = STATE_INIT;
 static uint32_t lastMode = 0xFFFFFFFF;
 static uint32_t globalErrorMask = ERR_NONE;
 
@@ -37,7 +36,7 @@ prechargeInit();
 
 // load PWM ARR
 uint32_t arr = pwmGetArr();
-piInit(&currentPid, 0.01f, 0.001f, 0.0f, 0.0f, (float)arr);
+piInit(&currentPid, 0.01f, 0.001f, CONTROL_DT_MS, 0.0f, (float)arr);
 
 
 // call pwm disable until safe
@@ -47,6 +46,7 @@ pwmDisable();
 
 void converterProcess(SystemState_t state)
 {
+sensorRead();
 const SensorValues_t* s = sensorGetValues();
 uint32_t errMask=ERR_NONE;
 uint8_t hasErr = diagCheck(s, &errMask);
@@ -60,6 +60,7 @@ piReset(&currentPid);
 lastMode = (uint32_t)state;
 }
 
+pwmHandlerProcess(hasErr, state);
 
 // run PID only in charge/discharge
 if(state == STATE_CHARGE)
@@ -84,6 +85,14 @@ pwmSetDuty((uint32_t)duty);
 // precharge
 if(state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
 {
-prechargeStart();
-}
+	currentState = STATE_PRECHARGE;
+	prechargeStart();
+	if (!hasErr){
+		currentState = STATE_IDLE;
+	}
+	else
+	{
+		currentState = STATE_INIT;
+	}
+	}
 }

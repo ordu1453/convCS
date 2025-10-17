@@ -12,7 +12,7 @@
 
 
 extern TIM_HandleTypeDef htim1; // configured for PWM
-extern PWMState_t currentPWMState;
+static PWMState_t currentPWMState = STATE_DISABLE;
 
 void pwmSetDuty(uint32_t duty)
 {

@@ -16,7 +16,7 @@
 
 
 void pwmHandlerInit(void);
-void pwmHandlerProcess(uint32_t errorMask);
+void pwmHandlerProcess(uint8_t hasError, SystemState_t state);
 
 
 
