@@ -23,6 +23,7 @@
 
 static PIController_t currentPid;
 static SystemState_t currentState = STATE_IDLE;
+static PWMState_t currentPWMState = STATE_DISABLE;
 static uint32_t lastMode = 0xFFFFFFFF;
 static uint32_t globalErrorMask = ERR_NONE;
 

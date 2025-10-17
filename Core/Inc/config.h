@@ -60,6 +60,11 @@ STATE_CHARGE = 3,
 STATE_DISCHARGE = 4
 } SystemState_t;
 
+typedef enum {
+	STATE_DISABLE = 0,
+	STATE_ENABLE = 1
+} PWMState_t;
+
 
 // Error bitmask
 #define ERR_NONE 0x00
