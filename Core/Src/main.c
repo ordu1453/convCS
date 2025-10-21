@@ -33,6 +33,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define ADC_DIVIDER 20 // Calculate adc values time = pwm_period/ADC_DIVIDER
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,7 +53,7 @@ TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
-uint32_t tickADC = OFFSET_ADC;
+uint32_t tickADC = ADC_DIVIDER;
 
 /* USER CODE END PV */
 
@@ -79,6 +80,7 @@ void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 // This used for adding offset to adc calculation in case if it is unnecessary to get data every pwm period
     	if (tickADC == ADC_DIVIDER){
     		sensorRead();
+    		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
     		tickADC = 0;
     	}
     	else
@@ -93,6 +95,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM6)
     {
     	converterProcess(ConverterGetState());
+		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
     }
 }
 /* USER CODE END 0 */
@@ -133,8 +136,8 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_OC_Start_IT(&htim1, TIM_CHANNEL_4);// starting main interrupt
-  HAL_TIM_Base_Start_IT(&htim6);
+  HAL_TIM_OC_Start_IT(&htim1, TIM_CHANNEL_4); // adc interrupt
+  HAL_TIM_Base_Start_IT(&htim6); // main process interrupt
   /* USER CODE END 2 */
 
   /* Infinite loop */
