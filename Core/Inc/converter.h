@@ -15,6 +15,7 @@
 
 void converterInit(void);
 void converterProcess(SystemState_t state);
+SystemState_t ConverterGetState(void);
 
 
 

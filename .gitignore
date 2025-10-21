@@ -34,3 +34,6 @@ Debug/Core/Src/stm32g4xx_hal_msp.su
 Debug/Core/Src/stm32g4xx_it.cyclo
 Debug/Core/Src/stm32g4xx_it.o
 Debug/Core/Src/stm32g4xx_it.su
+Debug/Core/Src/main.cyclo
+Debug/Core/Src/main.d
+Debug/Core/Src/main.su

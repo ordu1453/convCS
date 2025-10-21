@@ -22,7 +22,7 @@
 
 
 static PIController_t currentPid;
-static SystemState_t currentState = STATE_INIT;
+SystemState_t currentState = STATE_INIT;
 static uint32_t lastMode = 0xFFFFFFFF;
 static uint32_t globalErrorMask = ERR_NONE;
 
@@ -41,6 +41,10 @@ piInit(&currentPid, 0.01f, 0.001f, CONTROL_DT_MS, 0.0f, (float)arr);
 
 // call pwm disable until safe
 pwmDisable();
+}
+
+SystemState_t ConverterGetState(void) {
+    return currentState;
 }
 
 
@@ -98,3 +102,4 @@ if(state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
 
 canPublishTelemetry(currentState, errMask,  s);
 }
+
