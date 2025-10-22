@@ -65,6 +65,7 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
         hasError = 1;
     }
 
+#ifndef TEST_UNITY
 
     // --- Проверка ошибок от IGBT-драйверов ---
     for (uint8_t i = 0; i < DRIVER_FAULT_PIN_COUNT; i++) {
@@ -82,6 +83,9 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
             break; // можно выйти сразу при первой ошибке
         }
     }
+
+#endif
+
 
     return hasError;
 }

@@ -1,0 +1,51 @@
+---
+:source:
+  :file: test/test_all.c
+  :dirname: test
+  :basename: test_all.c
+:successes:
+- :test: test_prechargeInit_setsPrechargeDoneToZero
+  :line: 37
+  :message: ''
+  :unity_test_time: 0
+- :test: test_piInit_ShouldInitializeValues
+  :line: 42
+  :message: ''
+  :unity_test_time: 0
+- :test: test_piUpdate_ShouldReturnCorrectOutput
+  :line: 55
+  :message: ''
+  :unity_test_time: 0
+- :test: test_piUpdate_ShouldClampIntegralAndOutput
+  :line: 67
+  :message: ''
+  :unity_test_time: 0
+- :test: test_piReset_ShouldClearIntegralAndOutput
+  :line: 79
+  :message: ''
+  :unity_test_time: 0
+- :test: test_pi2Init_ShouldInitializeBothLoops
+  :line: 90
+  :message: ''
+  :unity_test_time: 0
+- :test: test_pi2Update_ShouldReturnDutyCycle
+  :line: 102
+  :message: ''
+  :unity_test_time: 0
+- :test: test_pi2Reset_ShouldResetBothLoops
+  :line: 113
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_NoErrors_ShouldReturnZero
+  :line: 126
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 9
+  :passed: 9
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 1.1196094999904744

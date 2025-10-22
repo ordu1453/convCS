@@ -104,6 +104,10 @@
   :include:
     # - src/** # In simple projects, this entry often duplicates :source
     - Core/Inc/**
+    - Drivers/STM32G4xx_HAL_Driver/Inc
+    - Drivers/CMSIS/Include
+    - Drivers/CMSIS/Device/ST/STM32G4xx/Include
+
   :support:
     - test/support
   :libraries: []
@@ -122,7 +126,9 @@
 #  - Specifiying symbols used during test preprocessing
 :defines:
   :test:
-    - TEST # Simple list option to add symbol 'TEST' to compilation of all files in all test executables
+    - TEST_UNITY # Simple list option to add symbol 'TEST' to compilation of all files in all test executables
+    - STM32G473xx
+    - USE_HAL_DRIVER
   :release: []
 
   # Enable to inject name of a test as a unique compilation symbol into its respective executable build. 
@@ -147,6 +153,7 @@
   :plugins:                        # What plugins should be used by CMock?
     - :ignore
     - :callback
+    - :ignore
   :verbosity:  2                   # the options being 0 errors only, 1 warnings and errors, 2 normal info, 3 verbose
   :when_no_prototypes:  :warn      # the options being :ignore, :warn, or :erro
 
@@ -201,7 +208,7 @@
 # Configuration options specific to Unity. 
 :unity:
   :defines:
-    - UNITY_EXCLUDE_FLOAT
+    # - UNITY_EXCLUDE_FLOAT
 
 # You can optionally have ceedling create environment variables for you before
 # performing the rest of its tasks.

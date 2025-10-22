@@ -1,0 +1,7 @@
+---
+- build/vendor/unity/src/unity.h
+- Core/Inc/precharge.h
+- Core/Inc/pid.h
+- Core/Inc/diag.h
+- Core/Inc/config.h
+- mock_stm32g4xx_hal.h

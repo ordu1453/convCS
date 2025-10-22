@@ -16,7 +16,7 @@
 #define PRECHARGE_Pin GPIO_PIN_10 // Relay gate gpio port
 
 
-static uint8_t prechargeDone = 0;
+//prechargeDone = 0;
 
 
 void prechargeInit(void)
