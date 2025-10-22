@@ -1,11 +1,11 @@
-name: Ceedling Tests
+name: Ceedling Unit-Tests
 
 on:
   push:
   pull_request:
 
 jobs:
-  test:
+  Unit-Test:
     runs-on: ubuntu-latest
 
     steps:
