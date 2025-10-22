@@ -1,0 +1,4 @@
+../Core/Src/pwm.c:17:6:pwmSetDuty	2
+../Core/Src/pwm.c:26:10:pwmGetArr	1
+../Core/Src/pwm.c:32:6:pwmEnable	2
+../Core/Src/pwm.c:46:6:pwmDisable	1

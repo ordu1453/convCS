@@ -1,0 +1,4 @@
+../Core/Src/pwm.c:17:6:pwmSetDuty	24	static
+../Core/Src/pwm.c:26:10:pwmGetArr	4	static
+../Core/Src/pwm.c:32:6:pwmEnable	8	static
+../Core/Src/pwm.c:46:6:pwmDisable	8	static
