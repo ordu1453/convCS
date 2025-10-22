@@ -8,6 +8,7 @@
 #include "pid.h"
 #include "diag.h"
 #include "config.h"
+#include "converter.h"
 #include "mock_stm32g4xx_hal.h"
 
 int GlobalExpectCount;
@@ -26,6 +27,7 @@ extern void test_pi2Init_ShouldInitializeBothLoops(void);
 extern void test_pi2Update_ShouldReturnDutyCycle(void);
 extern void test_pi2Reset_ShouldResetBothLoops(void);
 extern void test_diagCheck_NoErrors_ShouldReturnZero(void);
+extern void test_converterProcess_Charge_ShouldRunPID(void);
 
 
 /*=======Mock Management=====*/
@@ -118,21 +120,24 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_diagCheck_NoErrors_ShouldReturnZero");
       UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Charge_ShouldRunPID");
+      UNITY_PRINT_EOL();
       return 0;
     }
     return parse_status;
   }
 #endif
   UnityBegin("test_all.c");
-  run_test(test_prechargeInit_setsPrechargeDoneToZero, "test_prechargeInit_setsPrechargeDoneToZero", 37);
-  run_test(test_piInit_ShouldInitializeValues, "test_piInit_ShouldInitializeValues", 42);
-  run_test(test_piUpdate_ShouldReturnCorrectOutput, "test_piUpdate_ShouldReturnCorrectOutput", 55);
-  run_test(test_piUpdate_ShouldClampIntegralAndOutput, "test_piUpdate_ShouldClampIntegralAndOutput", 67);
-  run_test(test_piReset_ShouldClearIntegralAndOutput, "test_piReset_ShouldClearIntegralAndOutput", 79);
-  run_test(test_pi2Init_ShouldInitializeBothLoops, "test_pi2Init_ShouldInitializeBothLoops", 90);
-  run_test(test_pi2Update_ShouldReturnDutyCycle, "test_pi2Update_ShouldReturnDutyCycle", 102);
-  run_test(test_pi2Reset_ShouldResetBothLoops, "test_pi2Reset_ShouldResetBothLoops", 113);
-  run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 126);
+  run_test(test_prechargeInit_setsPrechargeDoneToZero, "test_prechargeInit_setsPrechargeDoneToZero", 45);
+  run_test(test_piInit_ShouldInitializeValues, "test_piInit_ShouldInitializeValues", 50);
+  run_test(test_piUpdate_ShouldReturnCorrectOutput, "test_piUpdate_ShouldReturnCorrectOutput", 63);
+  run_test(test_piUpdate_ShouldClampIntegralAndOutput, "test_piUpdate_ShouldClampIntegralAndOutput", 75);
+  run_test(test_piReset_ShouldClearIntegralAndOutput, "test_piReset_ShouldClearIntegralAndOutput", 87);
+  run_test(test_pi2Init_ShouldInitializeBothLoops, "test_pi2Init_ShouldInitializeBothLoops", 98);
+  run_test(test_pi2Update_ShouldReturnDutyCycle, "test_pi2Update_ShouldReturnDutyCycle", 110);
+  run_test(test_pi2Reset_ShouldResetBothLoops, "test_pi2Reset_ShouldResetBothLoops", 121);
+  run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 134);
+  run_test(test_converterProcess_Charge_ShouldRunPID, "test_converterProcess_Charge_ShouldRunPID", 143);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

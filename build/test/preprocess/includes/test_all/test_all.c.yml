@@ -4,4 +4,5 @@
 - Core/Inc/pid.h
 - Core/Inc/diag.h
 - Core/Inc/config.h
+- Core/Inc/converter.h
 - mock_stm32g4xx_hal.h

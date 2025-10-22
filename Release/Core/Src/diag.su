@@ -1,0 +1,2 @@
+../Core/Src/diag.c:29:6:diagInit	0	static
+../Core/Src/diag.c:35:9:diagCheck	24	static

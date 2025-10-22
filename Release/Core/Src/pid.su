@@ -1,0 +1,6 @@
+../Core/Src/pid.c:14:6:piInit	0	static
+../Core/Src/pid.c:25:14:piUpdate	0	static
+../Core/Src/pid.c:44:6:piReset	0	static
+../Core/Src/pid.c:53:6:pi2Init	0	static
+../Core/Src/pid.c:63:14:pi2Update	8	static
+../Core/Src/pid.c:76:6:pi2Reset	0	static

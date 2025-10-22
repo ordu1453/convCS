@@ -13,10 +13,10 @@
 #include "config.h"
 
 
+
 void converterInit(void);
 void converterProcess(SystemState_t state);
 SystemState_t ConverterGetState(void);
-
 
 
 #endif /* INC_CONVERTER_H_ */

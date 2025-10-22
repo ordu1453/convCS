@@ -20,15 +20,30 @@
 
 #include <stdint.h>
 
+#ifdef TEST_UNITY
+// Заглушки для юнит-тестов
+SensorValues_t unitTestSensorValues;
+uint32_t unitTestErrorMask;
+uint8_t unitTestHasError;
+#endif
 
-static PIController_t currentPid;
-SystemState_t currentState = STATE_INIT;
-static uint32_t lastMode = 0xFFFFFFFF;
+#ifdef TEST_UNITY
+uint32_t globalErrorMask;      // видна во всех тестах
+SystemState_t currentState;
+#else
 static uint32_t globalErrorMask = ERR_NONE;
+SystemState_t currentState = STATE_INIT;
+#endif
+
+PIController_t currentPid;
+uint32_t lastMode = 0xFFFFFFFF;
 
 
+
+#ifndef TEST_UNITY
 void converterInit(void)
 {
+
 sensorInit();
 diagInit();
 prechargeInit();
@@ -42,6 +57,7 @@ piInit(&currentPid, 0.01f, 0.001f, CONTROL_DT_MS, 0.0f, (float)arr);
 // call pwm disable until safe
 pwmDisable();
 }
+#endif
 
 SystemState_t ConverterGetState(void) {
     return currentState;
@@ -50,56 +66,70 @@ SystemState_t ConverterGetState(void) {
 
 void converterProcess(SystemState_t state)
 {
-sensorRead();
-const SensorValues_t* s = sensorGetValues();
-uint32_t errMask=ERR_NONE;
-uint8_t hasErr = diagCheck(s, &errMask);
-globalErrorMask = errMask;
+#ifndef TEST_UNITY
+    sensorRead();
+    const SensorValues_t* s = sensorGetValues();
+    uint32_t errMask = ERR_NONE;
+    uint8_t hasErr = diagCheck(s, &errMask);
+#else
+    // Заглушка для юнит-тестов
+    const SensorValues_t* s = &unitTestSensorValues;
+    uint32_t errMask = unitTestErrorMask;
+    uint8_t hasErr = unitTestHasError;
+#endif
 
+    globalErrorMask = errMask;
 
-// mode change -> reset pid
-if((uint32_t)state != lastMode)
-{
-piReset(&currentPid);
-lastMode = (uint32_t)state;
-}
+    // mode change -> reset pid
+    if ((uint32_t)state != lastMode)
+    {
+        piReset(&currentPid);
+        lastMode = (uint32_t)state;
+    }
 
-pwmHandlerProcess(hasErr, state);
+#ifndef TEST_UNITY
+    pwmHandlerProcess(hasErr, state);
+#endif
 
-// run PID only in charge/discharge
-if(state == STATE_CHARGE)
-{
-// Example: setpoint could come from CAN. Here placeholder
-float setpoint = 1000.0f; // mV or other unit depending on design
-float measurement = (float)s->voltageOut;
-// dt in seconds
-float duty = piUpdate(&currentPid, setpoint, measurement);
-pwmSetDuty((uint32_t)duty);
-}
-else if(state == STATE_DISCHARGE)
-{
-float setpoint = -1000.0f; // for example
-float measurement = (float)s->currentOut;
-float duty = piUpdate(&currentPid, setpoint, measurement);
-pwmSetDuty((uint32_t)duty);
+    // run PID only in charge/discharge
+    if (state == STATE_CHARGE)
+    {
+        float setpoint = 1000.0f;
+        float measurement = (float)s->voltageOut;
+        float duty = piUpdate(&currentPid, setpoint, measurement);
+#ifndef TEST_UNITY
+        pwmSetDuty((uint32_t)duty);
+#endif
+    }
+    else if (state == STATE_DISCHARGE)
+    {
+        float setpoint = -1000.0f;
+        float measurement = (float)s->currentOut;
+        float duty = piUpdate(&currentPid, setpoint, measurement);
+#ifndef TEST_UNITY
+        pwmSetDuty((uint32_t)duty);
+#endif
+    }
 
-}
+    // precharge
+    if (state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
+    {
+        currentState = STATE_PRECHARGE;
+#ifndef TEST_UNITY
+        prechargeStart();
+#endif
+        if (!hasErr)
+        {
+            currentState = STATE_IDLE;
+        }
+        else
+        {
+            currentState = STATE_INIT;
+        }
+    }
 
-
-// precharge
-if(state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
-{
-	currentState = STATE_PRECHARGE;
-	prechargeStart();
-	if (!hasErr){
-		currentState = STATE_IDLE;
-	}
-	else
-	{
-		currentState = STATE_INIT;
-	}
-	}
-
-canPublishTelemetry(currentState, errMask,  s);
+#ifndef TEST_UNITY
+    canPublishTelemetry(currentState, errMask, s);
+#endif
 }
 

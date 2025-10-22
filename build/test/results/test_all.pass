@@ -5,47 +5,51 @@
   :basename: test_all.c
 :successes:
 - :test: test_prechargeInit_setsPrechargeDoneToZero
-  :line: 37
+  :line: 45
   :message: ''
   :unity_test_time: 0
 - :test: test_piInit_ShouldInitializeValues
-  :line: 42
+  :line: 50
   :message: ''
   :unity_test_time: 0
 - :test: test_piUpdate_ShouldReturnCorrectOutput
-  :line: 55
+  :line: 63
   :message: ''
   :unity_test_time: 0
 - :test: test_piUpdate_ShouldClampIntegralAndOutput
-  :line: 67
+  :line: 75
   :message: ''
   :unity_test_time: 0
 - :test: test_piReset_ShouldClearIntegralAndOutput
-  :line: 79
+  :line: 87
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Init_ShouldInitializeBothLoops
-  :line: 90
+  :line: 98
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Update_ShouldReturnDutyCycle
-  :line: 102
+  :line: 110
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Reset_ShouldResetBothLoops
-  :line: 113
+  :line: 121
   :message: ''
   :unity_test_time: 0
 - :test: test_diagCheck_NoErrors_ShouldReturnZero
-  :line: 126
+  :line: 134
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldRunPID
+  :line: 143
   :message: ''
   :unity_test_time: 0
 :failures: []
 :ignores: []
 :counts:
-  :total: 9
-  :passed: 9
+  :total: 10
+  :passed: 10
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 1.1196094999904744
+:time: 0.802506500040181

@@ -1,0 +1,5 @@
+../Core/Src/can.c:17:6:canInit	16	static
+../Core/Src/can.c:28:6:canProcessPeriodic	0	static
+../Core/Src/can.c:42:6:canPublishTelemetry	56	static
+../Core/Src/can.c:82:6:canReceiveHandler	56	static
+../Core/Src/can.c:101:6:HAL_FDCAN_RxFifo0Callback	0	static

@@ -9169,7 +9169,12 @@ uint8_t diagCheck(const SensorValues_t* s, uint32_t* errorMask);
 # 10 "test/test_all.c" 2
 # 1 "Core/Inc/config.h" 1
 # 11 "test/test_all.c" 2
-
+# 1 "Core/Inc/converter.h" 1
+# 17 "Core/Inc/converter.h"
+void converterInit(void);
+void converterProcess(SystemState_t state);
+SystemState_t ConverterGetState(void);
+# 12 "test/test_all.c" 2
 
 
 
@@ -9177,6 +9182,14 @@ PIController_t pi;
 PI2Controller_t pi2;
 SensorValues_t sensor;
 
+
+extern SensorValues_t unitTestSensorValues;
+extern uint32_t unitTestErrorMask;
+extern uint8_t unitTestHasError;
+
+
+extern uint32_t globalErrorMask;
+extern SystemState_t currentState;
 
 
 void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState) {}
@@ -9198,10 +9211,10 @@ void tearDown(void) { }
 void test_prechargeInit_setsPrechargeDoneToZero(void) {
     prechargeInit();
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((prechargeDone)), (
-# 39 "test/test_all.c" 3 4
+# 47 "test/test_all.c" 3 4
    ((void *)0)
-# 39 "test/test_all.c"
-   ), (UNITY_UINT)(39), UNITY_DISPLAY_STYLE_UINT8);
+# 47 "test/test_all.c"
+   ), (UNITY_UINT)(47), UNITY_DISPLAY_STYLE_UINT8);
 }
 
 void test_piInit_ShouldInitializeValues(void)
@@ -9209,40 +9222,40 @@ void test_piInit_ShouldInitializeValues(void)
     piInit(&pi, 2.0f, 0.5f, 0.01f, 0, 100);
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((2.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((2.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.kp))), ((
-# 46 "test/test_all.c" 3 4
+# 54 "test/test_all.c" 3 4
    ((void *)0)
-# 46 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(46)));
+# 54 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(54)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.5f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.5f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.ki))), ((
-# 47 "test/test_all.c" 3 4
+# 55 "test/test_all.c" 3 4
    ((void *)0)
-# 47 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(47)));
+# 55 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(55)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.01f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.01f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.dt))), ((
-# 48 "test/test_all.c" 3 4
+# 56 "test/test_all.c" 3 4
    ((void *)0)
-# 48 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(48)));
+# 56 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(56)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.integral))), ((
-# 49 "test/test_all.c" 3 4
+# 57 "test/test_all.c" 3 4
    ((void *)0)
-# 49 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(49)));
+# 57 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(57)));
     UnityAssertEqualNumber((UNITY_INT)((0u)), (UNITY_INT)((pi.output)), (
-# 50 "test/test_all.c" 3 4
+# 58 "test/test_all.c" 3 4
    ((void *)0)
-# 50 "test/test_all.c"
-   ), (UNITY_UINT)(50), UNITY_DISPLAY_STYLE_UINT);
+# 58 "test/test_all.c"
+   ), (UNITY_UINT)(58), UNITY_DISPLAY_STYLE_UINT);
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.outMin))), ((
-# 51 "test/test_all.c" 3 4
+# 59 "test/test_all.c" 3 4
    ((void *)0)
-# 51 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(51)));
+# 59 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(59)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((100.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((100.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.outMax))), ((
-# 52 "test/test_all.c" 3 4
+# 60 "test/test_all.c" 3 4
    ((void *)0)
-# 52 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(52)));
+# 60 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(60)));
 }
 
 void test_piUpdate_ShouldReturnCorrectOutput(void)
@@ -9254,15 +9267,15 @@ void test_piUpdate_ShouldReturnCorrectOutput(void)
     float expected_output = pi.kp * (10.0f - 8.0f) + expected_integral;
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((expected_integral)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((expected_integral))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.integral))), ((
-# 63 "test/test_all.c" 3 4
+# 71 "test/test_all.c" 3 4
    ((void *)0)
-# 63 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(63)));
+# 71 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(71)));
     UnityAssertEqualNumber((UNITY_INT)(((unsigned int)expected_output)), (UNITY_INT)((out)), (
-# 64 "test/test_all.c" 3 4
+# 72 "test/test_all.c" 3 4
    ((void *)0)
-# 64 "test/test_all.c"
-   ), (UNITY_UINT)(64), UNITY_DISPLAY_STYLE_UINT);
+# 72 "test/test_all.c"
+   ), (UNITY_UINT)(72), UNITY_DISPLAY_STYLE_UINT);
 }
 
 void test_piUpdate_ShouldClampIntegralAndOutput(void)
@@ -9273,15 +9286,15 @@ void test_piUpdate_ShouldClampIntegralAndOutput(void)
     unsigned int out = piUpdate(&pi, 100.0f, 0.0f);
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((pi.outMax)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((pi.outMax))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.integral))), ((
-# 74 "test/test_all.c" 3 4
+# 82 "test/test_all.c" 3 4
    ((void *)0)
-# 74 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(74)));
+# 82 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(82)));
     UnityAssertEqualNumber((UNITY_INT)((pi.outMax)), (UNITY_INT)((out)), (
-# 75 "test/test_all.c" 3 4
+# 83 "test/test_all.c" 3 4
    ((void *)0)
-# 75 "test/test_all.c"
-   ), (UNITY_UINT)(75), UNITY_DISPLAY_STYLE_UINT);
+# 83 "test/test_all.c"
+   ), (UNITY_UINT)(83), UNITY_DISPLAY_STYLE_UINT);
 }
 
 
@@ -9293,15 +9306,15 @@ void test_piReset_ShouldClearIntegralAndOutput(void)
     piReset(&pi);
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.integral))), ((
-# 86 "test/test_all.c" 3 4
+# 94 "test/test_all.c" 3 4
    ((void *)0)
-# 86 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(86)));
+# 94 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(94)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi.output))), ((
-# 87 "test/test_all.c" 3 4
+# 95 "test/test_all.c" 3 4
    ((void *)0)
-# 87 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(87)));
+# 95 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(95)));
 }
 
 void test_pi2Init_ShouldInitializeBothLoops(void)
@@ -9309,31 +9322,31 @@ void test_pi2Init_ShouldInitializeBothLoops(void)
     pi2Init(&pi2, 2.0f, 0.5f, 1.0f, 0.2f, 0.01f, 0, 50, 0, 100);
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((2.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((2.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.voltageLoop.kp))), ((
-# 94 "test/test_all.c" 3 4
+# 102 "test/test_all.c" 3 4
    ((void *)0)
-# 94 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(94)));
+# 102 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(102)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.5f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.5f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.voltageLoop.ki))), ((
-# 95 "test/test_all.c" 3 4
+# 103 "test/test_all.c" 3 4
    ((void *)0)
-# 95 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(95)));
+# 103 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(103)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.01f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.01f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.voltageLoop.dt))), ((
-# 96 "test/test_all.c" 3 4
+# 104 "test/test_all.c" 3 4
    ((void *)0)
-# 96 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(96)));
+# 104 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(104)));
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.currentLoop.kp))), ((
-# 98 "test/test_all.c" 3 4
+# 106 "test/test_all.c" 3 4
    ((void *)0)
-# 98 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(98)));
+# 106 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(106)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.2f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.2f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.currentLoop.ki))), ((
-# 99 "test/test_all.c" 3 4
+# 107 "test/test_all.c" 3 4
    ((void *)0)
-# 99 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(99)));
+# 107 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(107)));
 }
 
 void test_pi2Update_ShouldReturnDutyCycle(void)
@@ -9343,8 +9356,8 @@ void test_pi2Update_ShouldReturnDutyCycle(void)
     unsigned int duty = pi2Update(&pi2, 10.0f, 8.0f, 5.0f);
 
 
-    do { if ((duty <= pi2.currentLoop.outMax)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((109))); } } while (0);
-    do { if ((duty >= pi2.currentLoop.outMin)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((110))); } } while (0);
+    do { if ((duty <= pi2.currentLoop.outMax)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((117))); } } while (0);
+    do { if ((duty >= pi2.currentLoop.outMin)) { } else { UnityFail( ((" Expected TRUE Was FALSE")), (UNITY_UINT)((118))); } } while (0);
 }
 
 void test_pi2Reset_ShouldResetBothLoops(void)
@@ -9355,25 +9368,25 @@ void test_pi2Reset_ShouldResetBothLoops(void)
     pi2Reset(&pi2);
 
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.voltageLoop.integral))), ((
-# 120 "test/test_all.c" 3 4
+# 128 "test/test_all.c" 3 4
    ((void *)0)
-# 120 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(120)));
+# 128 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(128)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.voltageLoop.output))), ((
-# 121 "test/test_all.c" 3 4
+# 129 "test/test_all.c" 3 4
    ((void *)0)
-# 121 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(121)));
+# 129 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(129)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.currentLoop.integral))), ((
-# 122 "test/test_all.c" 3 4
+# 130 "test/test_all.c" 3 4
    ((void *)0)
-# 122 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(122)));
+# 130 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(130)));
     UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((pi2.currentLoop.output))), ((
-# 123 "test/test_all.c" 3 4
+# 131 "test/test_all.c" 3 4
    ((void *)0)
-# 123 "test/test_all.c"
-   )), (UNITY_UINT)((UNITY_UINT)(123)));
+# 131 "test/test_all.c"
+   )), (UNITY_UINT)((UNITY_UINT)(131)));
 }
 
 void test_diagCheck_NoErrors_ShouldReturnZero(void) {
@@ -9381,13 +9394,31 @@ void test_diagCheck_NoErrors_ShouldReturnZero(void) {
     uint8_t result = diagCheck(&sensor, &errorMask);
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((result)), (
-# 130 "test/test_all.c" 3 4
+# 138 "test/test_all.c" 3 4
    ((void *)0)
-# 130 "test/test_all.c"
-   ), (UNITY_UINT)(130), UNITY_DISPLAY_STYLE_UINT8);
+# 138 "test/test_all.c"
+   ), (UNITY_UINT)(138), UNITY_DISPLAY_STYLE_UINT8);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
-# 131 "test/test_all.c" 3 4
+# 139 "test/test_all.c" 3 4
    ((void *)0)
-# 131 "test/test_all.c"
-   ), (UNITY_UINT)(131), UNITY_DISPLAY_STYLE_UINT32);
+# 139 "test/test_all.c"
+   ), (UNITY_UINT)(139), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+
+void test_converterProcess_Charge_ShouldRunPID(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x00;
+    unitTestHasError = 0;
+
+
+    converterProcess(STATE_CHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
+# 153 "test/test_all.c" 3 4
+   ((void *)0)
+# 153 "test/test_all.c"
+   ), (UNITY_UINT)(153), UNITY_DISPLAY_STYLE_UINT32);
 }

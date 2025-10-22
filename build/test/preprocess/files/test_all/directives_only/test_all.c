@@ -859,7 +859,7 @@
 #define GNU_COMPILER 1
 # 1 "test/test_all.c"
 
-//#ifdef TEST_UNITY
+
 
 # 1 "build/vendor/unity/src/unity.h" 1
 /* =========================================================================
@@ -58647,7 +58647,29 @@ uint8_t diagCheck(const SensorValues_t* s, uint32_t* errorMask);
  */
 
 # 11 "test/test_all.c" 2
-//#include "converter.h"
+# 1 "Core/Inc/converter.h" 1
+/*
+ * converter.h
+ *
+ *  Created on: Oct 16, 2025
+ *      Author: ordum
+ */
+
+
+#define INC_CONVERTER_H_ 
+
+
+
+
+
+
+
+void converterInit(void);
+void converterProcess(SystemState_t state);
+SystemState_t ConverterGetState(void);
+
+
+# 12 "test/test_all.c" 2
 //#include "pwm.h"
 //#include "sensor.h"
 
@@ -58655,6 +58677,14 @@ PIController_t pi;
 PI2Controller_t pi2;
 SensorValues_t sensor;
 
+
+extern SensorValues_t unitTestSensorValues;
+extern uint32_t unitTestErrorMask;
+extern uint8_t unitTestHasError;
+
+
+extern uint32_t globalErrorMask;
+extern SystemState_t currentState;
 
 //void HAL_Delay(uint32_t ms) {}
 void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState) {}
@@ -58771,6 +58801,17 @@ void test_diagCheck_NoErrors_ShouldReturnZero(void) {
 }
 
 
+void test_converterProcess_Charge_ShouldRunPID(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_NONE;
+    unitTestHasError = 0;
+
+    // Вызываем функцию
+    converterProcess(STATE_CHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(ERR_NONE, globalErrorMask);
+}
 
 
-//#endif // TEST

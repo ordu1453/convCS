@@ -35,4 +35,4 @@ build/test/out/test_all/test_all_runner.o: \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  Core/Inc/config.h Core/Inc/diag.h Core/Inc/types.h Core/Inc/config.h \
- build/test/mocks/test_all/mock_stm32g4xx_hal.h
+ Core/Inc/converter.h build/test/mocks/test_all/mock_stm32g4xx_hal.h
