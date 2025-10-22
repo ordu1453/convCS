@@ -1,21 +1,26 @@
-name: Test
+name: Ceedling Tests
+
 on:
-  workflow_dispatch:
+  push:
+  pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Set up Ruby
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2  # или любая >=3.0
-      - name: Run tests
-        uses: batov/ceedling_action@master
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
-        with:
-            files: build/artifacts/test/report.xml
+          ruby-version: '3.1'
+
+      - name: Install Ceedling
+        run: |
+          gem install ceedling
+
+      - name: Run Ceedling tests
+        run: |
+          ceedling test:all
