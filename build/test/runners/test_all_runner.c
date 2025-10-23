@@ -28,6 +28,12 @@ extern void test_pi2Update_ShouldReturnDutyCycle(void);
 extern void test_pi2Reset_ShouldResetBothLoops(void);
 extern void test_diagCheck_NoErrors_ShouldReturnZero(void);
 extern void test_converterProcess_Charge_ShouldRunPID(void);
+extern void test_converterProcess_Charge_ShouldntRunPID1(void);
+extern void test_converterProcess_Charge_ShouldntRunPID2(void);
+extern void test_converterProcess_Charge_ShouldntRunPID3(void);
+extern void test_converterProcess_Charge_ShouldntRunPID4(void);
+extern void test_converterProcess_Charge_ShouldGoInit(void);
+extern void test_converterProcess_Precharge_ShouldGoInit(void);
 
 
 /*=======Mock Management=====*/
@@ -122,6 +128,18 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_converterProcess_Charge_ShouldRunPID");
       UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Charge_ShouldntRunPID1");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Charge_ShouldntRunPID2");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Charge_ShouldntRunPID3");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Charge_ShouldntRunPID4");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Charge_ShouldGoInit");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Precharge_ShouldGoInit");
+      UNITY_PRINT_EOL();
       return 0;
     }
     return parse_status;
@@ -138,6 +156,12 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   run_test(test_pi2Reset_ShouldResetBothLoops, "test_pi2Reset_ShouldResetBothLoops", 121);
   run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 134);
   run_test(test_converterProcess_Charge_ShouldRunPID, "test_converterProcess_Charge_ShouldRunPID", 143);
+  run_test(test_converterProcess_Charge_ShouldntRunPID1, "test_converterProcess_Charge_ShouldntRunPID1", 159);
+  run_test(test_converterProcess_Charge_ShouldntRunPID2, "test_converterProcess_Charge_ShouldntRunPID2", 172);
+  run_test(test_converterProcess_Charge_ShouldntRunPID3, "test_converterProcess_Charge_ShouldntRunPID3", 185);
+  run_test(test_converterProcess_Charge_ShouldntRunPID4, "test_converterProcess_Charge_ShouldntRunPID4", 198);
+  run_test(test_converterProcess_Charge_ShouldGoInit, "test_converterProcess_Charge_ShouldGoInit", 211);
+  run_test(test_converterProcess_Precharge_ShouldGoInit, "test_converterProcess_Precharge_ShouldGoInit", 224);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

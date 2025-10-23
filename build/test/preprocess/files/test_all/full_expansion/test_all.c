@@ -9421,4 +9421,113 @@ void test_converterProcess_Charge_ShouldRunPID(void)
    ((void *)0)
 # 153 "test/test_all.c"
    ), (UNITY_UINT)(153), UNITY_DISPLAY_STYLE_UINT32);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_CHARGE)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
+# 154 "test/test_all.c" 3 4
+   ((void *)0)
+# 154 "test/test_all.c"
+   ), (UNITY_UINT)(154), UNITY_DISPLAY_STYLE_UINT32);
+
+}
+
+
+void test_converterProcess_Charge_ShouldntRunPID1(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x01;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_CHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
+# 169 "test/test_all.c" 3 4
+   ((void *)0)
+# 169 "test/test_all.c"
+   ), (UNITY_UINT)(169), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_Charge_ShouldntRunPID2(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x02;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_CHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x02)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
+# 182 "test/test_all.c" 3 4
+   ((void *)0)
+# 182 "test/test_all.c"
+   ), (UNITY_UINT)(182), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_Charge_ShouldntRunPID3(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x08;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_CHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x08)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
+# 195 "test/test_all.c" 3 4
+   ((void *)0)
+# 195 "test/test_all.c"
+   ), (UNITY_UINT)(195), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_Charge_ShouldntRunPID4(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x04;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_CHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
+# 208 "test/test_all.c" 3 4
+   ((void *)0)
+# 208 "test/test_all.c"
+   ), (UNITY_UINT)(208), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_Charge_ShouldGoInit(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x01;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_CHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
+# 221 "test/test_all.c" 3 4
+   ((void *)0)
+# 221 "test/test_all.c"
+   ), (UNITY_UINT)(221), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_Precharge_ShouldGoInit(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x01;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_PRECHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
+# 234 "test/test_all.c" 3 4
+   ((void *)0)
+# 234 "test/test_all.c"
+   ), (UNITY_UINT)(234), UNITY_DISPLAY_STYLE_UINT32);
 }

@@ -78,6 +78,11 @@ void converterProcess(SystemState_t state)
     uint8_t hasErr = unitTestHasError;
 #endif
 
+    if (hasErr)
+    {
+        currentState = STATE_INIT;
+    }
+
     globalErrorMask = errMask;
 
     // mode change -> reset pid
@@ -97,6 +102,7 @@ void converterProcess(SystemState_t state)
         float setpoint = 1000.0f;
         float measurement = (float)s->voltageOut;
         float duty = piUpdate(&currentPid, setpoint, measurement);
+        currentState = STATE_CHARGE;
 #ifndef TEST_UNITY
         pwmSetDuty((uint32_t)duty);
 #endif
@@ -106,6 +112,8 @@ void converterProcess(SystemState_t state)
         float setpoint = -1000.0f;
         float measurement = (float)s->currentOut;
         float duty = piUpdate(&currentPid, setpoint, measurement);
+        currentState = STATE_DISCHARGE;
+
 #ifndef TEST_UNITY
         pwmSetDuty((uint32_t)duty);
 #endif

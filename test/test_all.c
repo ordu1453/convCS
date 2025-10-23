@@ -151,7 +151,87 @@ void test_converterProcess_Charge_ShouldRunPID(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(ERR_NONE, globalErrorMask);
+    TEST_ASSERT_EQUAL_UINT32(STATE_CHARGE, currentState);
+
 }
 
+
+void test_converterProcess_Charge_ShouldntRunPID1(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_OVERVOLTAGE;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_CHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE, globalErrorMask);
+}
+
+void test_converterProcess_Charge_ShouldntRunPID2(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_UNDERVOLTAGE;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_CHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(ERR_UNDERVOLTAGE, globalErrorMask);
+}
+
+void test_converterProcess_Charge_ShouldntRunPID3(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_IGBT_DRIVER;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_CHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(ERR_IGBT_DRIVER, globalErrorMask);
+}
+
+void test_converterProcess_Charge_ShouldntRunPID4(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_OVERCURRENT;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_CHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, globalErrorMask);
+}
+
+void test_converterProcess_Charge_ShouldGoInit(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_OVERVOLTAGE;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_CHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
+}
+
+void test_converterProcess_Precharge_ShouldGoInit(void)
+{
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_OVERVOLTAGE;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_PRECHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
+}
 
 #endif // TEST

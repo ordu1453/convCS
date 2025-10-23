@@ -44,12 +44,36 @@
   :line: 143
   :message: ''
   :unity_test_time: 0
-:failures: []
+- :test: test_converterProcess_Charge_ShouldntRunPID1
+  :line: 159
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID2
+  :line: 172
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID3
+  :line: 185
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID4
+  :line: 198
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Precharge_ShouldGoInit
+  :line: 224
+  :message: ''
+  :unity_test_time: 0
+:failures:
+- :test: test_converterProcess_Charge_ShouldGoInit
+  :line: 221
+  :message: Expected 2 Was 3
+  :unity_test_time: 0
 :ignores: []
 :counts:
-  :total: 10
-  :passed: 10
-  :failed: 0
+  :total: 16
+  :passed: 15
+  :failed: 1
   :ignored: 0
 :stdout: []
-:time: 1.1638683000346646
+:time: 0.6832023001043126
