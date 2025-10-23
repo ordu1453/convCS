@@ -73,7 +73,6 @@ void converterProcess(SystemState_t state)
 
 
 #ifndef TEST_UNITY
-    sensorRead();
     const SensorValues_t* s = sensorGetValues();
     uint32_t errMask = ERR_NONE;
     uint8_t hasErr = diagCheck(s, &errMask);
@@ -106,8 +105,10 @@ void converterProcess(SystemState_t state)
 	printf("PWM Handler running\n");
 #endif
     pwmHandlerProcess(hasErr, state);
+#ifdef TEST_UNITY
     printf("System state: %d\n", currentState);
     printf("PWM state: %d\n", currentPWMState);
+#endif
 
     // run PID only in charge/discharge
     if (state == STATE_CHARGE)

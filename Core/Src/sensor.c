@@ -2,22 +2,32 @@
 #include "config.h"
 
 
-static SensorValues_t currentValues;
+
+
+#ifndef TEST_UNITY
 
 extern ADC_HandleTypeDef hadc1;
-
-
+static SensorValues_t currentValues;
 
 void sensorInit(void)
 {
 HAL_ADC_Start(&hadc1);
 }
 
+#else
+
+uint32_t rawValues[5];
+SensorValues_t currentValues;
+
+#endif
+
 
 void sensorRead(void)
 {
-uint32_t rawValues[5];
 
+#ifndef TEST_UNITY
+
+uint32_t rawValues[5];
 
 for (uint8_t i = 0; i < 5; i++)
 {
@@ -34,13 +44,15 @@ rawValues[i] = HAL_ADC_GetValue(&hadc1);
 HAL_ADC_Stop(&hadc1);
 }
 
+#endif
+
 
 // Преобразование ADC -> реальные значения
-currentValues.currentIn    = (float)rawValues[0] * ADC_TO_CURRENT_COEFF_IN;
-currentValues.currentOut   = (float)rawValues[1] * ADC_TO_CURRENT_COEFF_OUT;
-currentValues.currentChoke    = (float)rawValues[2] * ADC_TO_CURRENT_COEFF_CHOKE;
-currentValues.voltageIn    = (float)rawValues[3] * ADC_TO_VOLTAGE_COEFF_IN;
-currentValues.voltageOut   = (float)rawValues[4] * ADC_TO_VOLTAGE_COEFF_OUT;
+currentValues.currentIn    = ((float)rawValues[0] * ADC_TO_CURRENT_COEFF_IN) - CURRENT_OFFSET;
+currentValues.currentOut   = ((float)rawValues[1] * ADC_TO_CURRENT_COEFF_OUT) - CURRENT_OFFSET;
+currentValues.currentChoke = ((float)rawValues[2] * ADC_TO_CURRENT_COEFF_CHOKE) - CURRENT_OFFSET;
+currentValues.voltageIn    = ((float)rawValues[3] * ADC_TO_VOLTAGE_COEFF_IN) - VOLTAGE_OFFSET;
+currentValues.voltageOut   = ((float)rawValues[4] * ADC_TO_VOLTAGE_COEFF_OUT) - VOLTAGE_OFFSET;
 }
 
 

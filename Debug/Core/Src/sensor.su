@@ -1,3 +1,2 @@
-../Core/Src/sensor.c:11:6:sensorInit	8	static
-../Core/Src/sensor.c:17:6:sensorRead	72	static
-../Core/Src/sensor.c:47:23:sensorGetValues	4	static
+../Core/Src/sensor.c:25:6:sensorRead	4	static
+../Core/Src/sensor.c:59:23:sensorGetValues	4	static

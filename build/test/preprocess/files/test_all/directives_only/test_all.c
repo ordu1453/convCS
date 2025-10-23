@@ -57934,21 +57934,16 @@ void Error_Handler(void);
 #define VREF_VOLTS 3.3f
 
 
-// Voltage dividers (example): Vbus measured via divider Rtop/Rbot
-#define VOLTAGE_DIVIDER_RATIO 11.0f
-// Current sensors: assume bidirectional output centered at Vref/2
-#define CURRENT_SHUNT_GAIN 0.100f
-#define CURRENT_SENSOR_OFFSET_VOLTS (VREF_VOLTS/2.0f)
 
 
 // Limits for diagnostics (physical units)
 #define VBUS_MIN 0.0f
-#define VBUS_MAX 800.0f
+#define VBUS_MAX 1500.0f
 #define VIN_MIN 0.0f
-#define VIN_MAX 800.0f
+#define VIN_MAX 1500.0f
 
 
-#define I_MAX 2500.0f
+#define I_MAX 1900.0f
 
 
 // PWM
@@ -57962,9 +57957,9 @@ void Error_Handler(void);
 
 // System states
 typedef enum {
-STATE_IDLE = 0,
+STATE_INIT = 0,
 STATE_PRECHARGE = 1,
-STATE_INIT = 2,
+STATE_IDLE = 2,
 STATE_CHARGE = 3,
 STATE_DISCHARGE = 4
 } SystemState_t;
@@ -57984,11 +57979,14 @@ typedef enum {
 
 
 // Коэффициенты преобразования ADC -> физические величины
-#define ADC_TO_CURRENT_COEFF_IN 0.1f
-#define ADC_TO_CURRENT_COEFF_OUT 0.1f
-#define ADC_TO_CURRENT_COEFF_CHOKE 0.1f
-#define ADC_TO_VOLTAGE_COEFF_IN 1.0f
-#define ADC_TO_VOLTAGE_COEFF_OUT 1.0f
+#define ADC_TO_CURRENT_COEFF_IN 0.80586f
+#define ADC_TO_CURRENT_COEFF_OUT 0.80586f
+#define ADC_TO_CURRENT_COEFF_CHOKE 0.80586f
+#define ADC_TO_VOLTAGE_COEFF_IN 0.85959f
+#define ADC_TO_VOLTAGE_COEFF_OUT 0.85959f
+
+#define CURRENT_OFFSET 1500.0f
+#define VOLTAGE_OFFSET 1600.0f
 
 # 15 "Core/Inc/pid.h" 2
 
@@ -58715,7 +58713,26 @@ void pwmDisable(void);
 void pwmEnable(void);
 
 # 14 "test/test_all.c" 2
-//#include "sensor.h"
+# 1 "Core/Inc/sensor.h" 1
+/*
+ * sensor.h
+ *
+ *  Created on: Oct 16, 2025
+ *      Author: ordum
+ */
+
+
+#define INC_SENSOR_H_ 
+
+
+
+
+
+void sensorInit(void);
+void sensorRead(void);
+const SensorValues_t* sensorGetValues(void);
+
+# 15 "test/test_all.c" 2
 
 PIController_t pi;
 PI2Controller_t pi2;
@@ -58729,6 +58746,11 @@ extern uint8_t unitTestHasError;
 
 extern uint32_t globalErrorMask;
 extern SystemState_t currentState;
+extern PWMState_t currentPWMState;
+
+extern uint32_t rawValues[5];
+extern SensorValues_t currentValues;
+
 
 //void HAL_Delay(uint32_t ms) {}
 void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState) {}
@@ -58852,12 +58874,12 @@ void test_converterProcess_Charge_ShouldRunPID(void)
     unitTestErrorMask = ERR_NONE;
     unitTestHasError = 0;
 
-    // Вызываем функцию
     converterProcess(STATE_CHARGE);
 
-    // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(ERR_NONE, globalErrorMask);
     TEST_ASSERT_EQUAL_UINT32(STATE_CHARGE, currentState);
+    TEST_ASSERT_EQUAL_UINT32(STATE_ENABLE, currentPWMState);
+
 
 }
 
@@ -58875,6 +58897,8 @@ void test_converterProcess_Charge_ShouldntRunPID1(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE, globalErrorMask);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+
 }
 
 void test_converterProcess_Charge_ShouldntRunPID2(void)
@@ -58890,6 +58914,8 @@ void test_converterProcess_Charge_ShouldntRunPID2(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(ERR_UNDERVOLTAGE, globalErrorMask);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+
 }
 
 void test_converterProcess_Charge_ShouldntRunPID3(void)
@@ -58904,6 +58930,8 @@ void test_converterProcess_Charge_ShouldntRunPID3(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(ERR_IGBT_DRIVER, globalErrorMask);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+
 }
 
 void test_converterProcess_Charge_ShouldntRunPID4(void)
@@ -58919,6 +58947,8 @@ void test_converterProcess_Charge_ShouldntRunPID4(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, globalErrorMask);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+
 }
 
 void test_converterProcess_Charge_ShouldGoInit(void)
@@ -58934,6 +58964,7 @@ void test_converterProcess_Charge_ShouldGoInit(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
 }
 
 void test_converterProcess_Precharge_ShouldGoInit(void)
@@ -58950,5 +58981,69 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+}
+
+void test_sensor_ConvertationToRealValues1(void)
+{
+	printf("===TESTING SENSOR Convertation 1===\n");
+
+	rawValues[0] = 4095;
+	rawValues[1] = 4095;
+	rawValues[2] = 4095;
+	rawValues[3] = 4095;
+	rawValues[4] = 4095;
+
+	sensorRead();
+
+	TEST_ASSERT_EQUAL_FLOAT(1799.0f, currentValues.currentIn);
+	TEST_ASSERT_EQUAL_FLOAT(1799.0f, currentValues.currentChoke);
+	TEST_ASSERT_EQUAL_FLOAT(1799.0f, currentValues.currentOut);
+
+	TEST_ASSERT_EQUAL_FLOAT(1920.0f, currentValues.voltageIn);
+	TEST_ASSERT_EQUAL_FLOAT(1920.0f, currentValues.voltageOut);
+
+}
+
+void test_sensor_ConvertationToRealValues2(void)
+{
+	printf("===TESTING SENSOR Convertation 2===\n");
+
+	rawValues[0] = 0;
+	rawValues[1] = 0;
+	rawValues[2] = 0;
+	rawValues[3] = 0;
+	rawValues[4] = 0;
+
+	sensorRead();
+
+	TEST_ASSERT_EQUAL_FLOAT(-1500.0f, currentValues.currentIn);
+	TEST_ASSERT_EQUAL_FLOAT(-1500.0f, currentValues.currentChoke);
+	TEST_ASSERT_EQUAL_FLOAT(-1500.0f, currentValues.currentOut);
+
+	TEST_ASSERT_EQUAL_FLOAT(-1600.0f, currentValues.voltageIn);
+	TEST_ASSERT_EQUAL_FLOAT(-1600.0f, currentValues.voltageOut);
+
+}
+
+void test_sensor_ConvertationToRealValues3(void)
+{
+	printf("===TESTING SENSOR Convertation 3===\n");
+
+	rawValues[0] = 1861;
+	rawValues[1] = 1861;
+	rawValues[2] = 1861;
+	rawValues[3] = 1861;
+	rawValues[4] = 1861;
+
+	sensorRead();
+
+	TEST_ASSERT_EQUAL_FLOAT(0.0f, currentValues.currentIn);
+	TEST_ASSERT_EQUAL_FLOAT(0.0f, currentValues.currentChoke);
+	TEST_ASSERT_EQUAL_FLOAT(0.0f, currentValues.currentOut);
+
+	TEST_ASSERT_EQUAL_FLOAT(0.0f, currentValues.voltageIn);
+	TEST_ASSERT_EQUAL_FLOAT(0.0f, currentValues.voltageOut);
+
 }
 

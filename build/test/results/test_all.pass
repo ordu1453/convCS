@@ -5,74 +5,86 @@
   :basename: test_all.c
 :successes:
 - :test: test_prechargeInit_setsPrechargeDoneToZero
-  :line: 46
-  :message: ''
-  :unity_test_time: 0
-- :test: test_piInit_ShouldInitializeValues
   :line: 51
   :message: ''
   :unity_test_time: 0
+- :test: test_piInit_ShouldInitializeValues
+  :line: 56
+  :message: ''
+  :unity_test_time: 0
 - :test: test_piUpdate_ShouldReturnCorrectOutput
-  :line: 64
+  :line: 69
   :message: ''
   :unity_test_time: 0
 - :test: test_piUpdate_ShouldClampIntegralAndOutput
-  :line: 76
+  :line: 81
   :message: ''
   :unity_test_time: 0
 - :test: test_piReset_ShouldClearIntegralAndOutput
-  :line: 88
+  :line: 93
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Init_ShouldInitializeBothLoops
-  :line: 99
+  :line: 104
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Update_ShouldReturnDutyCycle
-  :line: 111
+  :line: 116
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Reset_ShouldResetBothLoops
-  :line: 122
+  :line: 127
   :message: ''
   :unity_test_time: 0
 - :test: test_diagCheck_NoErrors_ShouldReturnZero
-  :line: 135
+  :line: 140
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldRunPID
-  :line: 144
+  :line: 149
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID1
-  :line: 161
+  :line: 166
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID2
-  :line: 176
+  :line: 183
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID3
-  :line: 191
+  :line: 200
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID4
-  :line: 205
+  :line: 216
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldGoInit
-  :line: 220
+  :line: 233
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Precharge_ShouldGoInit
-  :line: 235
+  :line: 249
+  :message: ''
+  :unity_test_time: 0
+- :test: test_sensor_ConvertationToRealValues1
+  :line: 266
+  :message: ''
+  :unity_test_time: 0
+- :test: test_sensor_ConvertationToRealValues2
+  :line: 287
+  :message: ''
+  :unity_test_time: 0
+- :test: test_sensor_ConvertationToRealValues3
+  :line: 308
   :message: ''
   :unity_test_time: 0
 :failures: []
 :ignores: []
 :counts:
-  :total: 16
-  :passed: 16
+  :total: 19
+  :passed: 19
   :failed: 0
   :ignored: 0
 :stdout:
@@ -80,7 +92,7 @@
 - Converter process running
 - Variable setting
 - 'System has error: 0'
-- 'System state: 2'
+- 'System state: 0'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
@@ -95,64 +107,67 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
-- 'System state: 2'
+- 'System state: 0'
 - 'PWM state: 0'
 - PI-regulator evaluating
 - "===TESTING SYS PROCESS 3==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
-- 'System state: 2'
+- 'System state: 0'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
-- 'System state: 2'
+- 'System state: 0'
 - 'PWM state: 0'
 - PI-regulator evaluating
 - "===TESTING SYS PROCESS 4==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
-- 'System state: 2'
+- 'System state: 0'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
-- 'System state: 2'
+- 'System state: 0'
 - 'PWM state: 0'
 - PI-regulator evaluating
 - "===TESTING SYS PROCESS 5==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
-- 'System state: 2'
+- 'System state: 0'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
-- 'System state: 2'
+- 'System state: 0'
 - 'PWM state: 0'
 - PI-regulator evaluating
 - "===TESTING SYS PROCESS 6==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
-- 'System state: 2'
+- 'System state: 0'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
-- 'System state: 2'
+- 'System state: 0'
 - 'PWM state: 0'
 - PI-regulator evaluating
 - "===TESTING SYS PROCESS 7==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
-- 'System state: 2'
+- 'System state: 0'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
-- 'System state: 2'
+- 'System state: 0'
 - 'PWM state: 0'
 - Precharge mode starting
 - Error found after precharging
 - Entering to STATE_INIT
-:time: 0.8113583000376821
+- "===TESTING SENSOR Convertation 1==="
+- "===TESTING SENSOR Convertation 2==="
+- "===TESTING SENSOR Convertation 3==="
+:time: 0.7204367000376806

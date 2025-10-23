@@ -1,7 +1,5 @@
-build/test/out/test_all/test_all.o: test/test_all.c \
- build/vendor/unity/src/unity.h build/vendor/unity/src/unity_internals.h \
- Core/Inc/precharge.h Core/Inc/pid.h Core/Inc/main.h \
- Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
+build/test/out/test_all/sensor.o: Core/Src/sensor.c Core/Inc/sensor.h \
+ Core/Inc/main.h Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  Core/Inc/stm32g4xx_hal_conf.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_def.h \
@@ -32,6 +30,4 @@ build/test/out/test_all/test_all.o: test/test_all.c \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_tim_ex.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- Core/Inc/config.h build/test/mocks/test_all/mock_stm32g4xx_hal.h \
- Core/Inc/diag.h Core/Inc/types.h Core/Inc/config.h Core/Inc/converter.h \
- Core/Inc/pwmHandler.h Core/Inc/pwm.h Core/Inc/sensor.h
+ Core/Inc/types.h Core/Inc/config.h

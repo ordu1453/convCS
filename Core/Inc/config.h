@@ -25,21 +25,16 @@
 #define VREF_VOLTS 3.3f
 
 
-// Voltage dividers (example): Vbus measured via divider Rtop/Rbot
-#define VOLTAGE_DIVIDER_RATIO 11.0f // e.g. 10k/1k => 11
-// Current sensors: assume bidirectional output centered at Vref/2
-#define CURRENT_SHUNT_GAIN 0.100f // V/A (example)
-#define CURRENT_SENSOR_OFFSET_VOLTS (VREF_VOLTS/2.0f)
 
 
 // Limits for diagnostics (physical units)
 #define VBUS_MIN 0.0f
-#define VBUS_MAX 800.0f
+#define VBUS_MAX 1500.0f
 #define VIN_MIN 0.0f
-#define VIN_MAX 800.0f
+#define VIN_MAX 1500.0f
 
 
-#define I_MAX 2500.0f // +/-2500 A range provided by user - set realistically
+#define I_MAX 1900.0f // +/-2500 A range provided by user - set realistically
 
 
 // PWM
@@ -53,9 +48,9 @@
 
 // System states
 typedef enum {
-STATE_IDLE = 0,
+STATE_INIT = 0,
 STATE_PRECHARGE = 1,
-STATE_INIT = 2,
+STATE_IDLE = 2,
 STATE_CHARGE = 3,
 STATE_DISCHARGE = 4
 } SystemState_t;
@@ -75,10 +70,13 @@ typedef enum {
 
 
 // Коэффициенты преобразования ADC -> физические величины
-#define ADC_TO_CURRENT_COEFF_IN    0.1f    // мА/единицу ADC, подставь своё значение
-#define ADC_TO_CURRENT_COEFF_OUT   0.1f
-#define ADC_TO_CURRENT_COEFF_CHOKE 0.1f
-#define ADC_TO_VOLTAGE_COEFF_IN    1.0f    // мВ/единицу ADC, подставь своё значение
-#define ADC_TO_VOLTAGE_COEFF_OUT   1.0f
+#define ADC_TO_CURRENT_COEFF_IN    0.80586f    // мА/единицу ADC, подставь своё значение
+#define ADC_TO_CURRENT_COEFF_OUT   0.80586f
+#define ADC_TO_CURRENT_COEFF_CHOKE 0.80586f
+#define ADC_TO_VOLTAGE_COEFF_IN    0.85959f    // мВ/единицу ADC, подставь своё значение
+#define ADC_TO_VOLTAGE_COEFF_OUT   0.85959f
+
+#define CURRENT_OFFSET 1500.0f
+#define VOLTAGE_OFFSET 1600.0f
 
 #endif /* INC_CONFIG_H_ */
