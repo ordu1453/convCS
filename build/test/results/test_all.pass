@@ -68,23 +68,11 @@
   :line: 249
   :message: ''
   :unity_test_time: 0
-- :test: test_sensor_ConvertationToRealValues1
-  :line: 266
-  :message: ''
-  :unity_test_time: 0
-- :test: test_sensor_ConvertationToRealValues2
-  :line: 287
-  :message: ''
-  :unity_test_time: 0
-- :test: test_sensor_ConvertationToRealValues3
-  :line: 308
-  :message: ''
-  :unity_test_time: 0
 :failures: []
 :ignores: []
 :counts:
-  :total: 19
-  :passed: 19
+  :total: 16
+  :passed: 16
   :failed: 0
   :ignored: 0
 :stdout:
@@ -167,7 +155,4 @@
 - Precharge mode starting
 - Error found after precharging
 - Entering to STATE_INIT
-- "===TESTING SENSOR Convertation 1==="
-- "===TESTING SENSOR Convertation 2==="
-- "===TESTING SENSOR Convertation 3==="
-:time: 0.7204367000376806
+:time: 1.5126830999506637

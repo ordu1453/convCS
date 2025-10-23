@@ -1,4 +1,4 @@
-build/test/out/test_all/diag.o: Core/Src/diag.c Core/Inc/diag.h \
+build/test/out/test_sensor/diag.o: Core/Src/diag.c Core/Inc/diag.h \
  Core/Inc/types.h Core/Inc/config.h Core/Inc/main.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  Core/Inc/stm32g4xx_hal_conf.h \

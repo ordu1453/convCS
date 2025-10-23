@@ -1,4 +1,4 @@
-build/test/out/test_all/converter.o: Core/Src/converter.c \
+build/test/out/test_sensor/converter.o: Core/Src/converter.c \
  Core/Inc/converter.h Core/Inc/config.h Core/Inc/sensor.h Core/Inc/main.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  Core/Inc/stm32g4xx_hal_conf.h \

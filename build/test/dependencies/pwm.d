@@ -1,4 +1,4 @@
-build/test/out/test_all/pwm.o: Core/Src/pwm.c Core/Inc/pwm.h \
+build/test/out/test_sensor/pwm.o: Core/Src/pwm.c Core/Inc/pwm.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  Core/Inc/stm32g4xx_hal_conf.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \

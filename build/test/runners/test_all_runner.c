@@ -37,9 +37,6 @@ extern void test_converterProcess_Charge_ShouldntRunPID3(void);
 extern void test_converterProcess_Charge_ShouldntRunPID4(void);
 extern void test_converterProcess_Charge_ShouldGoInit(void);
 extern void test_converterProcess_Precharge_ShouldGoInit(void);
-extern void test_sensor_ConvertationToRealValues1(void);
-extern void test_sensor_ConvertationToRealValues2(void);
-extern void test_sensor_ConvertationToRealValues3(void);
 
 
 /*=======Mock Management=====*/
@@ -146,12 +143,6 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_converterProcess_Precharge_ShouldGoInit");
       UNITY_PRINT_EOL();
-      UnityPrint("  test_sensor_ConvertationToRealValues1");
-      UNITY_PRINT_EOL();
-      UnityPrint("  test_sensor_ConvertationToRealValues2");
-      UNITY_PRINT_EOL();
-      UnityPrint("  test_sensor_ConvertationToRealValues3");
-      UNITY_PRINT_EOL();
       return 0;
     }
     return parse_status;
@@ -174,9 +165,6 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   run_test(test_converterProcess_Charge_ShouldntRunPID4, "test_converterProcess_Charge_ShouldntRunPID4", 216);
   run_test(test_converterProcess_Charge_ShouldGoInit, "test_converterProcess_Charge_ShouldGoInit", 233);
   run_test(test_converterProcess_Precharge_ShouldGoInit, "test_converterProcess_Precharge_ShouldGoInit", 249);
-  run_test(test_sensor_ConvertationToRealValues1, "test_sensor_ConvertationToRealValues1", 266);
-  run_test(test_sensor_ConvertationToRealValues2, "test_sensor_ConvertationToRealValues2", 287);
-  run_test(test_sensor_ConvertationToRealValues3, "test_sensor_ConvertationToRealValues3", 308);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

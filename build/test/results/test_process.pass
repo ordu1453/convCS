@@ -1,0 +1,122 @@
+---
+:source:
+  :file: test/test_process.c
+  :dirname: test
+  :basename: test_process.c
+:successes:
+- :test: test_converterProcess_Charge_ShouldRunPID
+  :line: 54
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID1
+  :line: 71
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID2
+  :line: 88
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID3
+  :line: 105
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldntRunPID4
+  :line: 121
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldGoInit
+  :line: 138
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Precharge_ShouldGoInit
+  :line: 154
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 7
+  :passed: 7
+  :failed: 0
+  :ignored: 0
+:stdout:
+- "===TESTING SYS PROCESS 1==="
+- Converter process running
+- Variable setting
+- 'System has error: 0'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 3'
+- 'PWM state: 1'
+- PI-regulator evaluating
+- "===TESTING SYS PROCESS 2==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 3'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- PI-regulator evaluating
+- "===TESTING SYS PROCESS 3==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- PI-regulator evaluating
+- "===TESTING SYS PROCESS 4==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- PI-regulator evaluating
+- "===TESTING SYS PROCESS 5==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- PI-regulator evaluating
+- "===TESTING SYS PROCESS 6==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- PI-regulator evaluating
+- "===TESTING SYS PROCESS 7==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- Precharge mode starting
+- Error found after precharging
+- Entering to STATE_INIT
+:time: 1.2401686999946833

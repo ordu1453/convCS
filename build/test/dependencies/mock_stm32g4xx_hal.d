@@ -1,8 +1,8 @@
-build/test/out/test_all/mock_stm32g4xx_hal.o: \
- build/test/mocks/test_all/mock_stm32g4xx_hal.c \
+build/test/out/test_sensor/mock_stm32g4xx_hal.o: \
+ build/test/mocks/test_sensor/mock_stm32g4xx_hal.c \
  build/vendor/cmock/src/cmock.h build/vendor/cmock/src/cmock_internals.h \
  build/vendor/unity/src/unity.h build/vendor/unity/src/unity_internals.h \
- build/test/mocks/test_all/mock_stm32g4xx_hal.h \
+ build/test/mocks/test_sensor/mock_stm32g4xx_hal.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  Core/Inc/stm32g4xx_hal_conf.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \

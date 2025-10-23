@@ -1,4 +1,4 @@
-build/test/out/test_all/sensor.o: Core/Src/sensor.c Core/Inc/sensor.h \
+build/test/out/test_sensor/sensor.o: Core/Src/sensor.c Core/Inc/sensor.h \
  Core/Inc/main.h Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  Core/Inc/stm32g4xx_hal_conf.h \
  Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
