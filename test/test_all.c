@@ -10,6 +10,7 @@
 #include "config.h"
 #include "converter.h"
 #include "pwmHandler.h"
+#include "pwm.h"
 //#include "sensor.h"
 
 PIController_t pi;
@@ -142,6 +143,7 @@ void test_diagCheck_NoErrors_ShouldReturnZero(void) {
 
 void test_converterProcess_Charge_ShouldRunPID(void)
 {
+	printf("===TESTING SYS PROCESS 1===\n");
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_NONE;
     unitTestHasError = 0;
@@ -158,6 +160,8 @@ void test_converterProcess_Charge_ShouldRunPID(void)
 
 void test_converterProcess_Charge_ShouldntRunPID1(void)
 {
+	printf("===TESTING SYS PROCESS 2===\n");
+
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_OVERVOLTAGE;
     unitTestHasError = 1;
@@ -171,6 +175,8 @@ void test_converterProcess_Charge_ShouldntRunPID1(void)
 
 void test_converterProcess_Charge_ShouldntRunPID2(void)
 {
+	printf("===TESTING SYS PROCESS 3===\n");
+
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_UNDERVOLTAGE;
     unitTestHasError = 1;
@@ -184,6 +190,7 @@ void test_converterProcess_Charge_ShouldntRunPID2(void)
 
 void test_converterProcess_Charge_ShouldntRunPID3(void)
 {
+	printf("===TESTING SYS PROCESS 4===\n");
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_IGBT_DRIVER;
     unitTestHasError = 1;
@@ -197,6 +204,8 @@ void test_converterProcess_Charge_ShouldntRunPID3(void)
 
 void test_converterProcess_Charge_ShouldntRunPID4(void)
 {
+	printf("===TESTING SYS PROCESS 5===\n");
+
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_OVERCURRENT;
     unitTestHasError = 1;
@@ -210,6 +219,8 @@ void test_converterProcess_Charge_ShouldntRunPID4(void)
 
 void test_converterProcess_Charge_ShouldGoInit(void)
 {
+	printf("===TESTING SYS PROCESS 6===\n");
+
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_OVERVOLTAGE;
     unitTestHasError = 1;
@@ -223,6 +234,8 @@ void test_converterProcess_Charge_ShouldGoInit(void)
 
 void test_converterProcess_Precharge_ShouldGoInit(void)
 {
+	printf("===TESTING SYS PROCESS 7===\n");
+
     unitTestSensorValues.voltageOut = 500.0f;
     unitTestErrorMask = ERR_OVERVOLTAGE;
     unitTestHasError = 1;

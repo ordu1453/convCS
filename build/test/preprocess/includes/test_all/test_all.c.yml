@@ -6,4 +6,5 @@
 - Core/Inc/config.h
 - Core/Inc/converter.h
 - Core/Inc/pwmHandler.h
+- Core/Inc/pwm.h
 - mock_stm32g4xx_hal.h

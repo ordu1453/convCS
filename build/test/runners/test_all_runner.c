@@ -10,6 +10,7 @@
 #include "config.h"
 #include "converter.h"
 #include "pwmHandler.h"
+#include "pwm.h"
 #include "mock_stm32g4xx_hal.h"
 
 int GlobalExpectCount;
@@ -147,22 +148,22 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_all.c");
-  run_test(test_prechargeInit_setsPrechargeDoneToZero, "test_prechargeInit_setsPrechargeDoneToZero", 45);
-  run_test(test_piInit_ShouldInitializeValues, "test_piInit_ShouldInitializeValues", 50);
-  run_test(test_piUpdate_ShouldReturnCorrectOutput, "test_piUpdate_ShouldReturnCorrectOutput", 63);
-  run_test(test_piUpdate_ShouldClampIntegralAndOutput, "test_piUpdate_ShouldClampIntegralAndOutput", 75);
-  run_test(test_piReset_ShouldClearIntegralAndOutput, "test_piReset_ShouldClearIntegralAndOutput", 87);
-  run_test(test_pi2Init_ShouldInitializeBothLoops, "test_pi2Init_ShouldInitializeBothLoops", 98);
-  run_test(test_pi2Update_ShouldReturnDutyCycle, "test_pi2Update_ShouldReturnDutyCycle", 110);
-  run_test(test_pi2Reset_ShouldResetBothLoops, "test_pi2Reset_ShouldResetBothLoops", 121);
-  run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 134);
-  run_test(test_converterProcess_Charge_ShouldRunPID, "test_converterProcess_Charge_ShouldRunPID", 143);
-  run_test(test_converterProcess_Charge_ShouldntRunPID1, "test_converterProcess_Charge_ShouldntRunPID1", 159);
-  run_test(test_converterProcess_Charge_ShouldntRunPID2, "test_converterProcess_Charge_ShouldntRunPID2", 172);
-  run_test(test_converterProcess_Charge_ShouldntRunPID3, "test_converterProcess_Charge_ShouldntRunPID3", 185);
-  run_test(test_converterProcess_Charge_ShouldntRunPID4, "test_converterProcess_Charge_ShouldntRunPID4", 198);
-  run_test(test_converterProcess_Charge_ShouldGoInit, "test_converterProcess_Charge_ShouldGoInit", 211);
-  run_test(test_converterProcess_Precharge_ShouldGoInit, "test_converterProcess_Precharge_ShouldGoInit", 224);
+  run_test(test_prechargeInit_setsPrechargeDoneToZero, "test_prechargeInit_setsPrechargeDoneToZero", 46);
+  run_test(test_piInit_ShouldInitializeValues, "test_piInit_ShouldInitializeValues", 51);
+  run_test(test_piUpdate_ShouldReturnCorrectOutput, "test_piUpdate_ShouldReturnCorrectOutput", 64);
+  run_test(test_piUpdate_ShouldClampIntegralAndOutput, "test_piUpdate_ShouldClampIntegralAndOutput", 76);
+  run_test(test_piReset_ShouldClearIntegralAndOutput, "test_piReset_ShouldClearIntegralAndOutput", 88);
+  run_test(test_pi2Init_ShouldInitializeBothLoops, "test_pi2Init_ShouldInitializeBothLoops", 99);
+  run_test(test_pi2Update_ShouldReturnDutyCycle, "test_pi2Update_ShouldReturnDutyCycle", 111);
+  run_test(test_pi2Reset_ShouldResetBothLoops, "test_pi2Reset_ShouldResetBothLoops", 122);
+  run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 135);
+  run_test(test_converterProcess_Charge_ShouldRunPID, "test_converterProcess_Charge_ShouldRunPID", 144);
+  run_test(test_converterProcess_Charge_ShouldntRunPID1, "test_converterProcess_Charge_ShouldntRunPID1", 161);
+  run_test(test_converterProcess_Charge_ShouldntRunPID2, "test_converterProcess_Charge_ShouldntRunPID2", 176);
+  run_test(test_converterProcess_Charge_ShouldntRunPID3, "test_converterProcess_Charge_ShouldntRunPID3", 191);
+  run_test(test_converterProcess_Charge_ShouldntRunPID4, "test_converterProcess_Charge_ShouldntRunPID4", 205);
+  run_test(test_converterProcess_Charge_ShouldGoInit, "test_converterProcess_Charge_ShouldGoInit", 220);
+  run_test(test_converterProcess_Precharge_ShouldGoInit, "test_converterProcess_Precharge_ShouldGoInit", 235);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

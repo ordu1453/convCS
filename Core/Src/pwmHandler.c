@@ -16,28 +16,25 @@ extern SystemState_t currentState;
 
 void pwmHandlerProcess(uint8_t hasError, SystemState_t state)
 {
-if(hasError == 1 || state == STATE_INIT || state == STATE_IDLE || state == STATE_PRECHARGE)
+if(hasError == 1)
 {
-#ifndef TEST_UNITY
+	pwmDisable();
+	currentState = STATE_INIT;
+}
+else if(state == STATE_INIT || state == STATE_IDLE || state == STATE_PRECHARGE)
+{
 pwmDisable();
-#endif
-
-currentState = STATE_INIT;
+currentState = state;
 }
 else if (state == STATE_CHARGE)
 {
-#ifndef TEST_UNITY
 pwmEnable();
-#endif
 
-currentState = STATE_CHARGE;
+currentState = state;
 }
 else if (state == STATE_DISCHARGE)
 {
-#ifndef TEST_UNITY
 pwmEnable();
-#endif
-
-currentState = STATE_DISCHARGE;
+currentState = state;
 }
 }

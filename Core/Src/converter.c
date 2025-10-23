@@ -26,16 +26,16 @@
 SensorValues_t unitTestSensorValues;
 uint32_t unitTestErrorMask;
 uint8_t unitTestHasError;
+extern PWMState_t currentPWMState;
 #endif
 
 #ifdef TEST_UNITY
 uint32_t globalErrorMask;      // видна во всех тестах
-SystemState_t currentState;
 #else
 static uint32_t globalErrorMask = ERR_NONE;
-SystemState_t currentState = STATE_INIT;
 #endif
 
+SystemState_t currentState = STATE_INIT;
 PIController_t currentPid;
 uint32_t lastMode = 0xFFFFFFFF;
 
@@ -68,9 +68,10 @@ SystemState_t ConverterGetState(void) {
 void converterProcess(SystemState_t state)
 {
 #ifdef TEST_UNITY
-	printf("===TESTING===\n");
     printf("Converter process running\n");
 #endif
+
+
 #ifndef TEST_UNITY
     sensorRead();
     const SensorValues_t* s = sensorGetValues();
@@ -105,7 +106,8 @@ void converterProcess(SystemState_t state)
 	printf("PWM Handler running\n");
 #endif
     pwmHandlerProcess(hasErr, state);
-
+    printf("System state: %d\n", currentState);
+    printf("PWM state: %d\n", currentPWMState);
 
     // run PID only in charge/discharge
     if (state == STATE_CHARGE)

@@ -5,67 +5,67 @@
   :basename: test_all.c
 :successes:
 - :test: test_prechargeInit_setsPrechargeDoneToZero
-  :line: 45
+  :line: 46
   :message: ''
   :unity_test_time: 0
 - :test: test_piInit_ShouldInitializeValues
-  :line: 50
+  :line: 51
   :message: ''
   :unity_test_time: 0
 - :test: test_piUpdate_ShouldReturnCorrectOutput
-  :line: 63
+  :line: 64
   :message: ''
   :unity_test_time: 0
 - :test: test_piUpdate_ShouldClampIntegralAndOutput
-  :line: 75
+  :line: 76
   :message: ''
   :unity_test_time: 0
 - :test: test_piReset_ShouldClearIntegralAndOutput
-  :line: 87
+  :line: 88
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Init_ShouldInitializeBothLoops
-  :line: 98
+  :line: 99
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Update_ShouldReturnDutyCycle
-  :line: 110
+  :line: 111
   :message: ''
   :unity_test_time: 0
 - :test: test_pi2Reset_ShouldResetBothLoops
-  :line: 121
+  :line: 122
   :message: ''
   :unity_test_time: 0
 - :test: test_diagCheck_NoErrors_ShouldReturnZero
-  :line: 134
+  :line: 135
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldRunPID
-  :line: 143
+  :line: 144
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID1
-  :line: 159
+  :line: 161
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID2
-  :line: 172
+  :line: 176
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID3
-  :line: 185
+  :line: 191
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID4
-  :line: 198
+  :line: 205
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldGoInit
-  :line: 211
+  :line: 220
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Precharge_ShouldGoInit
-  :line: 224
+  :line: 235
   :message: ''
   :unity_test_time: 0
 :failures: []
@@ -76,16 +76,18 @@
   :failed: 0
   :ignored: 0
 :stdout:
-- "===TESTING==="
+- "===TESTING SYS PROCESS 1==="
 - Converter process running
 - Variable setting
 - 'System has error: 0'
-- 'System state: 0'
+- 'System state: 2'
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 3'
+- 'PWM state: 1'
 - PI-regulator evaluating
-- "===TESTING==="
+- "===TESTING SYS PROCESS 2==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
@@ -93,8 +95,10 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 2'
+- 'PWM state: 0'
 - PI-regulator evaluating
-- "===TESTING==="
+- "===TESTING SYS PROCESS 3==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
@@ -102,8 +106,10 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 2'
+- 'PWM state: 0'
 - PI-regulator evaluating
-- "===TESTING==="
+- "===TESTING SYS PROCESS 4==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
@@ -111,8 +117,10 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 2'
+- 'PWM state: 0'
 - PI-regulator evaluating
-- "===TESTING==="
+- "===TESTING SYS PROCESS 5==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
@@ -120,8 +128,10 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 2'
+- 'PWM state: 0'
 - PI-regulator evaluating
-- "===TESTING==="
+- "===TESTING SYS PROCESS 6==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
@@ -129,8 +139,10 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 2'
+- 'PWM state: 0'
 - PI-regulator evaluating
-- "===TESTING==="
+- "===TESTING SYS PROCESS 7==="
 - Converter process running
 - Variable setting
 - 'System has error: 1'
@@ -138,7 +150,9 @@
 - Global error mask setted
 - Last mode setted
 - PWM Handler running
+- 'System state: 2'
+- 'PWM state: 0'
 - Precharge mode starting
 - Error found after precharging
 - Entering to STATE_INIT
-:time: 0.680589499999769
+:time: 0.8113583000376821
