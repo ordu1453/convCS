@@ -16,6 +16,7 @@
 #include "config.h"
 #include "types.h"
 #include "can.h"
+#include <stdio.h>
 
 
 #include <stdint.h>
@@ -66,35 +67,52 @@ SystemState_t ConverterGetState(void) {
 
 void converterProcess(SystemState_t state)
 {
+#ifdef TEST_UNITY
+	printf("===TESTING===\n");
+    printf("Converter process running\n");
+#endif
 #ifndef TEST_UNITY
     sensorRead();
     const SensorValues_t* s = sensorGetValues();
     uint32_t errMask = ERR_NONE;
     uint8_t hasErr = diagCheck(s, &errMask);
 #else
+	printf("Variable setting\n");
     // Заглушка для юнит-тестов
     const SensorValues_t* s = &unitTestSensorValues;
     uint32_t errMask = unitTestErrorMask;
     uint8_t hasErr = unitTestHasError;
+    printf("System has error: %d\n", unitTestHasError);
+    printf("System state: %d\n", currentState);
 #endif
 
 
     globalErrorMask = errMask;
-
+#ifdef TEST_UNITY
+	printf("Global error mask setted\n");
+#endif
     // mode change -> reset pid
     if ((uint32_t)state != lastMode)
     {
         piReset(&currentPid);
         lastMode = (uint32_t)state;
     }
+#ifdef TEST_UNITY
+	printf("Last mode setted\n");
+#endif
 
-
+#ifdef TEST_UNITY
+	printf("PWM Handler running\n");
+#endif
     pwmHandlerProcess(hasErr, state);
 
 
     // run PID only in charge/discharge
     if (state == STATE_CHARGE)
     {
+#ifdef TEST_UNITY
+	printf("PI-regulator evaluating\n");
+#endif
         float setpoint = 1000.0f;
         float measurement = (float)s->voltageOut;
         float duty = piUpdate(&currentPid, setpoint, measurement);
@@ -104,6 +122,9 @@ void converterProcess(SystemState_t state)
     }
     else if (state == STATE_DISCHARGE)
     {
+#ifdef TEST_UNITY
+	printf("PI-regulator evaluating\n");
+#endif
         float setpoint = -1000.0f;
         float measurement = (float)s->currentOut;
         float duty = piUpdate(&currentPid, setpoint, measurement);
@@ -116,17 +137,32 @@ void converterProcess(SystemState_t state)
     // precharge
     if (state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
     {
+#ifdef TEST_UNITY
+	printf("Precharge mode starting\n");
+#endif
         currentState = STATE_PRECHARGE;
 #ifndef TEST_UNITY
         prechargeStart();
 #endif
         if (!hasErr)
         {
+#ifdef TEST_UNITY
+	printf("No error after precharging\n");
+#endif
             currentState = STATE_IDLE;
+#ifdef TEST_UNITY
+	printf("Entering to STATE_IDLE\n");
+#endif
         }
         else
         {
+#ifdef TEST_UNITY
+	printf("Error found after precharging\n");
+#endif
             currentState = STATE_INIT;
+#ifdef TEST_UNITY
+	printf("Entering to STATE_INIT\n");
+#endif
         }
     }
 

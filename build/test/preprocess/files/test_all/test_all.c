@@ -272,9 +272,10 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
     unitTestErrorMask = 0x01;
     unitTestHasError = 1;
 
-    converterProcess(STATE_PRECHARGE);
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
    ((void *)0)
-   ), (UNITY_UINT)(234), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(235), UNITY_DISPLAY_STYLE_UINT32);
 }

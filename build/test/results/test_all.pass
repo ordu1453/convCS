@@ -75,5 +75,70 @@
   :passed: 16
   :failed: 0
   :ignored: 0
-:stdout: []
-:time: 1.0177452999632806
+:stdout:
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 0'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- PI-regulator evaluating
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 3'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- PI-regulator evaluating
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 2'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- PI-regulator evaluating
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 2'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- PI-regulator evaluating
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 2'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- PI-regulator evaluating
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 2'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- PI-regulator evaluating
+- "===TESTING==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 2'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- Precharge mode starting
+- Error found after precharging
+- Entering to STATE_INIT
+:time: 0.680589499999769

@@ -9526,12 +9526,13 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
     unitTestHasError = 1;
 
 
-    converterProcess(STATE_PRECHARGE);
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
 
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
-# 234 "test/test_all.c" 3 4
+# 235 "test/test_all.c" 3 4
    ((void *)0)
-# 234 "test/test_all.c"
-   ), (UNITY_UINT)(234), UNITY_DISPLAY_STYLE_UINT32);
+# 235 "test/test_all.c"
+   ), (UNITY_UINT)(235), UNITY_DISPLAY_STYLE_UINT32);
 }

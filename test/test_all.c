@@ -228,7 +228,8 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
     unitTestHasError = 1;
 
     // Вызываем функцию
-    converterProcess(STATE_PRECHARGE);
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
 
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
