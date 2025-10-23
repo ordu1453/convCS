@@ -6,6 +6,7 @@
 #include "Core/Inc/diag.h"
 #include "Core/Inc/config.h"
 #include "Core/Inc/converter.h"
+#include "Core/Inc/pwmHandler.h"
 #include "mock_stm32g4xx_hal.h"
 
 PIController_t pi;

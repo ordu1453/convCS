@@ -60,20 +60,20 @@
   :line: 198
   :message: ''
   :unity_test_time: 0
+- :test: test_converterProcess_Charge_ShouldGoInit
+  :line: 211
+  :message: ''
+  :unity_test_time: 0
 - :test: test_converterProcess_Precharge_ShouldGoInit
   :line: 224
   :message: ''
   :unity_test_time: 0
-:failures:
-- :test: test_converterProcess_Charge_ShouldGoInit
-  :line: 221
-  :message: Expected 2 Was 3
-  :unity_test_time: 0
+:failures: []
 :ignores: []
 :counts:
   :total: 16
-  :passed: 15
-  :failed: 1
+  :passed: 16
+  :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.6832023001043126
+:time: 1.0177452999632806

@@ -58670,7 +58670,30 @@ SystemState_t ConverterGetState(void);
 
 
 # 12 "test/test_all.c" 2
-//#include "pwm.h"
+# 1 "Core/Inc/pwmHandler.h" 1
+/*
+ * pwmHandler.h
+ *
+ *  Created on: Oct 16, 2025
+ *      Author: ordum
+ */
+
+
+#define INC_PWMHANDLER_H_ 
+
+
+
+
+
+
+
+
+void pwmHandlerInit(void);
+void pwmHandlerProcess(uint8_t hasError, SystemState_t state);
+
+
+
+# 13 "test/test_all.c" 2
 //#include "sensor.h"
 
 PIController_t pi;

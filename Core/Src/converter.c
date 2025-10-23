@@ -78,10 +78,6 @@ void converterProcess(SystemState_t state)
     uint8_t hasErr = unitTestHasError;
 #endif
 
-    if (hasErr)
-    {
-        currentState = STATE_INIT;
-    }
 
     globalErrorMask = errMask;
 
@@ -92,9 +88,9 @@ void converterProcess(SystemState_t state)
         lastMode = (uint32_t)state;
     }
 
-#ifndef TEST_UNITY
+
     pwmHandlerProcess(hasErr, state);
-#endif
+
 
     // run PID only in charge/discharge
     if (state == STATE_CHARGE)
@@ -102,7 +98,6 @@ void converterProcess(SystemState_t state)
         float setpoint = 1000.0f;
         float measurement = (float)s->voltageOut;
         float duty = piUpdate(&currentPid, setpoint, measurement);
-        currentState = STATE_CHARGE;
 #ifndef TEST_UNITY
         pwmSetDuty((uint32_t)duty);
 #endif
@@ -112,7 +107,6 @@ void converterProcess(SystemState_t state)
         float setpoint = -1000.0f;
         float measurement = (float)s->currentOut;
         float duty = piUpdate(&currentPid, setpoint, measurement);
-        currentState = STATE_DISCHARGE;
 
 #ifndef TEST_UNITY
         pwmSetDuty((uint32_t)duty);

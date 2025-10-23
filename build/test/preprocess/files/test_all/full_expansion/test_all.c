@@ -9175,7 +9175,11 @@ void converterInit(void);
 void converterProcess(SystemState_t state);
 SystemState_t ConverterGetState(void);
 # 12 "test/test_all.c" 2
-
+# 1 "Core/Inc/pwmHandler.h" 1
+# 18 "Core/Inc/pwmHandler.h"
+void pwmHandlerInit(void);
+void pwmHandlerProcess(uint8_t hasError, SystemState_t state);
+# 13 "test/test_all.c" 2
 
 
 PIController_t pi;

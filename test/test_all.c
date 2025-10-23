@@ -9,7 +9,7 @@
 #include "diag.h"
 #include "config.h"
 #include "converter.h"
-//#include "pwm.h"
+#include "pwmHandler.h"
 //#include "sensor.h"
 
 PIController_t pi;

@@ -9,6 +9,7 @@
 #include "diag.h"
 #include "config.h"
 #include "converter.h"
+#include "pwmHandler.h"
 #include "mock_stm32g4xx_hal.h"
 
 int GlobalExpectCount;
