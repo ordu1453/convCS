@@ -5,15 +5,15 @@
   :basename: test_sensor.c
 :successes:
 - :test: test_sensor_ConvertationToRealValues1
-  :line: 38
+  :line: 39
   :message: ''
   :unity_test_time: 0
 - :test: test_sensor_ConvertationToRealValues2
-  :line: 59
+  :line: 60
   :message: ''
   :unity_test_time: 0
 - :test: test_sensor_ConvertationToRealValues3
-  :line: 80
+  :line: 81
   :message: ''
   :unity_test_time: 0
 :failures: []
@@ -27,4 +27,4 @@
 - "===TESTING SENSOR Convertation 1==="
 - "===TESTING SENSOR Convertation 2==="
 - "===TESTING SENSOR Convertation 3==="
-:time: 0.5104865001048893
+:time: 1.566980000003241

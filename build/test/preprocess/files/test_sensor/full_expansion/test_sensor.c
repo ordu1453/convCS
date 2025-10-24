@@ -2441,8 +2441,6 @@ void verifyTest(void);
 # 18 "Core/Inc/precharge.h"
 void prechargeInit(void);
 void prechargeStart(void);
-
-static uint8_t prechargeDone = 0;
 # 6 "test/test_sensor.c" 2
 # 1 "Core/Inc/pid.h" 1
 # 13 "Core/Inc/pid.h"
@@ -9217,6 +9215,7 @@ void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState Pin
 GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
 
+
 void test_sensor_ConvertationToRealValues1(void)
 {
  printf("===TESTING SENSOR Convertation 1===\n");
@@ -9230,31 +9229,31 @@ void test_sensor_ConvertationToRealValues1(void)
  sensorRead();
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentIn))), ((
-# 50 "test/test_sensor.c" 3 4
-((void *)0)
-# 50 "test/test_sensor.c"
-)), (UNITY_UINT)((UNITY_UINT)(50)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 # 51 "test/test_sensor.c" 3 4
 ((void *)0)
 # 51 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(51)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 # 52 "test/test_sensor.c" 3 4
 ((void *)0)
 # 52 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(52)));
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
+# 53 "test/test_sensor.c" 3 4
+((void *)0)
+# 53 "test/test_sensor.c"
+)), (UNITY_UINT)((UNITY_UINT)(53)));
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1920.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1920.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageIn))), ((
-# 54 "test/test_sensor.c" 3 4
-((void *)0)
-# 54 "test/test_sensor.c"
-)), (UNITY_UINT)((UNITY_UINT)(54)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1920.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1920.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
 # 55 "test/test_sensor.c" 3 4
 ((void *)0)
 # 55 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(55)));
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1920.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1920.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
+# 56 "test/test_sensor.c" 3 4
+((void *)0)
+# 56 "test/test_sensor.c"
+)), (UNITY_UINT)((UNITY_UINT)(56)));
 
 }
 
@@ -9271,31 +9270,31 @@ void test_sensor_ConvertationToRealValues2(void)
  sensorRead();
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentIn))), ((
-# 71 "test/test_sensor.c" 3 4
-((void *)0)
-# 71 "test/test_sensor.c"
-)), (UNITY_UINT)((UNITY_UINT)(71)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 # 72 "test/test_sensor.c" 3 4
 ((void *)0)
 # 72 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(72)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 # 73 "test/test_sensor.c" 3 4
 ((void *)0)
 # 73 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(73)));
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
+# 74 "test/test_sensor.c" 3 4
+((void *)0)
+# 74 "test/test_sensor.c"
+)), (UNITY_UINT)((UNITY_UINT)(74)));
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageIn))), ((
-# 75 "test/test_sensor.c" 3 4
-((void *)0)
-# 75 "test/test_sensor.c"
-)), (UNITY_UINT)((UNITY_UINT)(75)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
 # 76 "test/test_sensor.c" 3 4
 ((void *)0)
 # 76 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(76)));
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
+# 77 "test/test_sensor.c" 3 4
+((void *)0)
+# 77 "test/test_sensor.c"
+)), (UNITY_UINT)((UNITY_UINT)(77)));
 
 }
 
@@ -9312,31 +9311,31 @@ void test_sensor_ConvertationToRealValues3(void)
  sensorRead();
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentIn))), ((
-# 92 "test/test_sensor.c" 3 4
-((void *)0)
-# 92 "test/test_sensor.c"
-)), (UNITY_UINT)((UNITY_UINT)(92)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 # 93 "test/test_sensor.c" 3 4
 ((void *)0)
 # 93 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(93)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 # 94 "test/test_sensor.c" 3 4
 ((void *)0)
 # 94 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(94)));
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
+# 95 "test/test_sensor.c" 3 4
+((void *)0)
+# 95 "test/test_sensor.c"
+)), (UNITY_UINT)((UNITY_UINT)(95)));
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageIn))), ((
-# 96 "test/test_sensor.c" 3 4
-((void *)0)
-# 96 "test/test_sensor.c"
-)), (UNITY_UINT)((UNITY_UINT)(96)));
- UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
 # 97 "test/test_sensor.c" 3 4
 ((void *)0)
 # 97 "test/test_sensor.c"
 )), (UNITY_UINT)((UNITY_UINT)(97)));
+ UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
+# 98 "test/test_sensor.c" 3 4
+((void *)0)
+# 98 "test/test_sensor.c"
+)), (UNITY_UINT)((UNITY_UINT)(98)));
 
 
 }

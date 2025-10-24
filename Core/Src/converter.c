@@ -30,7 +30,7 @@ extern PWMState_t currentPWMState;
 #endif
 
 #ifdef TEST_UNITY
-uint32_t globalErrorMask;      // видна во всех тестах
+uint32_t globalErrorMask;
 #else
 static uint32_t globalErrorMask = ERR_NONE;
 #endif
@@ -138,10 +138,10 @@ void converterProcess(SystemState_t state)
     }
 
     // precharge
-    if (state == STATE_PRECHARGE && currentState != STATE_PRECHARGE)
+    if (state == STATE_PRECHARGE)
     {
 #ifdef TEST_UNITY
-	printf("Precharge mode starting\n");
+    	printf("Precharge mode starting\n");
 #endif
         currentState = STATE_PRECHARGE;
 #ifndef TEST_UNITY
@@ -150,21 +150,21 @@ void converterProcess(SystemState_t state)
         if (!hasErr)
         {
 #ifdef TEST_UNITY
-	printf("No error after precharging\n");
+        	printf("No error after precharging\n");
 #endif
             currentState = STATE_IDLE;
 #ifdef TEST_UNITY
-	printf("Entering to STATE_IDLE\n");
+            printf("Entering to STATE_IDLE\n");
 #endif
         }
         else
         {
 #ifdef TEST_UNITY
-	printf("Error found after precharging\n");
+        	printf("Error found after precharging\n");
 #endif
             currentState = STATE_INIT;
 #ifdef TEST_UNITY
-	printf("Entering to STATE_INIT\n");
+            printf("Entering to STATE_INIT\n");
 #endif
         }
     }

@@ -1,0 +1,23 @@
+---
+:source:
+  :file: test/test_pwmHandler.c
+  :dirname: test
+  :basename: test_pwmHandler.c
+:successes:
+- :test: test_Precharge_Init
+  :line: 38
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Precharge_DischargeWithNoError
+  :line: 52
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 2
+  :passed: 2
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 1.768765200045891

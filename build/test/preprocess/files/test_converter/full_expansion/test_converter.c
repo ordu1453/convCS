@@ -2441,8 +2441,6 @@ void verifyTest(void);
 # 18 "Core/Inc/precharge.h"
 void prechargeInit(void);
 void prechargeStart(void);
-
-static uint8_t prechargeDone = 0;
 # 6 "test/test_converter.c" 2
 # 1 "Core/Inc/pid.h" 1
 # 13 "Core/Inc/pid.h"
@@ -9385,6 +9383,29 @@ void test_converterProcess_Charge_ShouldGoInit(void)
    ), (UNITY_UINT)(151), UNITY_DISPLAY_STYLE_UINT32);
 }
 
+void test_converterProcess_Disharge_ShouldGoInit(void)
+{
+ printf("===TESTING SYS PROCESS 6===\n");
+
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x01;
+    unitTestHasError = 1;
+
+
+    converterProcess(STATE_DISCHARGE);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
+# 166 "test/test_converter.c" 3 4
+   ((void *)0)
+# 166 "test/test_converter.c"
+   ), (UNITY_UINT)(166), UNITY_DISPLAY_STYLE_UINT32);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
+# 167 "test/test_converter.c" 3 4
+   ((void *)0)
+# 167 "test/test_converter.c"
+   ), (UNITY_UINT)(167), UNITY_DISPLAY_STYLE_UINT32);
+}
 void test_converterProcess_Precharge_ShouldGoInit(void)
 {
  printf("===TESTING SYS PROCESS 7===\n");
@@ -9399,13 +9420,61 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
 
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
-# 167 "test/test_converter.c" 3 4
+# 182 "test/test_converter.c" 3 4
    ((void *)0)
-# 167 "test/test_converter.c"
-   ), (UNITY_UINT)(167), UNITY_DISPLAY_STYLE_UINT32);
+# 182 "test/test_converter.c"
+   ), (UNITY_UINT)(182), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
-# 168 "test/test_converter.c" 3 4
+# 183 "test/test_converter.c" 3 4
    ((void *)0)
-# 168 "test/test_converter.c"
-   ), (UNITY_UINT)(168), UNITY_DISPLAY_STYLE_UINT32);
+# 183 "test/test_converter.c"
+   ), (UNITY_UINT)(183), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_Precharge_ShouldGoIdle(void)
+{
+ printf("===TESTING SYS PROCESS 8===\n");
+
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = 0x00;
+    unitTestHasError = 0;
+
+
+
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((unitTestHasError)), (
+# 200 "test/test_converter.c" 3 4
+   ((void *)0)
+# 200 "test/test_converter.c"
+   ), (UNITY_UINT)(200), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_IDLE)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
+# 201 "test/test_converter.c" 3 4
+   ((void *)0)
+# 201 "test/test_converter.c"
+   ), (UNITY_UINT)(201), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_converterProcess_ConverterGetState(void)
+{
+ printf("===TESTING SYS PROCESS 8===\n");
+
+    unitTestSensorValues.voltageOut = 5000.0f;
+    unitTestErrorMask = 0x04;
+    unitTestHasError = 1;
+
+
+
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
+     SystemState_t newState = ConverterGetState();
+
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((newState)), (
+# 219 "test/test_converter.c" 3 4
+   ((void *)0)
+# 219 "test/test_converter.c"
+   ), (UNITY_UINT)(219), UNITY_DISPLAY_STYLE_UINT32);
 }

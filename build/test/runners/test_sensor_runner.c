@@ -116,9 +116,9 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   }
 #endif
   UnityBegin("test_sensor.c");
-  run_test(test_sensor_ConvertationToRealValues1, "test_sensor_ConvertationToRealValues1", 38);
-  run_test(test_sensor_ConvertationToRealValues2, "test_sensor_ConvertationToRealValues2", 59);
-  run_test(test_sensor_ConvertationToRealValues3, "test_sensor_ConvertationToRealValues3", 80);
+  run_test(test_sensor_ConvertationToRealValues1, "test_sensor_ConvertationToRealValues1", 39);
+  run_test(test_sensor_ConvertationToRealValues2, "test_sensor_ConvertationToRealValues2", 60);
+  run_test(test_sensor_ConvertationToRealValues3, "test_sensor_ConvertationToRealValues3", 81);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

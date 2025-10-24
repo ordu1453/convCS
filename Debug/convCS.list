@@ -708,7 +708,7 @@ void converterProcess(SystemState_t state)
  8000792:	d01c      	beq.n	80007ce <converterProcess+0x152>
     {
 #ifdef TEST_UNITY
-	printf("Precharge mode starting\n");
+    	printf("Precharge mode starting\n");
  8000794:	4823      	ldr	r0, [pc, #140]	@ (8000824 <converterProcess+0x1a8>)
  8000796:	f007 fb69 	bl	8007e6c <puts>
 #endif
@@ -725,7 +725,7 @@ void converterProcess(SystemState_t state)
  80007a6:	d109      	bne.n	80007bc <converterProcess+0x140>
         {
 #ifdef TEST_UNITY
-	printf("No error after precharging\n");
+        	printf("No error after precharging\n");
  80007a8:	481f      	ldr	r0, [pc, #124]	@ (8000828 <converterProcess+0x1ac>)
  80007aa:	f007 fb5f 	bl	8007e6c <puts>
 #endif
@@ -734,7 +734,7 @@ void converterProcess(SystemState_t state)
  80007b0:	2202      	movs	r2, #2
  80007b2:	701a      	strb	r2, [r3, #0]
 #ifdef TEST_UNITY
-	printf("Entering to STATE_IDLE\n");
+            printf("Entering to STATE_IDLE\n");
  80007b4:	481d      	ldr	r0, [pc, #116]	@ (800082c <converterProcess+0x1b0>)
  80007b6:	f007 fb59 	bl	8007e6c <puts>
     }
@@ -744,14 +744,14 @@ void converterProcess(SystemState_t state)
 #endif
 }
  80007ba:	e008      	b.n	80007ce <converterProcess+0x152>
-	printf("Error found after precharging\n");
+        	printf("Error found after precharging\n");
  80007bc:	481c      	ldr	r0, [pc, #112]	@ (8000830 <converterProcess+0x1b4>)
  80007be:	f007 fb55 	bl	8007e6c <puts>
             currentState = STATE_INIT;
  80007c2:	4b0b      	ldr	r3, [pc, #44]	@ (80007f0 <converterProcess+0x174>)
  80007c4:	2200      	movs	r2, #0
  80007c6:	701a      	strb	r2, [r3, #0]
-	printf("Entering to STATE_INIT\n");
+            printf("Entering to STATE_INIT\n");
  80007c8:	481a      	ldr	r0, [pc, #104]	@ (8000834 <converterProcess+0x1b8>)
  80007ca:	f007 fb4f 	bl	8007e6c <puts>
 }

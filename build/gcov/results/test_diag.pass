@@ -1,0 +1,55 @@
+---
+:source:
+  :file: test/test_diag.c
+  :dirname: test
+  :basename: test_diag.c
+:successes:
+- :test: test_diagCheck_NoErrors_ShouldReturnZero
+  :line: 48
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_CurChoke
+  :line: 63
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_CurOut
+  :line: 90
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_Cur_In
+  :line: 116
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_FirstErrors_ThenNoError
+  :line: 142
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_FirstErrors_ThenNoError_ThenError
+  :line: 167
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_VolIn
+  :line: 202
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_VolOut
+  :line: 228
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_VolAndCur
+  :line: 252
+  :message: ''
+  :unity_test_time: 0
+- :test: test_diagCheck_Errors_All
+  :line: 276
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 10
+  :passed: 10
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 4.501878299983218

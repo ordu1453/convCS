@@ -16,8 +16,7 @@
 #define PRECHARGE_Pin GPIO_PIN_10 // Relay gate gpio port
 
 
-//prechargeDone = 0;
-
+uint8_t prechargeDone;
 
 void prechargeInit(void)
 {
@@ -28,11 +27,16 @@ prechargeDone = 0;
 
 void prechargeStart(void)
 {
-if(prechargeDone) return;
+if(prechargeDone) {
+	return;
+}
+else{
 
-
+#ifndef TEST_UNITY
 HAL_GPIO_WritePin(PRECHARGE_GPIO_Port, PRECHARGE_Pin, GPIO_PIN_SET);
 HAL_Delay(5000); // 5 seconds blocking start; could be made non-blocking
 HAL_GPIO_WritePin(PRECHARGE_GPIO_Port, PRECHARGE_Pin, GPIO_PIN_RESET);
+#endif
 prechargeDone = 1;
+}
 }

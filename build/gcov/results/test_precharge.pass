@@ -1,0 +1,23 @@
+---
+:source:
+  :file: test/test_precharge.c
+  :dirname: test
+  :basename: test_precharge.c
+:successes:
+- :test: test_Precharge_Init
+  :line: 39
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Precharge_Start
+  :line: 49
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 2
+  :passed: 2
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 2.686809999984689

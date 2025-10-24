@@ -7458,7 +7458,6 @@ void verifyTest(void);
 void prechargeInit(void);
 void prechargeStart(void);
 
-static uint8_t prechargeDone = 0;
 
 
 

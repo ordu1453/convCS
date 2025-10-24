@@ -75,12 +75,10 @@ Discarded input sections
  .data          0x00000000        0x0 ./Core/Src/converter.o
  .bss           0x00000000        0x0 ./Core/Src/converter.o
  .text.converterInit
-                0x00000000       0x48 ./Core/Src/converter.o
+                0x00000000       0x44 ./Core/Src/converter.o
  .text          0x00000000        0x0 ./Core/Src/diag.o
  .data          0x00000000        0x0 ./Core/Src/diag.o
  .bss           0x00000000        0x0 ./Core/Src/diag.o
- .text.diagInit
-                0x00000000        0x2 ./Core/Src/diag.o
  .text          0x00000000        0x0 ./Core/Src/main.o
  .data          0x00000000        0x0 ./Core/Src/main.o
  .bss           0x00000000        0x0 ./Core/Src/main.o

@@ -28,15 +28,27 @@
   :line: 138
   :message: ''
   :unity_test_time: 0
-- :test: test_converterProcess_Precharge_ShouldGoInit
+- :test: test_converterProcess_Disharge_ShouldGoInit
   :line: 154
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Precharge_ShouldGoInit
+  :line: 169
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_Precharge_ShouldGoIdle
+  :line: 186
+  :message: ''
+  :unity_test_time: 0
+- :test: test_converterProcess_ConverterGetState
+  :line: 204
   :message: ''
   :unity_test_time: 0
 :failures: []
 :ignores: []
 :counts:
-  :total: 7
-  :passed: 7
+  :total: 10
+  :passed: 10
   :failed: 0
   :ignored: 0
 :stdout:
@@ -106,6 +118,17 @@
 - 'System state: 0'
 - 'PWM state: 0'
 - PI-regulator evaluating
+- "===TESTING SYS PROCESS 6==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- PI-regulator evaluating
 - "===TESTING SYS PROCESS 7==="
 - Converter process running
 - Variable setting
@@ -119,4 +142,30 @@
 - Precharge mode starting
 - Error found after precharging
 - Entering to STATE_INIT
-:time: 3.4992242000298575
+- "===TESTING SYS PROCESS 8==="
+- Converter process running
+- Variable setting
+- 'System has error: 0'
+- 'System state: 0'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 1'
+- 'PWM state: 0'
+- Precharge mode starting
+- No error after precharging
+- Entering to STATE_IDLE
+- "===TESTING SYS PROCESS 8==="
+- Converter process running
+- Variable setting
+- 'System has error: 1'
+- 'System state: 2'
+- Global error mask setted
+- Last mode setted
+- PWM Handler running
+- 'System state: 0'
+- 'PWM state: 0'
+- Precharge mode starting
+- Error found after precharging
+- Entering to STATE_INIT
+:time: 6.181977099971846

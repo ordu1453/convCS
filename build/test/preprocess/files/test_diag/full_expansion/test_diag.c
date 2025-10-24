@@ -2441,8 +2441,6 @@ void verifyTest(void);
 # 18 "Core/Inc/precharge.h"
 void prechargeInit(void);
 void prechargeStart(void);
-
-static uint8_t prechargeDone = 0;
 # 6 "test/test_diag.c" 2
 # 1 "Core/Inc/pid.h" 1
 # 13 "Core/Inc/pid.h"

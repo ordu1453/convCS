@@ -26,12 +26,6 @@ static const uint16_t driverFaultPins[DRIVER_FAULT_PIN_COUNT] = {
 
 
 
-void diagInit(void)
-{
-// any init if needed
-}
-
-
 uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 {
     uint8_t hasError = 0;

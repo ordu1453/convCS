@@ -18,7 +18,6 @@
 void prechargeInit(void);
 void prechargeStart(void);
 
-static uint8_t prechargeDone = 0;
 
 
 #endif // PRECHARGE_H

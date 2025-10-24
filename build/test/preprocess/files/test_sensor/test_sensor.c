@@ -44,20 +44,20 @@ void test_sensor_ConvertationToRealValues1(void)
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentIn))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(50)));
+)), (UNITY_UINT)((UNITY_UINT)(51)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(51)));
+)), (UNITY_UINT)((UNITY_UINT)(52)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1799.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1799.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(52)));
+)), (UNITY_UINT)((UNITY_UINT)(53)));
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1920.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1920.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageIn))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(54)));
+)), (UNITY_UINT)((UNITY_UINT)(55)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((1920.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((1920.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(55)));
+)), (UNITY_UINT)((UNITY_UINT)(56)));
 }
 
 void test_sensor_ConvertationToRealValues2(void)
@@ -74,20 +74,20 @@ void test_sensor_ConvertationToRealValues2(void)
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentIn))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(71)));
+)), (UNITY_UINT)((UNITY_UINT)(72)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(72)));
+)), (UNITY_UINT)((UNITY_UINT)(73)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1500.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(73)));
+)), (UNITY_UINT)((UNITY_UINT)(74)));
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageIn))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(75)));
+)), (UNITY_UINT)((UNITY_UINT)(76)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((-1600.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(76)));
+)), (UNITY_UINT)((UNITY_UINT)(77)));
 }
 
 void test_sensor_ConvertationToRealValues3(void)
@@ -104,18 +104,18 @@ void test_sensor_ConvertationToRealValues3(void)
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentIn))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(92)));
+)), (UNITY_UINT)((UNITY_UINT)(93)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentChoke))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(93)));
+)), (UNITY_UINT)((UNITY_UINT)(94)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.currentOut))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(94)));
+)), (UNITY_UINT)((UNITY_UINT)(95)));
 
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageIn))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(96)));
+)), (UNITY_UINT)((UNITY_UINT)(97)));
  UnityAssertFloatsWithin((UNITY_FLOAT)((UNITY_FLOAT)((0.0f)) * (UNITY_FLOAT)(0.00001f)), (UNITY_FLOAT)((UNITY_FLOAT)((0.0f))), (UNITY_FLOAT)((UNITY_FLOAT)((currentValues.voltageOut))), ((
 ((void *)0)
-)), (UNITY_UINT)((UNITY_UINT)(97)));
+)), (UNITY_UINT)((UNITY_UINT)(98)));
 }

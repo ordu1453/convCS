@@ -1,0 +1,30 @@
+---
+:source:
+  :file: test/test_sensor.c
+  :dirname: test
+  :basename: test_sensor.c
+:successes:
+- :test: test_sensor_ConvertationToRealValues1
+  :line: 39
+  :message: ''
+  :unity_test_time: 0
+- :test: test_sensor_ConvertationToRealValues2
+  :line: 60
+  :message: ''
+  :unity_test_time: 0
+- :test: test_sensor_ConvertationToRealValues3
+  :line: 81
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 3
+  :passed: 3
+  :failed: 0
+  :ignored: 0
+:stdout:
+- "===TESTING SENSOR Convertation 1==="
+- "===TESTING SENSOR Convertation 2==="
+- "===TESTING SENSOR Convertation 3==="
+:time: 0.9383455000352114

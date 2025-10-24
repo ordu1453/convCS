@@ -7458,7 +7458,6 @@ void verifyTest(void);
 void prechargeInit(void);
 void prechargeStart(void);
 
-static uint8_t prechargeDone = 0;
 
 
 
@@ -58870,6 +58869,21 @@ void test_converterProcess_Charge_ShouldGoInit(void)
     TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
 }
 
+void test_converterProcess_Disharge_ShouldGoInit(void)
+{
+	printf("===TESTING SYS PROCESS 6===\n");
+
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_OVERVOLTAGE;
+    unitTestHasError = 1;
+
+    // Вызываем функцию
+    converterProcess(STATE_DISCHARGE);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
+    TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+}
 void test_converterProcess_Precharge_ShouldGoInit(void)
 {
 	printf("===TESTING SYS PROCESS 7===\n");
@@ -58885,6 +58899,42 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
     // Проверяем логику (например, currentState, globalErrorMask)
     TEST_ASSERT_EQUAL_UINT32(STATE_INIT, currentState);
     TEST_ASSERT_EQUAL_UINT32(STATE_DISABLE, currentPWMState);
+}
+
+void test_converterProcess_Precharge_ShouldGoIdle(void)
+{
+	printf("===TESTING SYS PROCESS 8===\n");
+
+    unitTestSensorValues.voltageOut = 500.0f;
+    unitTestErrorMask = ERR_NONE;
+    unitTestHasError = 0;
+
+
+    // Вызываем функцию
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT8(0, unitTestHasError);
+    TEST_ASSERT_EQUAL_UINT32(STATE_IDLE, currentState);
+}
+
+void test_converterProcess_ConverterGetState(void)
+{
+	printf("===TESTING SYS PROCESS 8===\n");
+
+    unitTestSensorValues.voltageOut = 5000.0f;
+    unitTestErrorMask = ERR_OVERCURRENT;
+    unitTestHasError = 1;
+
+
+    // Вызываем функцию
+    SystemState_t state = STATE_PRECHARGE;
+    converterProcess(state);
+     SystemState_t newState = ConverterGetState();
+
+    // Проверяем логику (например, currentState, globalErrorMask)
+    TEST_ASSERT_EQUAL_UINT32(STATE_INIT, newState);
 }
 
 

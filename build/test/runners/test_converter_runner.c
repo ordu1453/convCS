@@ -27,7 +27,10 @@ extern void test_converterProcess_Charge_ShouldntRunPID2(void);
 extern void test_converterProcess_Charge_ShouldntRunPID3(void);
 extern void test_converterProcess_Charge_ShouldntRunPID4(void);
 extern void test_converterProcess_Charge_ShouldGoInit(void);
+extern void test_converterProcess_Disharge_ShouldGoInit(void);
 extern void test_converterProcess_Precharge_ShouldGoInit(void);
+extern void test_converterProcess_Precharge_ShouldGoIdle(void);
+extern void test_converterProcess_ConverterGetState(void);
 
 
 /*=======Mock Management=====*/
@@ -114,7 +117,13 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_converterProcess_Charge_ShouldGoInit");
       UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Disharge_ShouldGoInit");
+      UNITY_PRINT_EOL();
       UnityPrint("  test_converterProcess_Precharge_ShouldGoInit");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_Precharge_ShouldGoIdle");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_converterProcess_ConverterGetState");
       UNITY_PRINT_EOL();
       return 0;
     }
@@ -128,7 +137,10 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
   run_test(test_converterProcess_Charge_ShouldntRunPID3, "test_converterProcess_Charge_ShouldntRunPID3", 105);
   run_test(test_converterProcess_Charge_ShouldntRunPID4, "test_converterProcess_Charge_ShouldntRunPID4", 121);
   run_test(test_converterProcess_Charge_ShouldGoInit, "test_converterProcess_Charge_ShouldGoInit", 138);
-  run_test(test_converterProcess_Precharge_ShouldGoInit, "test_converterProcess_Precharge_ShouldGoInit", 154);
+  run_test(test_converterProcess_Disharge_ShouldGoInit, "test_converterProcess_Disharge_ShouldGoInit", 154);
+  run_test(test_converterProcess_Precharge_ShouldGoInit, "test_converterProcess_Precharge_ShouldGoInit", 169);
+  run_test(test_converterProcess_Precharge_ShouldGoIdle, "test_converterProcess_Precharge_ShouldGoIdle", 186);
+  run_test(test_converterProcess_ConverterGetState, "test_converterProcess_ConverterGetState", 204);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();
