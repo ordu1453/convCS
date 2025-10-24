@@ -30,8 +30,6 @@
 // Limits for diagnostics (physical units)
 #define VBUS_MIN 0.0f
 #define VBUS_MAX 1500.0f
-#define VIN_MIN 0.0f
-#define VIN_MAX 1500.0f
 
 
 #define I_MAX 1900.0f // +/-2500 A range provided by user - set realistically

@@ -22,6 +22,15 @@ char* GlobalOrderError;
 extern void setUp(void);
 extern void tearDown(void);
 extern void test_diagCheck_NoErrors_ShouldReturnZero(void);
+extern void test_diagCheck_Errors_CurChoke(void);
+extern void test_diagCheck_Errors_CurOut(void);
+extern void test_diagCheck_Errors_Cur_In(void);
+extern void test_diagCheck_FirstErrors_ThenNoError(void);
+extern void test_diagCheck_FirstErrors_ThenNoError_ThenError(void);
+extern void test_diagCheck_Errors_VolIn(void);
+extern void test_diagCheck_Errors_VolOut(void);
+extern void test_diagCheck_Errors_VolAndCur(void);
+extern void test_diagCheck_Errors_All(void);
 
 
 /*=======Mock Management=====*/
@@ -98,13 +107,40 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
       UNITY_PRINT_EOL();
       UnityPrint("  test_diagCheck_NoErrors_ShouldReturnZero");
       UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_CurChoke");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_CurOut");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_Cur_In");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_FirstErrors_ThenNoError");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_FirstErrors_ThenNoError_ThenError");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_VolIn");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_VolOut");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_VolAndCur");
+      UNITY_PRINT_EOL();
+      UnityPrint("  test_diagCheck_Errors_All");
+      UNITY_PRINT_EOL();
       return 0;
     }
     return parse_status;
   }
 #endif
   UnityBegin("test_diag.c");
-  run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 53);
+  run_test(test_diagCheck_NoErrors_ShouldReturnZero, "test_diagCheck_NoErrors_ShouldReturnZero", 48);
+  run_test(test_diagCheck_Errors_CurChoke, "test_diagCheck_Errors_CurChoke", 63);
+  run_test(test_diagCheck_Errors_CurOut, "test_diagCheck_Errors_CurOut", 90);
+  run_test(test_diagCheck_Errors_Cur_In, "test_diagCheck_Errors_Cur_In", 116);
+  run_test(test_diagCheck_FirstErrors_ThenNoError, "test_diagCheck_FirstErrors_ThenNoError", 142);
+  run_test(test_diagCheck_FirstErrors_ThenNoError_ThenError, "test_diagCheck_FirstErrors_ThenNoError_ThenError", 167);
+  run_test(test_diagCheck_Errors_VolIn, "test_diagCheck_Errors_VolIn", 202);
+  run_test(test_diagCheck_Errors_VolOut, "test_diagCheck_Errors_VolOut", 228);
+  run_test(test_diagCheck_Errors_VolAndCur, "test_diagCheck_Errors_VolAndCur", 252);
+  run_test(test_diagCheck_Errors_All, "test_diagCheck_Errors_All", 276);
 
   CMock_Guts_MemFreeFinal();
   return UNITY_END();

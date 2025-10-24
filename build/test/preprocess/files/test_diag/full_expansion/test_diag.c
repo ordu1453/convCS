@@ -8617,7 +8617,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Error_Handler(void);
 # 14 "Core/Inc/pid.h" 2
 # 1 "Core/Inc/config.h" 1
-# 50 "Core/Inc/config.h"
+# 48 "Core/Inc/config.h"
 typedef enum {
 STATE_INIT = 0,
 STATE_PRECHARGE = 1,
@@ -9222,28 +9222,437 @@ GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 extern uint8_t prechargeDone;
 
 void setUp(void) {
-    sensor.currentIn = 0;
-    sensor.currentOut = 0;
-    sensor.currentChoke = 0;
-    sensor.voltageIn = 0;
-    sensor.voltageOut = 0;
 }
 void tearDown(void) { }
 
 
 
 void test_diagCheck_NoErrors_ShouldReturnZero(void) {
-    uint32_t errorMask;
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
     uint8_t result = diagCheck(&sensor, &errorMask);
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((result)), (
-# 57 "test/test_diag.c" 3 4
-   ((void *)0)
-# 57 "test/test_diag.c"
-   ), (UNITY_UINT)(57), UNITY_DISPLAY_STYLE_UINT8);
-    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
 # 58 "test/test_diag.c" 3 4
    ((void *)0)
 # 58 "test/test_diag.c"
-   ), (UNITY_UINT)(58), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(58), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 59 "test/test_diag.c" 3 4
+   ((void *)0)
+# 59 "test/test_diag.c"
+   ), (UNITY_UINT)(59), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+
+void test_diagCheck_Errors_CurChoke (void)
+{
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 1900.0f +1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 74 "test/test_diag.c" 3 4
+   ((void *)0)
+# 74 "test/test_diag.c"
+   ), (UNITY_UINT)(74), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 75 "test/test_diag.c" 3 4
+   ((void *)0)
+# 75 "test/test_diag.c"
+   ), (UNITY_UINT)(75), UNITY_DISPLAY_STYLE_UINT32);
+
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = -1900.0f -1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 85 "test/test_diag.c" 3 4
+   ((void *)0)
+# 85 "test/test_diag.c"
+   ), (UNITY_UINT)(85), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 86 "test/test_diag.c" 3 4
+   ((void *)0)
+# 86 "test/test_diag.c"
+   ), (UNITY_UINT)(86), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+
+void test_diagCheck_Errors_CurOut (void)
+{
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 1900.0f +1;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 101 "test/test_diag.c" 3 4
+   ((void *)0)
+# 101 "test/test_diag.c"
+   ), (UNITY_UINT)(101), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 102 "test/test_diag.c" 3 4
+   ((void *)0)
+# 102 "test/test_diag.c"
+   ), (UNITY_UINT)(102), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = -1900.0f -1;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 111 "test/test_diag.c" 3 4
+   ((void *)0)
+# 111 "test/test_diag.c"
+   ), (UNITY_UINT)(111), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 112 "test/test_diag.c" 3 4
+   ((void *)0)
+# 112 "test/test_diag.c"
+   ), (UNITY_UINT)(112), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+
+void test_diagCheck_Errors_Cur_In (void)
+{
+
+    sensor.currentIn = 1900.0f +1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 127 "test/test_diag.c" 3 4
+   ((void *)0)
+# 127 "test/test_diag.c"
+   ), (UNITY_UINT)(127), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 128 "test/test_diag.c" 3 4
+   ((void *)0)
+# 128 "test/test_diag.c"
+   ), (UNITY_UINT)(128), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = -1900.0f -1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 137 "test/test_diag.c" 3 4
+   ((void *)0)
+# 137 "test/test_diag.c"
+   ), (UNITY_UINT)(137), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 138 "test/test_diag.c" 3 4
+   ((void *)0)
+# 138 "test/test_diag.c"
+   ), (UNITY_UINT)(138), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+
+void test_diagCheck_FirstErrors_ThenNoError (void)
+{
+
+    sensor.currentIn = 1900.0f +1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 153 "test/test_diag.c" 3 4
+   ((void *)0)
+# 153 "test/test_diag.c"
+   ), (UNITY_UINT)(153), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 154 "test/test_diag.c" 3 4
+   ((void *)0)
+# 154 "test/test_diag.c"
+   ), (UNITY_UINT)(154), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 163 "test/test_diag.c" 3 4
+   ((void *)0)
+# 163 "test/test_diag.c"
+   ), (UNITY_UINT)(163), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 164 "test/test_diag.c" 3 4
+   ((void *)0)
+# 164 "test/test_diag.c"
+   ), (UNITY_UINT)(164), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_diagCheck_FirstErrors_ThenNoError_ThenError (void)
+{
+
+    sensor.currentIn = 1900.0f +1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 178 "test/test_diag.c" 3 4
+   ((void *)0)
+# 178 "test/test_diag.c"
+   ), (UNITY_UINT)(178), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 179 "test/test_diag.c" 3 4
+   ((void *)0)
+# 179 "test/test_diag.c"
+   ), (UNITY_UINT)(179), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 188 "test/test_diag.c" 3 4
+   ((void *)0)
+# 188 "test/test_diag.c"
+   ), (UNITY_UINT)(188), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 189 "test/test_diag.c" 3 4
+   ((void *)0)
+# 189 "test/test_diag.c"
+   ), (UNITY_UINT)(189), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 1900.0f +1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 198 "test/test_diag.c" 3 4
+   ((void *)0)
+# 198 "test/test_diag.c"
+   ), (UNITY_UINT)(198), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 199 "test/test_diag.c" 3 4
+   ((void *)0)
+# 199 "test/test_diag.c"
+   ), (UNITY_UINT)(199), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_diagCheck_Errors_VolIn (void)
+{
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 1500.0f +1;
+    sensor.voltageOut = 0;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 213 "test/test_diag.c" 3 4
+   ((void *)0)
+# 213 "test/test_diag.c"
+   ), (UNITY_UINT)(213), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 214 "test/test_diag.c" 3 4
+   ((void *)0)
+# 214 "test/test_diag.c"
+   ), (UNITY_UINT)(214), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0.0f -1;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 223 "test/test_diag.c" 3 4
+   ((void *)0)
+# 223 "test/test_diag.c"
+   ), (UNITY_UINT)(223), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x02)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 224 "test/test_diag.c" 3 4
+   ((void *)0)
+# 224 "test/test_diag.c"
+   ), (UNITY_UINT)(224), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+
+void test_diagCheck_Errors_VolOut (void)
+{
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 1500.0f +1;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 238 "test/test_diag.c" 3 4
+   ((void *)0)
+# 238 "test/test_diag.c"
+   ), (UNITY_UINT)(238), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 239 "test/test_diag.c" 3 4
+   ((void *)0)
+# 239 "test/test_diag.c"
+   ), (UNITY_UINT)(239), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0.0f -1;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 248 "test/test_diag.c" 3 4
+   ((void *)0)
+# 248 "test/test_diag.c"
+   ), (UNITY_UINT)(248), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x02)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 249 "test/test_diag.c" 3 4
+   ((void *)0)
+# 249 "test/test_diag.c"
+   ), (UNITY_UINT)(249), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_diagCheck_Errors_VolAndCur (void)
+{
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 1900.0f +1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 1500.0f +1;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 262 "test/test_diag.c" 3 4
+   ((void *)0)
+# 262 "test/test_diag.c"
+   ), (UNITY_UINT)(262), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01 | 0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 263 "test/test_diag.c" 3 4
+   ((void *)0)
+# 263 "test/test_diag.c"
+   ), (UNITY_UINT)(263), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = -1900.0f -1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0.0f -1;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 272 "test/test_diag.c" 3 4
+   ((void *)0)
+# 272 "test/test_diag.c"
+   ), (UNITY_UINT)(272), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x02 | 0x04)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 273 "test/test_diag.c" 3 4
+   ((void *)0)
+# 273 "test/test_diag.c"
+   ), (UNITY_UINT)(273), UNITY_DISPLAY_STYLE_UINT32);
+}
+
+void test_diagCheck_Errors_All (void)
+{
+    sensor.currentIn = -1900.0f -1;
+    sensor.currentOut = 1900.0f +1;
+    sensor.currentChoke = 1900.0f +1;
+    sensor.voltageIn = 0.0f -1;
+    sensor.voltageOut = 1500.0f +1;
+ uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 286 "test/test_diag.c" 3 4
+   ((void *)0)
+# 286 "test/test_diag.c"
+   ), (UNITY_UINT)(286), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01 | 0x04 | 0x02)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 287 "test/test_diag.c" 3 4
+   ((void *)0)
+# 287 "test/test_diag.c"
+   ), (UNITY_UINT)(287), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = -1900.0f -1;
+    sensor.currentOut = -1900.0f -1;
+    sensor.currentChoke = 1900.0f +1;
+    sensor.voltageIn = 1500.0f +1;
+    sensor.voltageOut = 0.0f -1;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((1)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 296 "test/test_diag.c" 3 4
+   ((void *)0)
+# 296 "test/test_diag.c"
+   ), (UNITY_UINT)(296), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01 | 0x04 | 0x02)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 297 "test/test_diag.c" 3 4
+   ((void *)0)
+# 297 "test/test_diag.c"
+   ), (UNITY_UINT)(297), UNITY_DISPLAY_STYLE_UINT32);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((result)), (
+# 306 "test/test_diag.c" 3 4
+   ((void *)0)
+# 306 "test/test_diag.c"
+   ), (UNITY_UINT)(306), UNITY_DISPLAY_STYLE_UINT8);
+    UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((errorMask)), (
+# 307 "test/test_diag.c" 3 4
+   ((void *)0)
+# 307 "test/test_diag.c"
+   ), (UNITY_UINT)(307), UNITY_DISPLAY_STYLE_UINT32);
 }

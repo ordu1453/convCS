@@ -57939,8 +57939,6 @@ void Error_Handler(void);
 // Limits for diagnostics (physical units)
 #define VBUS_MIN 0.0f
 #define VBUS_MAX 1500.0f
-#define VIN_MIN 0.0f
-#define VIN_MAX 1500.0f
 
 
 #define I_MAX 1900.0f
@@ -58761,18 +58759,19 @@ GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 extern uint8_t prechargeDone;
 
 void setUp(void) {
-    sensor.currentIn = 0;
-    sensor.currentOut = 0;
-    sensor.currentChoke = 0;
-    sensor.voltageIn = 0;
-    sensor.voltageOut = 0;
 }
 void tearDown(void) { }
 
 
 
 void test_diagCheck_NoErrors_ShouldReturnZero(void) {
-    uint32_t errorMask;
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
     uint8_t result = diagCheck(&sensor, &errorMask);
 
     TEST_ASSERT_EQUAL_UINT8(0, result);
@@ -58780,4 +58779,250 @@ void test_diagCheck_NoErrors_ShouldReturnZero(void) {
 }
 
 
+void test_diagCheck_Errors_CurChoke (void)
+{
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = I_MAX+1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = -I_MAX-1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+}
+
+
+void test_diagCheck_Errors_CurOut (void)
+{
+
+    sensor.currentIn = 0;
+    sensor.currentOut = I_MAX+1;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = -I_MAX-1;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+}
+
+
+void test_diagCheck_Errors_Cur_In (void)
+{
+
+    sensor.currentIn = I_MAX+1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+
+    sensor.currentIn = -I_MAX-1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+}
+
+
+void test_diagCheck_FirstErrors_ThenNoError (void)
+{
+
+    sensor.currentIn = I_MAX+1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(0, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_NONE, errorMask);
+}
+
+void test_diagCheck_FirstErrors_ThenNoError_ThenError (void)
+{
+
+    sensor.currentIn = I_MAX+1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(0, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_NONE, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = I_MAX+1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERCURRENT, errorMask);
+}
+
+void test_diagCheck_Errors_VolIn (void)
+{
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = VBUS_MAX+1;
+    sensor.voltageOut = 0;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = VBUS_MIN-1;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_UNDERVOLTAGE, errorMask);
+}
+
+
+void test_diagCheck_Errors_VolOut (void)
+{
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = VBUS_MAX+1;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = VBUS_MIN-1;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_UNDERVOLTAGE, errorMask);
+}
+
+void test_diagCheck_Errors_VolAndCur (void)
+{
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = I_MAX+1;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = VBUS_MAX+1;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE | ERR_OVERCURRENT, errorMask);
+
+    sensor.currentIn = -I_MAX-1;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = VBUS_MIN-1;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_UNDERVOLTAGE | ERR_OVERCURRENT, errorMask);
+}
+
+void test_diagCheck_Errors_All (void)
+{
+    sensor.currentIn = -I_MAX-1;
+    sensor.currentOut = I_MAX+1;
+    sensor.currentChoke = I_MAX+1;
+    sensor.voltageIn = VBUS_MIN-1;
+    sensor.voltageOut = VBUS_MAX+1;
+	uint32_t errorMask;
+    uint8_t result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE | ERR_OVERCURRENT | ERR_UNDERVOLTAGE, errorMask);
+
+    sensor.currentIn = -I_MAX-1;
+    sensor.currentOut = -I_MAX-1;
+    sensor.currentChoke = I_MAX+1;
+    sensor.voltageIn = VBUS_MAX+1;
+    sensor.voltageOut = VBUS_MIN-1;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(1, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_OVERVOLTAGE | ERR_OVERCURRENT | ERR_UNDERVOLTAGE, errorMask);
+
+    sensor.currentIn = 0;
+    sensor.currentOut = 0;
+    sensor.currentChoke = 0;
+    sensor.voltageIn = 0;
+    sensor.voltageOut = 0;
+    result = diagCheck(&sensor, &errorMask);
+
+    TEST_ASSERT_EQUAL_UINT8(0, result);
+    TEST_ASSERT_EQUAL_UINT32(ERR_NONE, errorMask);
+}
 

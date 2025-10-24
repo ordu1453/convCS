@@ -8617,7 +8617,7 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Error_Handler(void);
 # 14 "Core/Inc/pid.h" 2
 # 1 "Core/Inc/config.h" 1
-# 50 "Core/Inc/config.h"
+# 48 "Core/Inc/config.h"
 typedef enum {
 STATE_INIT = 0,
 STATE_PRECHARGE = 1,
