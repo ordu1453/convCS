@@ -5,43 +5,43 @@
   :basename: test_converter.c
 :successes:
 - :test: test_converterProcess_Charge_ShouldRunPID
-  :line: 54
+  :line: 51
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID1
-  :line: 71
+  :line: 68
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID2
-  :line: 88
+  :line: 85
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID3
-  :line: 105
+  :line: 102
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldntRunPID4
-  :line: 121
+  :line: 118
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Charge_ShouldGoInit
-  :line: 138
+  :line: 135
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Disharge_ShouldGoInit
-  :line: 154
+  :line: 151
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Precharge_ShouldGoInit
-  :line: 169
+  :line: 166
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_Precharge_ShouldGoIdle
-  :line: 186
+  :line: 183
   :message: ''
   :unity_test_time: 0
 - :test: test_converterProcess_ConverterGetState
-  :line: 204
+  :line: 201
   :message: ''
   :unity_test_time: 0
 :failures: []
@@ -168,4 +168,4 @@
 - Precharge mode starting
 - Error found after precharging
 - Entering to STATE_INIT
-:time: 6.181977099971846
+:time: 4.88843690000067

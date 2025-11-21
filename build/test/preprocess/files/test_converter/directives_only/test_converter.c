@@ -58735,11 +58735,9 @@ PIController_t pi;
 PI2Controller_t pi2;
 SensorValues_t sensor;
 
-
 extern SensorValues_t unitTestSensorValues;
 extern uint32_t unitTestErrorMask;
 extern uint8_t unitTestHasError;
-
 
 extern uint32_t globalErrorMask;
 extern SystemState_t currentState;
@@ -58747,7 +58745,6 @@ extern PWMState_t currentPWMState;
 
 extern uint32_t rawValues[5];
 extern SensorValues_t currentValues;
-
 
 //void HAL_Delay(uint32_t ms) {}
 void HAL_GPIO_WritePin(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState) {}

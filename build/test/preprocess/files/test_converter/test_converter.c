@@ -54,13 +54,13 @@ void test_converterProcess_Charge_ShouldRunPID(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x00)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
    ((void *)0)
-   ), (UNITY_UINT)(63), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(60), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_CHARGE)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
    ((void *)0)
-   ), (UNITY_UINT)(64), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(61), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_ENABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(65), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(62), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Charge_ShouldntRunPID1(void)
@@ -75,10 +75,10 @@ void test_converterProcess_Charge_ShouldntRunPID1(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x01)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
    ((void *)0)
-   ), (UNITY_UINT)(83), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(80), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(84), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(81), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Charge_ShouldntRunPID2(void)
@@ -93,10 +93,10 @@ void test_converterProcess_Charge_ShouldntRunPID2(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x02)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
    ((void *)0)
-   ), (UNITY_UINT)(100), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(97), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(101), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(98), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Charge_ShouldntRunPID3(void)
@@ -110,10 +110,10 @@ void test_converterProcess_Charge_ShouldntRunPID3(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x08)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
    ((void *)0)
-   ), (UNITY_UINT)(116), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(113), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(117), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(114), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Charge_ShouldntRunPID4(void)
@@ -128,10 +128,10 @@ void test_converterProcess_Charge_ShouldntRunPID4(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((0x04)), (UNITY_INT)(UNITY_UINT32)((globalErrorMask)), (
    ((void *)0)
-   ), (UNITY_UINT)(133), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(130), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(134), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(131), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Charge_ShouldGoInit(void)
@@ -146,10 +146,10 @@ void test_converterProcess_Charge_ShouldGoInit(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
    ((void *)0)
-   ), (UNITY_UINT)(150), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(147), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(151), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(148), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Disharge_ShouldGoInit(void)
@@ -164,10 +164,10 @@ void test_converterProcess_Disharge_ShouldGoInit(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
    ((void *)0)
-   ), (UNITY_UINT)(166), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(163), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(167), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(164), UNITY_DISPLAY_STYLE_UINT32);
 }
 void test_converterProcess_Precharge_ShouldGoInit(void)
 {
@@ -182,10 +182,10 @@ void test_converterProcess_Precharge_ShouldGoInit(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
    ((void *)0)
-   ), (UNITY_UINT)(182), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(179), UNITY_DISPLAY_STYLE_UINT32);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_DISABLE)), (UNITY_INT)(UNITY_UINT32)((currentPWMState)), (
    ((void *)0)
-   ), (UNITY_UINT)(183), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(180), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_Precharge_ShouldGoIdle(void)
@@ -201,10 +201,10 @@ void test_converterProcess_Precharge_ShouldGoIdle(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT8 )((0)), (UNITY_INT)(UNITY_UINT8 )((unitTestHasError)), (
    ((void *)0)
-   ), (UNITY_UINT)(200), UNITY_DISPLAY_STYLE_UINT8);
+   ), (UNITY_UINT)(197), UNITY_DISPLAY_STYLE_UINT8);
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_IDLE)), (UNITY_INT)(UNITY_UINT32)((currentState)), (
    ((void *)0)
-   ), (UNITY_UINT)(201), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(198), UNITY_DISPLAY_STYLE_UINT32);
 }
 
 void test_converterProcess_ConverterGetState(void)
@@ -221,5 +221,5 @@ void test_converterProcess_ConverterGetState(void)
 
     UnityAssertEqualNumber((UNITY_INT)(UNITY_UINT32)((STATE_INIT)), (UNITY_INT)(UNITY_UINT32)((newState)), (
    ((void *)0)
-   ), (UNITY_UINT)(219), UNITY_DISPLAY_STYLE_UINT32);
+   ), (UNITY_UINT)(216), UNITY_DISPLAY_STYLE_UINT32);
 }
