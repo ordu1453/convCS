@@ -1,5 +1,8 @@
-../Core/Src/can.c:17:6:canInit	1
-../Core/Src/can.c:28:6:canProcessPeriodic	2
-../Core/Src/can.c:42:6:canPublishTelemetry	2
-../Core/Src/can.c:82:6:canReceiveHandler	2
-../Core/Src/can.c:101:6:HAL_FDCAN_RxFifo0Callback	1
+../Core/Src/can.c:18:6:canInit	3
+../Core/Src/can.c:70:6:canProcessPeriodic	1
+../Core/Src/can.c:75:6:canHeartbeat	2
+../Core/Src/can.c:116:6:canPublishTelemetry	2
+../Core/Src/can.c:175:6:canReceiveHandler	3
+../Core/Src/can.c:205:6:HAL_FDCAN_RxFifo0Callback	1
+../Core/Src/can.c:212:6:canRecoverFromBusOff	1
+../Core/Src/can.c:250:6:canCheckStatus	3

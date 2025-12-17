@@ -68,13 +68,26 @@ typedef enum {
 
 
 // Коэффициенты преобразования ADC -> физические величины
-#define ADC_TO_CURRENT_COEFF_IN    0.80586f    // мА/единицу ADC, подставь своё значение
-#define ADC_TO_CURRENT_COEFF_OUT   0.80586f
-#define ADC_TO_CURRENT_COEFF_CHOKE 0.80586f
-#define ADC_TO_VOLTAGE_COEFF_IN    0.85959f    // мВ/единицу ADC, подставь своё значение
-#define ADC_TO_VOLTAGE_COEFF_OUT   0.85959f
+
+#define ADC_TO_CURRENT_COEFF 0.80586f
+#define ADC_TO_VOLTAGE_COEFF    0.85959f
 
 #define CURRENT_OFFSET 1500.0f
 #define VOLTAGE_OFFSET 1600.0f
+//
+//#define CURR_CAL 63.0f
+//#define VOL_CAL 60.0f
+
+
+#define CURR_CAL1 0.0f
+#define CURR_CAL2 0.0f
+#define CURR_CAL3 0.0f
+
+#define VOL_CAL1 0.0f
+#define VOL_CAL2 0.0f
+
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+
+
 
 #endif /* INC_CONFIG_H_ */

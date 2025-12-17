@@ -8,6 +8,7 @@ C_SRCS += \
 ../Core/Src/can.c \
 ../Core/Src/converter.c \
 ../Core/Src/diag.c \
+../Core/Src/flash.c \
 ../Core/Src/main.c \
 ../Core/Src/pid.c \
 ../Core/Src/precharge.c \
@@ -24,6 +25,7 @@ OBJS += \
 ./Core/Src/can.o \
 ./Core/Src/converter.o \
 ./Core/Src/diag.o \
+./Core/Src/flash.o \
 ./Core/Src/main.o \
 ./Core/Src/pid.o \
 ./Core/Src/precharge.o \
@@ -40,6 +42,7 @@ C_DEPS += \
 ./Core/Src/can.d \
 ./Core/Src/converter.d \
 ./Core/Src/diag.d \
+./Core/Src/flash.d \
 ./Core/Src/main.d \
 ./Core/Src/pid.d \
 ./Core/Src/precharge.d \
@@ -60,7 +63,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/can.cyclo ./Core/Src/can.d ./Core/Src/can.o ./Core/Src/can.su ./Core/Src/converter.cyclo ./Core/Src/converter.d ./Core/Src/converter.o ./Core/Src/converter.su ./Core/Src/diag.cyclo ./Core/Src/diag.d ./Core/Src/diag.o ./Core/Src/diag.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/pid.cyclo ./Core/Src/pid.d ./Core/Src/pid.o ./Core/Src/pid.su ./Core/Src/precharge.cyclo ./Core/Src/precharge.d ./Core/Src/precharge.o ./Core/Src/precharge.su ./Core/Src/pwm.cyclo ./Core/Src/pwm.d ./Core/Src/pwm.o ./Core/Src/pwm.su ./Core/Src/pwmHandler.cyclo ./Core/Src/pwmHandler.d ./Core/Src/pwmHandler.o ./Core/Src/pwmHandler.su ./Core/Src/sensor.cyclo ./Core/Src/sensor.d ./Core/Src/sensor.o ./Core/Src/sensor.su ./Core/Src/stm32g4xx_hal_msp.cyclo ./Core/Src/stm32g4xx_hal_msp.d ./Core/Src/stm32g4xx_hal_msp.o ./Core/Src/stm32g4xx_hal_msp.su ./Core/Src/stm32g4xx_it.cyclo ./Core/Src/stm32g4xx_it.d ./Core/Src/stm32g4xx_it.o ./Core/Src/stm32g4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g4xx.cyclo ./Core/Src/system_stm32g4xx.d ./Core/Src/system_stm32g4xx.o ./Core/Src/system_stm32g4xx.su
+	-$(RM) ./Core/Src/can.cyclo ./Core/Src/can.d ./Core/Src/can.o ./Core/Src/can.su ./Core/Src/converter.cyclo ./Core/Src/converter.d ./Core/Src/converter.o ./Core/Src/converter.su ./Core/Src/diag.cyclo ./Core/Src/diag.d ./Core/Src/diag.o ./Core/Src/diag.su ./Core/Src/flash.cyclo ./Core/Src/flash.d ./Core/Src/flash.o ./Core/Src/flash.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/pid.cyclo ./Core/Src/pid.d ./Core/Src/pid.o ./Core/Src/pid.su ./Core/Src/precharge.cyclo ./Core/Src/precharge.d ./Core/Src/precharge.o ./Core/Src/precharge.su ./Core/Src/pwm.cyclo ./Core/Src/pwm.d ./Core/Src/pwm.o ./Core/Src/pwm.su ./Core/Src/pwmHandler.cyclo ./Core/Src/pwmHandler.d ./Core/Src/pwmHandler.o ./Core/Src/pwmHandler.su ./Core/Src/sensor.cyclo ./Core/Src/sensor.d ./Core/Src/sensor.o ./Core/Src/sensor.su ./Core/Src/stm32g4xx_hal_msp.cyclo ./Core/Src/stm32g4xx_hal_msp.d ./Core/Src/stm32g4xx_hal_msp.o ./Core/Src/stm32g4xx_hal_msp.su ./Core/Src/stm32g4xx_it.cyclo ./Core/Src/stm32g4xx_it.d ./Core/Src/stm32g4xx_it.o ./Core/Src/stm32g4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32g4xx.cyclo ./Core/Src/system_stm32g4xx.d ./Core/Src/system_stm32g4xx.o ./Core/Src/system_stm32g4xx.su
 
 .PHONY: clean-Core-2f-Src
 

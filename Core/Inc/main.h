@@ -81,10 +81,10 @@ void Error_Handler(void);
 #define H7_GPIO_Port GPIOB
 #define H8_Pin GPIO_PIN_7
 #define H8_GPIO_Port GPIOB
-#define USER_BTN_Pin GPIO_PIN_9
-#define USER_BTN_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+#define DEBUG_MODE 0
+
 
 /* USER CODE END Private defines */
 

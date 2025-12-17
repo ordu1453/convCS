@@ -1,6 +1,7 @@
 "./Core/Src/can.o"
 "./Core/Src/converter.o"
 "./Core/Src/diag.o"
+"./Core/Src/flash.o"
 "./Core/Src/main.o"
 "./Core/Src/pid.o"
 "./Core/Src/precharge.o"

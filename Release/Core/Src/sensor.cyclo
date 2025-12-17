@@ -1,3 +1,5 @@
-../Core/Src/sensor.c:12:6:sensorInit	1
-../Core/Src/sensor.c:25:6:sensorRead	2
-../Core/Src/sensor.c:59:23:sensorGetValues	1
+../Core/Src/sensor.c:17:6:sensorInit	1
+../Core/Src/sensor.c:46:6:sensorRead	4
+../Core/Src/sensor.c:90:6:SensorCalibration	7
+../Core/Src/sensor.c:23:6:sensorC	1
+../Core/Src/sensor.c:191:23:sensorGetValues	1

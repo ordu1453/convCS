@@ -23,6 +23,9 @@
 /* USER CODE BEGIN Includes */
 #include "converter.h"
 #include "sensor.h"
+
+#include "can.h"
+#include "flash.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,7 +35,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define ADC_DIVIDER 20 // Calculate adc values time = pwm_period/ADC_DIVIDER
+#define ADC_DIVIDER 1 // Calculate adc values time = pwm_period/ADC_DIVIDER
+//#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 
 /* USER CODE END PD */
 
@@ -49,11 +53,29 @@ FDCAN_HandleTypeDef hfdcan2;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim6;
+TIM_HandleTypeDef htim7;
 
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 uint32_t tickADC = ADC_DIVIDER;
+
+uint8_t processRun = 0;
+uint8_t processRunOld = 0;
+
+SystemState_t debug = STATE_CHARGE;
+
+volatile uint8_t flag_irq = 0;
+volatile uint32_t time_irq = 0;
+
+
+
+////// Переменные в RAM
+//FlashVars_t vars1;
+//FlashVars_t varsFromFlash1;
+
+
+
 
 /* USER CODE END PV */
 
@@ -61,11 +83,12 @@ uint32_t tickADC = ADC_DIVIDER;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_ADC1_Init(void);
-static void MX_FDCAN1_Init(void);
 static void MX_FDCAN2_Init(void);
 static void MX_TIM1_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM7_Init(void);
+static void MX_FDCAN1_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -73,14 +96,40 @@ static void MX_TIM6_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+void ledTick2 ()
+{
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
+	  HAL_Delay(1000);
+}
+
+void ledTick1 ()
+{
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+	  HAL_Delay(1000);
+}
+
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM1 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4)
     {
+//		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+
 // This used for adding offset to adc calculation in case if it is unnecessary to get data every pwm period
-    	if (tickADC == ADC_DIVIDER){
+    	if (tickADC == ADC_DIVIDER)
+    	{
     		sensorRead();
-    		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
     		tickADC = 0;
     	}
     	else
@@ -95,9 +144,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM6)
     {
     	converterProcess(ConverterGetState());
-		HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+//    	converterProcess(debug);
+    	processRun = !processRun;
+    }
+    if (htim->Instance == TIM7)
+    {
+//    	canCheckStatus();
+    	canProcessPeriodic();
+//    	canHeartbeat();
+//    	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
     }
 }
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -130,14 +190,52 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_FDCAN1_Init();
   MX_FDCAN2_Init();
   MX_TIM1_Init();
   MX_USART3_UART_Init();
   MX_TIM6_Init();
+  MX_TIM7_Init();
+  MX_FDCAN1_Init();
   /* USER CODE BEGIN 2 */
+
+
+  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+
+
+
+
+//  vars1.calCur1 = 1000;
+//  vars1.calCur2 = 1100;
+//  vars1.calCur3 = 1200;
+//  vars1.calVol1 = 1300;
+//  vars1.calVol2 = 1400;
+//  vars1.calPerf = 1500;
+//
+//
+//  // Стираем страницу FLASH
+//  if (Flash_Erase() != HAL_OK)
+//  {
+//	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//      // обработка ошибки
+//  }
+//
+//  // Записываем в FLASH
+//  if (Flash_WriteVars(&vars1) != HAL_OK)
+//  {
+//      // обработка ошибки
+//	  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+//
+//  }
+//
+//  // Читаем обратно из FLASH
+//  Flash_ReadVars(&varsFromFlash1);
+  HAL_Delay(1000);
+  canInit();
   HAL_TIM_OC_Start_IT(&htim1, TIM_CHANNEL_4); // adc interrupt
   HAL_TIM_Base_Start_IT(&htim6); // main process interrupt
+  HAL_TIM_Base_Start_IT(&htim7);
+  sensorInit();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -146,10 +244,33 @@ int main(void)
   {
 //	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
 //	  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-//	  HAL_Delay(100);
+//	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	  TIM1->CCR1 = 2000;
+//	  ledTick2();
+
+//	  printf("a=%lu, b=%lu, c=%d, d=%d, e=%u, f=%u\r\n",
+//	         varsFromFlash.a,
+//	         varsFromFlash.b,
+//	         varsFromFlash.c,
+//	         varsFromFlash.d,
+//	         varsFromFlash.e,
+//	         varsFromFlash.f);
+
+	  if(flag_irq && (HAL_GetTick() - time_irq) > 200)
+	  {
+	    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_9);  // очищаем бит EXTI_PR
+	    NVIC_ClearPendingIRQ(EXTI9_5_IRQn); // очищаем бит NVIC_ICPRx
+	    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);   // включаем внешнее прерывание
+
+	    flag_irq = 0;
+	  }
+
+
+
   }
   /* USER CODE END 3 */
 }
@@ -213,7 +334,6 @@ static void MX_ADC1_Init(void)
 
   ADC_MultiModeTypeDef multimode = {0};
   ADC_ChannelConfTypeDef sConfig = {0};
-  ADC_InjectionConfTypeDef sConfigInjected = {0};
 
   /* USER CODE BEGIN ADC1_Init 1 */
 
@@ -230,7 +350,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
-  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.NbrOfConversion = 5;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
@@ -254,7 +374,7 @@ static void MX_ADC1_Init(void)
   */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = ADC_REGULAR_RANK_1;
-  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+  sConfig.SamplingTime = ADC_SAMPLETIME_247CYCLES_5;
   sConfig.SingleDiff = ADC_SINGLE_ENDED;
   sConfig.OffsetNumber = ADC_OFFSET_NONE;
   sConfig.Offset = 0;
@@ -263,46 +383,38 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
 
-  /** Configure Injected Channel
+  /** Configure Regular Channel
   */
-  sConfigInjected.InjectedChannel = ADC_CHANNEL_1;
-  sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
-  sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_2CYCLES_5;
-  sConfigInjected.InjectedSingleDiff = ADC_SINGLE_ENDED;
-  sConfigInjected.InjectedOffsetNumber = ADC_OFFSET_NONE;
-  sConfigInjected.InjectedOffset = 0;
-  sConfigInjected.InjectedNbrOfConversion = 4;
-  sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
-  sConfigInjected.AutoInjectedConv = DISABLE;
-  sConfigInjected.QueueInjectedContext = DISABLE;
-  sConfigInjected.ExternalTrigInjecConv = ADC_INJECTED_SOFTWARE_START;
-  sConfigInjected.ExternalTrigInjecConvEdge = ADC_EXTERNALTRIGINJECCONV_EDGE_NONE;
-  sConfigInjected.InjecOversamplingMode = DISABLE;
-  if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
+  sConfig.Channel = ADC_CHANNEL_2;
+  sConfig.Rank = ADC_REGULAR_RANK_2;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /** Configure Injected Channel
+  /** Configure Regular Channel
   */
-  sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
-  if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
+  sConfig.Channel = ADC_CHANNEL_3;
+  sConfig.Rank = ADC_REGULAR_RANK_3;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /** Configure Injected Channel
+  /** Configure Regular Channel
   */
-  sConfigInjected.InjectedRank = ADC_INJECTED_RANK_3;
-  if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
+  sConfig.Channel = ADC_CHANNEL_4;
+  sConfig.Rank = ADC_REGULAR_RANK_4;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
 
-  /** Configure Injected Channel
+  /** Configure Regular Channel
   */
-  sConfigInjected.InjectedRank = ADC_INJECTED_RANK_4;
-  if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
+  sConfig.Channel = ADC_CHANNEL_5;
+  sConfig.Rank = ADC_REGULAR_RANK_5;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
@@ -523,6 +635,44 @@ static void MX_TIM6_Init(void)
 }
 
 /**
+  * @brief TIM7 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM7_Init(void)
+{
+
+  /* USER CODE BEGIN TIM7_Init 0 */
+
+  /* USER CODE END TIM7_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM7_Init 1 */
+
+  /* USER CODE END TIM7_Init 1 */
+  htim7.Instance = TIM7;
+  htim7.Init.Prescaler = 2719;
+  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim7.Init.Period = 62499;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM7_Init 2 */
+
+  /* USER CODE END TIM7_Init 2 */
+
+}
+
+/**
   * @brief USART3 Initialization Function
   * @param None
   * @retval None
@@ -614,13 +764,21 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(RELAY_GATE_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : H5_Pin H6_Pin H7_Pin H8_Pin
-                           USER_BTN_Pin */
-  GPIO_InitStruct.Pin = H5_Pin|H6_Pin|H7_Pin|H8_Pin
-                          |USER_BTN_Pin;
+  /*Configure GPIO pins : H5_Pin H6_Pin H7_Pin H8_Pin */
+  GPIO_InitStruct.Pin = H5_Pin|H6_Pin|H7_Pin|H8_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_9;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 
@@ -628,6 +786,36 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+PUTCHAR_PROTOTYPE
+{
+  /* Place your implementation of fputc here */
+  /* e.g. write a character to the USART1 and Loop until the end of transmission */
+  HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
+
+  return ch;
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+
+{
+
+  if(GPIO_Pin== GPIO_PIN_9) {
+
+//    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+      HAL_NVIC_DisableIRQ(EXTI9_5_IRQn); // сразу же отключаем прерывания на этом пине
+      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+      sensorC();
+      flag_irq = 1;
+      time_irq = HAL_GetTick();
+
+  } else{
+
+    __NOP();
+
+  }
+
+}
 
 /* USER CODE END 4 */
 

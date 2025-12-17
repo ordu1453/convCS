@@ -20,7 +20,7 @@ void canInit(void);
 
 // Функция вызывается периодически каждые CONTROL_DT_MS миллисекунд.
 // Она отслеживает время и чередует отправку сообщений между FDCAN1 и FDCAN2 каждые 250 мс.
-void canProcessPeriodic(uint32_t msTick);
+void canProcessPeriodic();
 
 
 // Отправка телеметрии (режим работы, ошибки, измерения датчиков)
@@ -30,6 +30,10 @@ void canPublishTelemetry(SystemState_t state, uint32_t errorMask, const SensorVa
 // Приём сообщений от управляющего блока.
 // Обновляет глобальные переменные с целевым напряжением и режимом работы.
 void canReceiveHandler(FDCAN_HandleTypeDef *hfdcan);
+
+void canCheckStatus(void);
+
+void canHeartbeat(void);
 
 
 // Глобальные данные, обновляемые по CAN.

@@ -21,3 +21,5 @@ build/vendor/unity/src/meson.build
 build/vendor/unity/src/unity_internals.h
 build/vendor/unity/src/unity.c
 build/vendor/unity/src/unity.h
+/Release/
+/Debug/

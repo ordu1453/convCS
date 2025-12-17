@@ -5,12 +5,43 @@
  *      Author: ordum
  */
 
+/*
+ *
+0x00 - нет ошибок
+
+0x01 - только перегрузка напряжения
+
+0x02 - только недогрузка напряжения
+
+0x03 - перегрузка + недогрузка
+
+0x04 - только перегрузка тока
+
+0x05 - перегрузка напряжения + перегрузка тока
+
+0x06 - недогрузка напряжения + перегрузка тока
+
+0x08 - только ошибка драйвера IGBT
+
+0x09 - перегрузка напряжения + ошибка драйвера
+
+0x0A - недогрузка напряжения + ошибка драйвера
+
+0x0C - перегрузка тока + ошибка драйвера
+
+0x0F - все 4 ошибки одновременно
+
+
+ */
+
+
+
 
 #include "diag.h"
 #include "config.h"
 #include "main.h"
 
-#define DRIVER_FAULT_PIN_COUNT 4  // количество входов от IGBT-драйверов (один полумост)
+#define DRIVER_FAULT_PIN_COUNT 4// количество входов от IGBT-драйверов (один полумост)
 
 static const uint16_t driverFaultPins[DRIVER_FAULT_PIN_COUNT] = {
     GPIO_PIN_4,
@@ -80,6 +111,10 @@ uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 
 #endif
 
+    if (DEBUG_MODE)
+    {
+    	*errorMask = ERR_NONE;
+    }
 
-    return hasError;
+    return DEBUG_MODE ? 0 : hasError;
 }

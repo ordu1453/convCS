@@ -15,5 +15,7 @@
 void sensorInit(void);
 void sensorRead(void);
 const SensorValues_t* sensorGetValues(void);
+void SensorCalibration(void);
+
 
 #endif /* INC_SENSOR_H_ */
