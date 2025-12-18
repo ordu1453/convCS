@@ -128,7 +128,7 @@ data[1] = (uint8_t)(errorMask & 0xFF);
 
 int16_t vin = (int16_t)(s->voltageIn);
 int16_t vout = (int16_t)(s->voltageOut);
-int16_t iL = (int16_t)(s->currentChoke);
+int16_t iL = (int16_t)(s->currentOut);
 
 
 memcpy(&data[2], &vin, 2);

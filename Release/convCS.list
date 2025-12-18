@@ -470,23 +470,24 @@ Disassembly of section .text:
 08000668 <canPublishTelemetry>:
  8000668:	b500      	push	{lr}
  800066a:	b08d      	sub	sp, #52	@ 0x34
- 800066c:	f88d 1005 	strb.w	r1, [sp, #5]
- 8000670:	6911      	ldr	r1, [r2, #16]
- 8000672:	f8ad 1008 	strh.w	r1, [sp, #8]
- 8000676:	e9d2 3202 	ldrd	r3, r2, [r2, #8]
- 800067a:	f8ad 2006 	strh.w	r2, [sp, #6]
- 800067e:	f8ad 300a 	strh.w	r3, [sp, #10]
- 8000682:	f240 1223 	movw	r2, #291	@ 0x123
- 8000686:	2300      	movs	r3, #0
- 8000688:	e9cd 2303 	strd	r2, r3, [sp, #12]
- 800068c:	2208      	movs	r2, #8
- 800068e:	e9cd 2306 	strd	r2, r3, [sp, #24]
- 8000692:	e9cd 3308 	strd	r3, r3, [sp, #32]
- 8000696:	9305      	str	r3, [sp, #20]
- 8000698:	930a      	str	r3, [sp, #40]	@ 0x28
- 800069a:	4b0a      	ldr	r3, [pc, #40]	@ (80006c4 <canPublishTelemetry+0x5c>)
- 800069c:	f88d 0004 	strb.w	r0, [sp, #4]
- 80006a0:	781b      	ldrb	r3, [r3, #0]
+ 800066c:	6853      	ldr	r3, [r2, #4]
+ 800066e:	f88d 1005 	strb.w	r1, [sp, #5]
+ 8000672:	6911      	ldr	r1, [r2, #16]
+ 8000674:	68d2      	ldr	r2, [r2, #12]
+ 8000676:	f8ad 2006 	strh.w	r2, [sp, #6]
+ 800067a:	f8ad 300a 	strh.w	r3, [sp, #10]
+ 800067e:	f240 1223 	movw	r2, #291	@ 0x123
+ 8000682:	2300      	movs	r3, #0
+ 8000684:	e9cd 2303 	strd	r2, r3, [sp, #12]
+ 8000688:	2208      	movs	r2, #8
+ 800068a:	e9cd 2306 	strd	r2, r3, [sp, #24]
+ 800068e:	e9cd 3308 	strd	r3, r3, [sp, #32]
+ 8000692:	9305      	str	r3, [sp, #20]
+ 8000694:	930a      	str	r3, [sp, #40]	@ 0x28
+ 8000696:	4b0b      	ldr	r3, [pc, #44]	@ (80006c4 <canPublishTelemetry+0x5c>)
+ 8000698:	f8ad 1008 	strh.w	r1, [sp, #8]
+ 800069c:	781b      	ldrb	r3, [r3, #0]
+ 800069e:	f88d 0004 	strb.w	r0, [sp, #4]
  80006a2:	aa01      	add	r2, sp, #4
  80006a4:	a903      	add	r1, sp, #12
  80006a6:	b143      	cbz	r3, 80006ba <canPublishTelemetry+0x52>

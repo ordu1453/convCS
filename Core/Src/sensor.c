@@ -10,7 +10,7 @@ KalmanFilter currentIn_filter;
 KalmanFilter currentOut_filter;
 KalmanFilter currentChoke_filter;
 
-
+// Фильтры для калибровки датчиков
 KalmanFilter voltageIn_filter0;
 KalmanFilter voltageOut_filter0;
 KalmanFilter currentIn_filter0;
@@ -27,13 +27,13 @@ extern UART_HandleTypeDef huart3;
 FlashVars_t varsFromFlash;
 FlashVars_t vars;
 
-// Инициализация фильтров (вызвать один раз при старте)
+// Инициализация фильтров
 void initKalmanFilters(void) {
     // Параметры:
-    // q = 0.01  - шум процесса (чем больше, тем быстрее реакция на изменения)
-    // r = 0.1   - шум измерений (чем больше, тем больше сглаживание)
-    // initial_value = 0.0 - начальное значение
-    // initial_error = 1.0 - начальная ошибка
+    // q - шум процесса (чем больше, тем быстрее реакция на изменения)
+    // r - шум измерений (чем больше, тем больше сглаживание)
+    // initial_value - начальное значение
+    // initial_error - начальная ошибка
 
     kalmanInit(&voltageIn_filter,0.001f, 2.0f, 0.0f, 1.0f);
     kalmanInit(&voltageOut_filter, 0.001f, 2.0f, 0.0f, 1.0f);
