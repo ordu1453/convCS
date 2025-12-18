@@ -1,7 +1,14 @@
 #include "sensor.h"
 #include "config.h"
 #include "flash.h"
+#include "kalmanFilter.h"
 
+// Объявляем фильтры для каждого канала
+KalmanFilter voltageIn_filter;
+KalmanFilter voltageOut_filter;
+KalmanFilter currentIn_filter;
+KalmanFilter currentOut_filter;
+KalmanFilter currentChoke_filter;
 
 
 #ifndef TEST_UNITY
@@ -14,13 +21,28 @@ extern UART_HandleTypeDef huart3;
 FlashVars_t varsFromFlash;
 FlashVars_t vars;
 
+// Инициализация фильтров (вызвать один раз при старте)
+void initKalmanFilters(void) {
+    // Параметры:
+    // q = 0.01  - шум процесса (чем больше, тем быстрее реакция на изменения)
+    // r = 0.1   - шум измерений (чем больше, тем больше сглаживание)
+    // initial_value = 0.0 - начальное значение
+    // initial_error = 1.0 - начальная ошибка
+
+    kalmanInit(&voltageIn_filter, 0.01f, 0.1f, 0.0f, 1.0f);
+    kalmanInit(&voltageOut_filter, 0.01f, 0.1f, 0.0f, 1.0f);
+    kalmanInit(&currentIn_filter, 0.01f, 0.1f, 0.0f, 1.0f);
+    kalmanInit(&currentOut_filter, 0.01f, 0.1f, 0.0f, 1.0f);
+    kalmanInit(&currentChoke_filter, 0.01f, 0.1f, 0.0f, 1.0f);
+}
+
 void sensorInit(void)
 {
 	  Flash_ReadVars(&vars);
 }
 
 
-void sensorC(void)
+void sensorCalculateCoeff(void)
 {
 //	uint32_t primask_bit = __get_PRIMASK();  // сохраняем состояние
 	__disable_irq();
@@ -67,14 +89,18 @@ printf("vol1: %d\r\n", vars.calVol1);
 float temp;
 
 // Преобразование ADC -> реальные значения
-currentValues.currentIn    = ((float)rawValues[2] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur1;
-currentValues.currentOut   = ((float)rawValues[3] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur2;
-currentValues.currentChoke = ((float)rawValues[4] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur3;
+currentValues.currentIn    = kalmanFilter(&currentIn_filter,((float)rawValues[2] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur1);
+currentValues.currentOut   = kalmanFilter(&currentOut_filter,((float)rawValues[3] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur2);
+currentValues.currentChoke = kalmanFilter(&currentChoke_filter,((float)rawValues[4] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur3);
 
 temp = -((float)rawValues[0] * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET - vars.calVol1;
-currentValues.voltageIn = (temp < 0) ? 0 : temp;
+temp = (temp < 0) ? 0 : temp;
+currentValues.voltageIn = kalmanFilter(&voltageIn_filter, temp);
+
 temp = -((float)rawValues[1] * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET - vars.calVol2;
-currentValues.voltageOut = (temp < 0) ? 0 : temp;
+temp = (temp < 0) ? 0 : temp;
+currentValues.voltageOut = kalmanFilter(&voltageOut_filter, temp);
+
 //printf("\033[2J\033[H");
 //
 //printf("adc value: %lu\r\n", rawValues[0]);
@@ -161,7 +187,7 @@ void SensorCalibration(void)
     HAL_StatusTypeDef status = Flash_Erase();
        if (status != HAL_OK)
        {
-           HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+           HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, SET);
            printf("Flash erase error: %d\r\n", status);
            return;
        }
@@ -170,7 +196,7 @@ void SensorCalibration(void)
        status = Flash_WriteVars(&varsFromFlash);
        if (status != HAL_OK)
        {
-           HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+           HAL_GPIO_WritePin(LED1_GPIO_Port, LED2_Pin, SET);
            printf("Flash write error: %d\r\n", status);
            return;
        }
