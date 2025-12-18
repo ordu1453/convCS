@@ -29,16 +29,17 @@ void initKalmanFilters(void) {
     // initial_value = 0.0 - начальное значение
     // initial_error = 1.0 - начальная ошибка
 
-    kalmanInit(&voltageIn_filter, 0.01f, 0.1f, 0.0f, 1.0f);
-    kalmanInit(&voltageOut_filter, 0.01f, 0.1f, 0.0f, 1.0f);
-    kalmanInit(&currentIn_filter, 0.01f, 0.1f, 0.0f, 1.0f);
-    kalmanInit(&currentOut_filter, 0.01f, 0.1f, 0.0f, 1.0f);
-    kalmanInit(&currentChoke_filter, 0.01f, 0.1f, 0.0f, 1.0f);
+    kalmanInit(&voltageIn_filter,0.001f, 1.0f, 0.0f, 1.0f);
+    kalmanInit(&voltageOut_filter, 0.001f, 1.0f, 0.0f, 1.0f);
+    kalmanInit(&currentIn_filter, 0.001f, 1.0f, 0.0f, 1.0f);
+    kalmanInit(&currentOut_filter, 0.001f, 1.0f, 0.0f, 1.0f);
+    kalmanInit(&currentChoke_filter, 0.001f, 1.0f, 0.0f, 1.0f);
 }
 
 void sensorInit(void)
 {
 	  Flash_ReadVars(&vars);
+	  initKalmanFilters();
 }
 
 
@@ -188,8 +189,11 @@ void SensorCalibration(void)
        if (status != HAL_OK)
        {
            HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, SET);
+#ifdef DEBUG
            printf("Flash erase error: %d\r\n", status);
+#endif
            return;
+
        }
 
        // Записываем в FLASH
@@ -197,7 +201,9 @@ void SensorCalibration(void)
        if (status != HAL_OK)
        {
            HAL_GPIO_WritePin(LED1_GPIO_Port, LED2_Pin, SET);
+#ifdef DEBUG
            printf("Flash write error: %d\r\n", status);
+#endif
            return;
        }
 
