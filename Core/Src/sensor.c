@@ -11,6 +11,12 @@ KalmanFilter currentOut_filter;
 KalmanFilter currentChoke_filter;
 
 
+KalmanFilter voltageIn_filter0;
+KalmanFilter voltageOut_filter0;
+KalmanFilter currentIn_filter0;
+KalmanFilter currentOut_filter0;
+KalmanFilter currentChoke_filter0;
+
 #ifndef TEST_UNITY
 
 extern ADC_HandleTypeDef hadc1;
@@ -29,11 +35,17 @@ void initKalmanFilters(void) {
     // initial_value = 0.0 - начальное значение
     // initial_error = 1.0 - начальная ошибка
 
-    kalmanInit(&voltageIn_filter,0.001f, 1.0f, 0.0f, 1.0f);
-    kalmanInit(&voltageOut_filter, 0.001f, 1.0f, 0.0f, 1.0f);
-    kalmanInit(&currentIn_filter, 0.001f, 1.0f, 0.0f, 1.0f);
-    kalmanInit(&currentOut_filter, 0.001f, 1.0f, 0.0f, 1.0f);
-    kalmanInit(&currentChoke_filter, 0.001f, 1.0f, 0.0f, 1.0f);
+    kalmanInit(&voltageIn_filter,0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&voltageOut_filter, 0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&currentIn_filter, 0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&currentOut_filter, 0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&currentChoke_filter, 0.001f, 2.0f, 0.0f, 1.0f);
+
+    kalmanInit(&voltageIn_filter0,0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&voltageOut_filter0, 0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&currentIn_filter0, 0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&currentOut_filter0, 0.001f, 2.0f, 0.0f, 1.0f);
+    kalmanInit(&currentChoke_filter0, 0.001f, 2.0f, 0.0f, 1.0f);
 }
 
 void sensorInit(void)
@@ -148,11 +160,11 @@ void SensorCalibration(void)
 
         // Преобразуем в реальные значения
         SensorValues_t current;
-        current.currentIn    = ((float)raw2 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET;
-        current.currentOut   = ((float)raw3 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET;
-        current.currentChoke = ((float)raw4 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET;
-        current.voltageIn    = -((float)raw0 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET;
-        current.voltageOut   = -((float)raw1 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET;
+        current.currentIn    = kalmanFilter(&currentIn_filter0,((float)raw2 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
+        current.currentOut   = kalmanFilter(&currentOut_filter0,((float)raw3 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
+        current.currentChoke = kalmanFilter(&currentChoke_filter0,((float)raw4 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
+        current.voltageIn    = kalmanFilter(&voltageIn_filter0,-((float)raw0 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET);
+        current.voltageOut   = kalmanFilter(&voltageOut_filter0,-((float)raw1 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET);
 
 //        // Защита от отрицательных значений
 //        current.voltageIn  = (current.voltageIn  < 0.0f) ? 0.0f : current.voltageIn;
