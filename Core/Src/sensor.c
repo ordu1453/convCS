@@ -23,7 +23,7 @@ void sensorInit(void)
 void sensorC(void)
 {
 //	uint32_t primask_bit = __get_PRIMASK();  // сохраняем состояние
-//	__disable_irq();
+	__disable_irq();
 	SensorCalibration();
     // Вывод результатов
 //    printf("vol1: %d\r\n", varsFromFlash.calVol1);
@@ -31,7 +31,7 @@ void sensorC(void)
 //    printf("cur1: %d\r\n", varsFromFlash.calCur1);
 //    printf("cur2: %d\r\n", varsFromFlash.calCur2);
 //    printf("cur3: %d\r\n", varsFromFlash.calCur3);
-//	__enable_irq();   // Включить прерывания (PRIMASK = 0)
+	__enable_irq();   // Включить прерывания (PRIMASK = 0)
 
 }
 
@@ -91,8 +91,8 @@ void SensorCalibration(void)
 {
 #ifndef TEST_UNITY
 
-    #define ADC_SAMPLES 500
-#define CAL_OFFSET 250
+    #define ADC_SAMPLES 1000
+#define CAL_OFFSET 0
 
     // Структура для накопления суммы значений
 	SensorValues_t sumValues = {0};
@@ -127,10 +127,10 @@ void SensorCalibration(void)
         current.voltageIn    = -((float)raw0 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET;
         current.voltageOut   = -((float)raw1 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET;
 
-        // Защита от отрицательных значений
-        current.voltageIn  = (current.voltageIn  < 0.0f) ? 0.0f : current.voltageIn;
-        current.voltageOut = (current.voltageOut < 0.0f) ? 0.0f : current.voltageOut;
-
+//        // Защита от отрицательных значений
+//        current.voltageIn  = (current.voltageIn  < 0.0f) ? 0.0f : current.voltageIn;
+//        current.voltageOut = (current.voltageOut < 0.0f) ? 0.0f : current.voltageOut;
+//
         if(i >= CAL_OFFSET){
         // Накопление суммы
         sumValues.currentIn    += current.currentIn;
@@ -139,6 +139,7 @@ void SensorCalibration(void)
         sumValues.voltageIn    += current.voltageIn;
         sumValues.voltageOut   += current.voltageOut;
         }
+
     }
 
     // Вычисляем среднее
@@ -157,37 +158,34 @@ void SensorCalibration(void)
     varsFromFlash.calPerf = 0;
 
 
-    // Стираем страницу FLASH
-    if (Flash_Erase() != HAL_OK)
-    {
-        // обработка ошибки
-        HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    HAL_StatusTypeDef status = Flash_Erase();
+       if (status != HAL_OK)
+       {
+           HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+           printf("Flash erase error: %d\r\n", status);
+           return;
+       }
 
-    }
+       // Записываем в FLASH
+       status = Flash_WriteVars(&varsFromFlash);
+       if (status != HAL_OK)
+       {
+           HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+           printf("Flash write error: %d\r\n", status);
+           return;
+       }
 
-    // Записываем в FLASH
-    if (Flash_WriteVars(&varsFromFlash) != HAL_OK)
-    {
-        HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
+       // Читаем обратно
+       Flash_ReadVars(&vars);
 
-        // обработка ошибки
-    }
-
-     vars.calCur1=varsFromFlash.calCur1;
-     vars.calCur2=varsFromFlash.calCur2;
-     vars.calCur3=varsFromFlash.calCur3;
-     vars.calVol1=varsFromFlash.calVol1;
-     vars.calVol2=varsFromFlash.calVol2;
-
-    // Вывод результатов
-    printf("vol1: %d\r\n", vars.calVol1);
-    printf("vol2: %d\r\n", vars.calVol2);
-    printf("cur1: %d\r\n", vars.calCur1);
-    printf("cur2: %d\r\n", vars.calCur2);
-    printf("cur3: %d\r\n", vars.calCur3);
-}
-#endif
-
+       // Вывод результатов
+//       printf("vol1: %d\r\n", vars.calVol1);
+//       printf("vol2: %d\r\n", vars.calVol2);
+//       printf("cur1: %d\r\n", vars.calCur1);
+//       printf("cur2: %d\r\n", vars.calCur2);
+//       printf("cur3: %d\r\n", vars.calCur3);
+   #endif
+   }
 const SensorValues_t* sensorGetValues(void)
 {
 return &currentValues;

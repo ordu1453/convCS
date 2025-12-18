@@ -250,7 +250,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  TIM1->CCR1 = 2000;
-//	  ledTick2();
+	  ledTick2();
 
 //	  printf("a=%lu, b=%lu, c=%d, d=%d, e=%u, f=%u\r\n",
 //	         varsFromFlash.a,
@@ -804,7 +804,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 //    HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
       HAL_NVIC_DisableIRQ(EXTI9_5_IRQn); // сразу же отключаем прерывания на этом пине
-      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//      HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
       sensorC();
       flag_irq = 1;
       time_irq = HAL_GetTick();
