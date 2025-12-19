@@ -1,6 +1,6 @@
-../Core/Src/sensor.c:31:6:initKalmanFilters	16	static
-../Core/Src/sensor.c:51:6:sensorInit	8	static
-../Core/Src/sensor.c:81:6:sensorRead	64	static
-../Core/Src/sensor.c:129:6:SensorCalibration	64	static
-../Core/Src/sensor.c:58:6:sensorCalculateCoeff	8	static,ignoring_inline_asm
-../Core/Src/sensor.c:233:23:sensorGetValues	0	static
+../Core/Src/sensor.c:75:6:initKalmanFilters	16	static
+../Core/Src/sensor.c:104:6:sensorInit	8	static
+../Core/Src/sensor.c:155:6:sensorRead	48	static
+../Core/Src/sensor.c:204:6:SensorCalibration	64	static
+../Core/Src/sensor.c:122:6:sensorCalculateCoeff	8	static,ignoring_inline_asm
+../Core/Src/sensor.c:313:23:sensorGetValues	0	static

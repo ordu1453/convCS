@@ -1,2 +1,2 @@
-../Core/Src/precharge.c:21:6:prechargeInit	1
-../Core/Src/precharge.c:28:6:prechargeStart	2
+../Core/Src/precharge.c:38:6:prechargeInit	1
+../Core/Src/precharge.c:61:6:prechargeStart	2
