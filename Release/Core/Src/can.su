@@ -1,8 +1,9 @@
 ../Core/Src/can.c:18:6:canInit	16	static
 ../Core/Src/can.c:70:6:canProcessPeriodic	0	static
 ../Core/Src/can.c:75:6:canHeartbeat	48	static
-../Core/Src/can.c:116:6:canPublishTelemetry	88	static
-../Core/Src/can.c:193:6:canReceiveHandler	56	static
-../Core/Src/can.c:223:6:HAL_FDCAN_RxFifo0Callback	0	static
-../Core/Src/can.c:230:6:canRecoverFromBusOff	16	static
-../Core/Src/can.c:268:6:canCheckStatus	96	static
+../Core/Src/can.c:116:6:canPublishTelemetry	96	static
+../Core/Src/can.c:188:6:canReceiveHandler	56	static
+../Core/Src/can.c:218:6:HAL_FDCAN_RxFifo0Callback	0	static
+../Core/Src/can.c:225:6:canRecoverFromBusOff	16	static
+../Core/Src/can.c:263:6:canCheckStatus	96	static
+../Core/Src/can.c:286:15:getRequestedMode	0	static

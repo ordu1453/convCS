@@ -52,6 +52,9 @@ void pwmDisable(void);
  *
  * Включает генерацию ШИМ-сигналов на всех каналах.
  */
-void pwmEnable(void);
+void pwmEnableCharge(void);
+
+void pwmEnableDischarge(void);
+
 
 #endif /* INC_PWM_H_ */

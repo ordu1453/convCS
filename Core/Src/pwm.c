@@ -20,8 +20,10 @@ void pwmSetDuty(uint32_t duty)
 {
 uint32_t arr = htim1.Instance->ARR;
 if(duty > arr) duty = arr;
-__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, duty);
-__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, duty);
+//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, duty);
+//__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, duty);
+TIM1->CCR1 = duty;
+TIM1->CCR2 = duty;
 }
 #endif
 
@@ -33,19 +35,35 @@ return htim1.Instance->ARR;
 #endif
 
 
-void pwmEnable(void)
+void pwmEnableCharge(void)
 {
-	if (currentPWMState == STATE_DISABLE)
-	{
 #ifndef TEST_UNITY
 	    // Включаем PWM
+	    HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_2);
+	    HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_2);
+
 	    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
 	    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
+//	    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
+//	    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
+#endif
+	    currentPWMState = STATE_ENABLE;
+
+}
+
+void pwmEnableDischarge(void)
+{
+
+#ifndef TEST_UNITY
+	    // Включаем PWM
+	    HAL_TIM_PWM_Stop(&htim1, TIM_CHANNEL_1);
+	    HAL_TIMEx_PWMN_Stop(&htim1, TIM_CHANNEL_1);
+//	    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
+//	    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
 	    HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
 	    HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_2);
 #endif
 	    currentPWMState = STATE_ENABLE;
-	}
 
 }
 

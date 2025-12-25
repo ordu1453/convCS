@@ -28,13 +28,13 @@ currentState = state;
 }
 else if (state == STATE_CHARGE)
 {
-pwmEnable();
+pwmEnableCharge();
 
 currentState = state;
 }
 else if (state == STATE_DISCHARGE)
 {
-pwmEnable();
+pwmEnableDischarge();
 currentState = state;
 }
 }

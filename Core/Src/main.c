@@ -143,7 +143,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM6)
     {
-    	converterProcess(ConverterGetState());
+//    	converterProcess(ConverterGetState());
+    	converterProcess(getRequestedMode());
+
 //    	converterProcess(debug);
     	processRun = !processRun;
     }

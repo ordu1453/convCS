@@ -86,6 +86,9 @@ void canCheckStatus(void);
  */
 void canHeartbeat(void);
 
+SystemState_t getRequestedMode(void);
+
+
 /** @brief Целевое напряжение, полученное по CAN (в вольтах) */
 extern float targetVoltage;
 

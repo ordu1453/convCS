@@ -5,7 +5,7 @@
 uint8_t can_init = 0;
 
 float targetVoltage = 0.0f;
-SystemState_t requestedMode = STATE_IDLE;
+SystemState_t requestedMode = STATE_INIT;
 
 
 static uint32_t canMsCounter = 0;
@@ -120,20 +120,20 @@ void canPublishTelemetry(SystemState_t state, uint32_t errorMask, const SensorVa
 //		canInit();
 	}
 uint8_t data_state[2];
-int8_t data_tele[4];
+uint8_t data_tele[8];
 
 data_state[0] = (uint8_t)state;
 data_state[1] = (uint8_t)(errorMask & 0xFF);
 
-int16_t vout = (int16_t)(s->voltageOut)/10;
-int16_t vin = (int16_t)(s->voltageIn)/10;
-int16_t iout = (int16_t)(s->currentOut)/10;
-int16_t iin = (int16_t)(s->currentIn)/10;
+int16_t vout = (int16_t)(s->voltageOut);
+int16_t vin = (int16_t)(s->voltageIn);
+int16_t iout = (int16_t)(s->currentOut);
+int16_t iin = (int16_t)(s->currentIn);
 
-memcpy(&data_tele[2], &vout, 2);
-memcpy(&data_tele[4], &vin, 2);
-memcpy(&data_tele[6], &iout, 2);
-memcpy(&data_tele[8], &iin, 2);
+memcpy(&data_tele[0], &vout, 2);
+memcpy(&data_tele[2], &vin, 2);
+memcpy(&data_tele[4], &iout, 2);
+memcpy(&data_tele[6], &iin, 2);
 
 //data_tele[0] = (s->voltageOut)/10;
 //data_tele[1] = (s->voltageIn)/10;
@@ -184,7 +184,6 @@ else
     }
 }
 }
-
 
 void canReceiveHandler(FDCAN_HandleTypeDef *hfdcan)
 {
@@ -282,6 +281,11 @@ void canCheckStatus(void)
         canRecoverFromBusOff(&hfdcan2);        // Мигаем LED2 для CAN2
         HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
     }
+}
+
+SystemState_t getRequestedMode()
+{
+	return requestedMode;
 }
 
 

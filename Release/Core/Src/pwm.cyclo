@@ -1,4 +1,5 @@
 ../Core/Src/pwm.c:19:6:pwmSetDuty	1
-../Core/Src/pwm.c:29:10:pwmGetArr	1
-../Core/Src/pwm.c:36:6:pwmEnable	2
-../Core/Src/pwm.c:52:6:pwmDisable	1
+../Core/Src/pwm.c:31:10:pwmGetArr	1
+../Core/Src/pwm.c:38:6:pwmEnableCharge	1
+../Core/Src/pwm.c:54:6:pwmEnableDischarge	1
+../Core/Src/pwm.c:70:6:pwmDisable	1

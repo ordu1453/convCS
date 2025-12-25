@@ -96,15 +96,15 @@ rawValues[i] = HAL_ADC_GetValue(&hadc1);
 #endif
 
 currentValues.voltageIn    = -((float)rawValues[0] * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET;
-printf("voltage before: %lu\r\n", currentValues.voltageIn);
-printf("vol1: %d\r\n", vars.calVol1);
+//printf("voltage before: %lu\r\n", currentValues.voltageIn);
+//printf("vol1: %d\r\n", vars.calVol1);
 
 float temp;
 
 // Преобразование ADC -> реальные значения
-currentValues.currentIn    = kalmanFilter(&currentIn_filter,((float)rawValues[2] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur1);
-currentValues.currentOut   = kalmanFilter(&currentOut_filter,((float)rawValues[3] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur2);
-currentValues.currentChoke = kalmanFilter(&currentChoke_filter,((float)rawValues[4] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur3);
+currentValues.currentIn    = kalmanFilter(&currentIn_filter,(rawValues[2] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur1);
+currentValues.currentOut   = kalmanFilter(&currentOut_filter, (rawValues[3] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur2);
+currentValues.currentChoke = kalmanFilter(&currentChoke_filter, (rawValues[4] * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET + vars.calCur3);
 
 temp = -((float)rawValues[0] * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET - vars.calVol1;
 temp = (temp < 0) ? 0 : temp;
@@ -118,11 +118,24 @@ currentValues.voltageOut = kalmanFilter(&voltageOut_filter, temp);
 //
 //printf("adc value: %lu\r\n", rawValues[0]);
 ////printf("adc value: %lu\r\n", rawValues[1]);
-////printf("adc value: %lu\r\n", rawValues[2]);
-////printf("adc value: %lu\r\n", rawValues[3]);
-////printf("adc value: %lu\r\n", rawValues[4]);
+//printf("adc 2: %lu\r\n", rawValues[2]);
+//printf("adc 3: %lu\r\n", rawValues[3]);
+//printf("adc 4: %lu\r\n", rawValues[4]);
+
+//printf("adc 0: %lu\r\n", vars.calVol1);
+//printf("adc 1: %lu\r\n", vars.calVol2);
+printf("adc 2: %lu\r\n", vars.calCur1);
+printf("adc 3: %lu\r\n", vars.calCur2);
+printf("adc 4: %lu\r\n", vars.calCur3);
 //
-printf("voltage: %lu\r\n", currentValues.voltageIn);
+//printf("voltage: %lu\r\n", currentValues.currentIn)
+
+//printf("\033[2J\033[H");
+printf("2: %ld\r\n", currentValues.currentIn);
+printf("3: %ld\r\n", currentValues.currentOut);
+printf("4: %ld\r\n", currentValues.currentChoke);
+
+
 
 }
 
@@ -160,9 +173,9 @@ void SensorCalibration(void)
 
         // Преобразуем в реальные значения
         SensorValues_t current;
-        current.currentIn    = kalmanFilter(&currentIn_filter0,((float)raw2 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
-        current.currentOut   = kalmanFilter(&currentOut_filter0,((float)raw3 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
-        current.currentChoke = kalmanFilter(&currentChoke_filter0,((float)raw4 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
+        current.currentIn    = kalmanFilter(&currentIn_filter0, ((float)raw2 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
+        current.currentOut   = kalmanFilter(&currentOut_filter0, ((float)raw3 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
+        current.currentChoke = kalmanFilter(&currentChoke_filter0, ((float)raw4 * ADC_TO_CURRENT_COEFF) - CURRENT_OFFSET);
         current.voltageIn    = kalmanFilter(&voltageIn_filter0,-((float)raw0 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET);
         current.voltageOut   = kalmanFilter(&voltageOut_filter0,-((float)raw1 * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET);
 
@@ -172,9 +185,9 @@ void SensorCalibration(void)
 //
         if(i >= CAL_OFFSET){
         // Накопление суммы
-        sumValues.currentIn    += current.currentIn;
-        sumValues.currentOut   += current.currentOut;
-        sumValues.currentChoke += current.currentChoke;
+        sumValues.currentIn    += abs(current.currentIn);
+        sumValues.currentOut   += abs(current.currentOut);
+        sumValues.currentChoke += abs(current.currentChoke);
         sumValues.voltageIn    += current.voltageIn;
         sumValues.voltageOut   += current.voltageOut;
         }
