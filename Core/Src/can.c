@@ -119,38 +119,52 @@ void canPublishTelemetry(SystemState_t state, uint32_t errorMask, const SensorVa
 	{
 //		canInit();
 	}
-uint8_t data[8];
+uint8_t data_state[2];
+int8_t data_tele[4];
 
+data_state[0] = (uint8_t)state;
+data_state[1] = (uint8_t)(errorMask & 0xFF);
 
-data[0] = (uint8_t)state;
-data[1] = (uint8_t)(errorMask & 0xFF);
+int16_t vout = (int16_t)(s->voltageOut)/10;
+int16_t vin = (int16_t)(s->voltageIn)/10;
+int16_t iout = (int16_t)(s->currentOut)/10;
+int16_t iin = (int16_t)(s->currentIn)/10;
 
+memcpy(&data_tele[2], &vout, 2);
+memcpy(&data_tele[4], &vin, 2);
+memcpy(&data_tele[6], &iout, 2);
+memcpy(&data_tele[8], &iin, 2);
 
-int16_t vin = (int16_t)(s->voltageIn);
-int16_t vout = (int16_t)(s->voltageOut);
-int16_t iL = (int16_t)(s->currentOut);
+//data_tele[0] = (s->voltageOut)/10;
+//data_tele[1] = (s->voltageIn)/10;
+//data_tele[2] = (s->currentOut)/10;
+//data_tele[3] = (s->currentIn)/10;
 
+FDCAN_TxHeaderTypeDef txHeader_state;
+txHeader_state.Identifier = 0x198;
+txHeader_state.IdType = FDCAN_STANDARD_ID;
+txHeader_state.TxFrameType = FDCAN_DATA_FRAME;
+txHeader_state.DataLength = FDCAN_DLC_BYTES_2;
+txHeader_state.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+txHeader_state.BitRateSwitch = FDCAN_BRS_OFF;
+txHeader_state.FDFormat = FDCAN_CLASSIC_CAN;
+txHeader_state.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 
-memcpy(&data[2], &vin, 2);
-memcpy(&data[4], &vout, 2);
-memcpy(&data[6], &iL, 2);
-
-
-FDCAN_TxHeaderTypeDef txHeader;
-txHeader.Identifier = 0x123;
-txHeader.IdType = FDCAN_STANDARD_ID;
-txHeader.TxFrameType = FDCAN_DATA_FRAME;
-txHeader.DataLength = FDCAN_DLC_BYTES_8;
-txHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-txHeader.BitRateSwitch = FDCAN_BRS_OFF;
-txHeader.FDFormat = FDCAN_CLASSIC_CAN;
-txHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+FDCAN_TxHeaderTypeDef txHeader_tele;
+txHeader_tele.Identifier = 0x298;
+txHeader_tele.IdType = FDCAN_STANDARD_ID;
+txHeader_tele.TxFrameType = FDCAN_DATA_FRAME;
+txHeader_tele.DataLength = FDCAN_DLC_BYTES_8;
+txHeader_tele.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+txHeader_tele.BitRateSwitch = FDCAN_BRS_OFF;
+txHeader_tele.FDFormat = FDCAN_CLASSIC_CAN;
+txHeader_tele.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
 
 // Используем разные ID для CAN1 и CAN2
 if (sendOnCan1)
 {
-    txHeader.Identifier = 0x123; // ID для CAN1
-    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, data);
+    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader_state, data_state);
+    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader_tele, data_tele);
 
     // Проверяем статус отправки
     if (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1) == 3)
@@ -160,8 +174,8 @@ if (sendOnCan1)
 }
 else
 {
-    txHeader.Identifier = 0x123; // Другой ID для CAN2
-    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, data);
+    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader_state, data_state);
+    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader_tele, data_tele);
 
     // Проверяем статус отправки
     if (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan2) == 3)
@@ -180,7 +194,7 @@ uint8_t data[8];
 if (HAL_FDCAN_GetRxMessage(hfdcan, FDCAN_RX_FIFO0, &rxHeader, data) != HAL_OK)
 return;
 
-if (rxHeader.Identifier == 0x666)
+if (rxHeader.Identifier == 0x218)
 {
 
 	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
@@ -192,7 +206,7 @@ if (rxHeader.Identifier == 0x666)
 
 	int16_t vDeci = 0;
 	memcpy(&vDeci, &data[1], 2);
-	targetVoltage = (float)vDeci;
+	targetVoltage = (float)vDeci*10;
 }
 else
 {

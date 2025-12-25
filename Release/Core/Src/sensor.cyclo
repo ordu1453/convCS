@@ -1,6 +1,6 @@
-../Core/Src/sensor.c:75:6:initKalmanFilters	1
-../Core/Src/sensor.c:104:6:sensorInit	1
-../Core/Src/sensor.c:155:6:sensorRead	4
-../Core/Src/sensor.c:204:6:SensorCalibration	4
-../Core/Src/sensor.c:122:6:sensorCalculateCoeff	1
-../Core/Src/sensor.c:313:23:sensorGetValues	1
+../Core/Src/sensor.c:31:6:initKalmanFilters	1
+../Core/Src/sensor.c:51:6:sensorInit	1
+../Core/Src/sensor.c:81:6:sensorRead	4
+../Core/Src/sensor.c:129:6:SensorCalibration	4
+../Core/Src/sensor.c:58:6:sensorCalculateCoeff	1
+../Core/Src/sensor.c:233:23:sensorGetValues	1
