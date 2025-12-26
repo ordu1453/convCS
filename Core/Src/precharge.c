@@ -18,6 +18,7 @@
 
 
 uint8_t prechargeDone = 0;
+uint8_t prechargeStart = 0;
 
 void prechargeInit(void)
 {
@@ -25,24 +26,43 @@ void prechargeInit(void)
 prechargeDone = 0;
 }
 
-
-void prechargeStart(void)
+void setPrechargeDone(uint8_t state)
 {
-if(prechargeDone) {
-	return;
+	prechargeDone = state;
+//	return prechargeDone;
 }
-else{
+
+void setPrechargeStart(uint8_t state)
+{
+	prechargeStart = state;
+//	return prechargeStart;
+}
+
+int getPrechargeStart(){
+	return prechargeStart;
+}
+
+int getPrechargeState(){
+	return prechargeDone;
+}
+
+void prechargeStartFunc()
+{
+//if(prechargeDone) {
+//	return;
+//}
+//else{
 
 #ifndef TEST_UNITY
-HAL_GPIO_WritePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin, GPIO_PIN_SET);
+HAL_GPIO_TogglePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin);
 //HAL_Delay(500); // 5 seconds blocking start; could be made non-blocking
 int i = 0;
-while (i<10000)
+while (i<1000000000)
 {
 	i++;
 }
-HAL_GPIO_WritePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin, GPIO_PIN_RESET);
+HAL_GPIO_TogglePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin);
 #endif
 prechargeDone = 1;
-}
+//}
 }

@@ -38,6 +38,7 @@ static uint32_t globalErrorMask = ERR_NONE;
 SystemState_t currentState = STATE_INIT;
 PIController_t currentPid;
 uint32_t lastMode = 0xFFFFFFFF;
+extern uint8_t prechargeDone;
 
 
 
@@ -145,14 +146,19 @@ void converterProcess(SystemState_t state)
 #endif
         currentState = STATE_PRECHARGE;
 #ifndef TEST_UNITY
-        prechargeStart();
+//        prechargeStart();
+        if(!getPrechargeState()){
+        setPrechargeStart(1);
+        }
+
 #endif
-        if (!hasErr)
+        if (!hasErr && getPrechargeState())
         {
 #ifdef TEST_UNITY
         	printf("No error after precharging\n");
 #endif
             currentState = STATE_IDLE;
+            setPrechargeStart(0);
 #ifdef TEST_UNITY
             printf("Entering to STATE_IDLE\n");
 #endif

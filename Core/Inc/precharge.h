@@ -35,7 +35,17 @@ void prechargeInit(void);
  * @note Использует блокирующую задержку на 5 секунд
  * @warning Должна вызываться только при безопасных условиях
  */
-void prechargeStart(void);
+//void prechargeStart(void);
+
+void setPrechargeStart(uint8_t state);
+
+void setPrechargeDone(uint8_t state);
+
+int getPrechargeState(void);
+
+int getPrechargeStart(void);
+
+
 
 #endif // PRECHARGE_H
 

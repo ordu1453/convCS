@@ -1,2 +1,6 @@
-../Core/Src/precharge.c:22:6:prechargeInit	1
-../Core/Src/precharge.c:29:6:prechargeStart	2
+../Core/Src/precharge.c:23:6:prechargeInit	1
+../Core/Src/precharge.c:29:6:setPrechargeDone	1
+../Core/Src/precharge.c:35:6:setPrechargeStart	1
+../Core/Src/precharge.c:41:5:getPrechargeStart	1
+../Core/Src/precharge.c:45:5:getPrechargeState	1
+../Core/Src/precharge.c:49:6:prechargeStartFunc	1

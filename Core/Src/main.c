@@ -26,6 +26,7 @@
 
 #include "can.h"
 #include "flash.h"
+#include "precharge.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,6 +97,13 @@ static void MX_FDCAN1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+// Простая задержка на N тактов
+void delay_cycles(uint32_t cycles) {
+    while(cycles--) {
+        __NOP(); // No Operation
+    }
+}
+
 void ledTick2 ()
 {
 	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
@@ -153,6 +161,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
 //    	canCheckStatus();
     	canProcessPeriodic();
+    	if (getPrechargeStart())
+    	{
+    		HAL_GPIO_TogglePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin);
+    		delay_cycles(10000000);
+    		HAL_GPIO_TogglePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin);
+    		setPrechargeDone(1);
+    	}
 //    	canHeartbeat();
 //    	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
     }
