@@ -2,6 +2,9 @@
 #include "config.h"
 #include "flash.h"
 #include "kalmanFilter.h"
+#include <stdlib.h>    // для abs(int)
+#include <stdint.h>
+
 
 // Объявляем фильтры для каждого канала
 KalmanFilter voltageIn_filter;
@@ -27,7 +30,6 @@ extern UART_HandleTypeDef huart3;
 FlashVars_t varsFromFlash;
 FlashVars_t vars;
 
-// Инициализация фильтров
 void initKalmanFilters(void) {
     // Параметры:
     // q - шум процесса (чем больше, тем быстрее реакция на изменения)
@@ -54,20 +56,11 @@ void sensorInit(void)
 	  initKalmanFilters();
 }
 
-
 void sensorCalculateCoeff(void)
 {
-//	uint32_t primask_bit = __get_PRIMASK();  // сохраняем состояние
 	__disable_irq();
 	SensorCalibration();
-    // Вывод результатов
-//    printf("vol1: %d\r\n", varsFromFlash.calVol1);
-//    printf("vol2: %d\r\n", varsFromFlash.calVol2);
-//    printf("cur1: %d\r\n", varsFromFlash.calCur1);
-//    printf("cur2: %d\r\n", varsFromFlash.calCur2);
-//    printf("cur3: %d\r\n", varsFromFlash.calCur3);
-	__enable_irq();   // Включить прерывания (PRIMASK = 0)
-
+	__enable_irq();
 }
 
 #else
@@ -90,15 +83,11 @@ for (uint8_t i = 0; i < 5; i++)
 HAL_ADC_Start(&hadc1);
 HAL_ADC_PollForConversion(&hadc1, 10);
 rawValues[i] = HAL_ADC_GetValue(&hadc1);
-//HAL_ADC_Stop(&hadc1);
 }
 
 #endif
 
 currentValues.voltageIn    = -((float)rawValues[0] * ADC_TO_VOLTAGE_COEFF) + VOLTAGE_OFFSET;
-//printf("voltage before: %lu\r\n", currentValues.voltageIn);
-//printf("vol1: %d\r\n", vars.calVol1);
-
 float temp;
 
 // Преобразование ADC -> реальные значения
@@ -115,27 +104,6 @@ temp = (temp < 0) ? 0 : temp;
 currentValues.voltageOut = kalmanFilter(&voltageOut_filter, temp);
 
 //printf("\033[2J\033[H");
-//
-//printf("adc value: %lu\r\n", rawValues[0]);
-////printf("adc value: %lu\r\n", rawValues[1]);
-//printf("adc 2: %lu\r\n", rawValues[2]);
-//printf("adc 3: %lu\r\n", rawValues[3]);
-//printf("adc 4: %lu\r\n", rawValues[4]);
-
-//printf("adc 0: %lu\r\n", vars.calVol1);
-//printf("adc 1: %lu\r\n", vars.calVol2);
-printf("adc 2: %lu\r\n", vars.calCur1);
-printf("adc 3: %lu\r\n", vars.calCur2);
-printf("adc 4: %lu\r\n", vars.calCur3);
-//
-//printf("voltage: %lu\r\n", currentValues.currentIn)
-
-//printf("\033[2J\033[H");
-printf("2: %ld\r\n", currentValues.currentIn);
-printf("3: %ld\r\n", currentValues.currentOut);
-printf("4: %ld\r\n", currentValues.currentChoke);
-
-
 
 }
 
@@ -182,7 +150,7 @@ void SensorCalibration(void)
 //        // Защита от отрицательных значений
 //        current.voltageIn  = (current.voltageIn  < 0.0f) ? 0.0f : current.voltageIn;
 //        current.voltageOut = (current.voltageOut < 0.0f) ? 0.0f : current.voltageOut;
-//
+
         if(i >= CAL_OFFSET){
         // Накопление суммы
         sumValues.currentIn    += abs(current.currentIn);
@@ -232,15 +200,7 @@ void SensorCalibration(void)
            return;
        }
 
-       // Читаем обратно
        Flash_ReadVars(&vars);
-
-       // Вывод результатов
-//       printf("vol1: %d\r\n", vars.calVol1);
-//       printf("vol2: %d\r\n", vars.calVol2);
-//       printf("cur1: %d\r\n", vars.calCur1);
-//       printf("cur2: %d\r\n", vars.calCur2);
-//       printf("cur3: %d\r\n", vars.calCur3);
    #endif
    }
 const SensorValues_t* sensorGetValues(void)

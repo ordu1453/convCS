@@ -1,3 +1,4 @@
-../Core/Src/converter.c:46:6:converterInit	1
-../Core/Src/converter.c:64:15:ConverterGetState	1
-../Core/Src/converter.c:69:6:converterProcess	8
+../Core/Src/converter.c:48:5:getErrorState	1
+../Core/Src/converter.c:54:6:converterInit	1
+../Core/Src/converter.c:70:15:ConverterGetState	1
+../Core/Src/converter.c:75:6:converterProcess	8

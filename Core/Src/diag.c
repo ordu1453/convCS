@@ -54,9 +54,6 @@ static const uint16_t driverFaultPins[DRIVER_FAULT_PIN_COUNT] = {
 #define DRIVER_FAULT_GPIOB GPIOB
 
 
-
-
-
 uint8_t diagCheck(const SensorValues_t* sensorValues, uint32_t* errorMask)
 {
     uint8_t hasError = 0;

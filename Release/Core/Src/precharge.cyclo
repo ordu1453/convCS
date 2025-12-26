@@ -1,6 +1,7 @@
-../Core/Src/precharge.c:23:6:prechargeInit	1
-../Core/Src/precharge.c:29:6:setPrechargeDone	1
-../Core/Src/precharge.c:35:6:setPrechargeStart	1
-../Core/Src/precharge.c:41:5:getPrechargeStart	1
-../Core/Src/precharge.c:45:5:getPrechargeState	1
-../Core/Src/precharge.c:49:6:prechargeStartFunc	1
+../Core/Src/precharge.c:17:6:prechargeInit	1
+../Core/Src/precharge.c:22:6:delay_cycles	2
+../Core/Src/precharge.c:28:6:setPrechargeDone	1
+../Core/Src/precharge.c:33:6:setPrechargeStart	1
+../Core/Src/precharge.c:38:5:getPrechargeStart	1
+../Core/Src/precharge.c:42:5:getPrechargeState	1
+../Core/Src/precharge.c:46:6:doPrecharge	3

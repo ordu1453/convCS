@@ -3,14 +3,9 @@
 #include <string.h>
 
 uint8_t can_init = 0;
-
 float targetVoltage = 0.0f;
 SystemState_t requestedMode = STATE_INIT;
-
-
-static uint32_t canMsCounter = 0;
 static uint8_t sendOnCan1 = 1;
-
 
 extern FDCAN_HandleTypeDef hfdcan1;
 extern FDCAN_HandleTypeDef hfdcan2;
@@ -18,23 +13,17 @@ extern FDCAN_HandleTypeDef hfdcan2;
 void canInit(void)
 {
 
-    // 3. Затем активируем CAN2
     if (HAL_FDCAN_Start(&hfdcan2) != HAL_OK)
     {
         Error_Handler();
     }
-    // 1. Сначала активируем CAN1
     if (HAL_FDCAN_Start(&hfdcan1) != HAL_OK)
     {
         Error_Handler();
     }
 
-    // 2. Задержка перед запуском CAN2
     HAL_Delay(10);
 
-
-
-    // 4. Настройка фильтров для обоих CAN
     HAL_FDCAN_ConfigGlobalFilter(&hfdcan1, FDCAN_ACCEPT_IN_RX_FIFO0,
                                  FDCAN_ACCEPT_IN_RX_FIFO0,
                                  FDCAN_FILTER_REMOTE,
@@ -45,73 +34,16 @@ void canInit(void)
                                  FDCAN_FILTER_REMOTE,
                                  FDCAN_FILTER_REMOTE);
 
-    // 5. Активация прерываний
     HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
     HAL_FDCAN_ActivateNotification(&hfdcan2, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 
     can_init = 1;
 }
 
-
-//void canProcessPeriodic(uint32_t msTick)
-//{
-//canMsCounter += msTick;
-//static uint32_t lastToggle = 0;
-//
-//
-//if (canMsCounter - lastToggle >= CAN_TOGGLE_MS)
-//{
-//sendOnCan1 = !sendOnCan1;
-//lastToggle = canMsCounter;
-//}
-//}
-
-
 void canProcessPeriodic()
 {
 	sendOnCan1 = !sendOnCan1;
 }
-
-void canHeartbeat(void)
-{
-	uint8_t data[1];
-
-	data[0] = (uint8_t)0;
-
-	FDCAN_TxHeaderTypeDef txHeader;
-	txHeader.Identifier = 0x120;
-	txHeader.IdType = FDCAN_STANDARD_ID;
-	txHeader.TxFrameType = FDCAN_DATA_FRAME;
-	txHeader.DataLength = FDCAN_DLC_BYTES_1;
-	txHeader.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-	txHeader.BitRateSwitch = FDCAN_BRS_OFF;
-	txHeader.FDFormat = FDCAN_CLASSIC_CAN;
-	txHeader.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-
-
-	// Используем разные ID для CAN1 и CAN2
-	if (sendOnCan1)
-	{
-	    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &txHeader, data);
-
-	    // Проверяем статус отправки
-	    if (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan1) == 3)
-	    {
-	        // Ошибка - сообщение не добавлено в FIFO
-	    }
-	}
-	else
-	{
-	    HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan2, &txHeader, data);
-
-	    // Проверяем статус отправки
-	    if (HAL_FDCAN_GetTxFifoFreeLevel(&hfdcan2) == 3)
-	    {
-	        // Ошибка - сообщение не добавлено в FIFO
-	    }
-	}
-}
-
 
 void canPublishTelemetry(SystemState_t state, uint32_t errorMask, const SensorValues_t* s)
 {
@@ -134,11 +66,6 @@ memcpy(&data_tele[0], &vout, 2);
 memcpy(&data_tele[2], &vin, 2);
 memcpy(&data_tele[4], &iout, 2);
 memcpy(&data_tele[6], &iin, 2);
-
-//data_tele[0] = (s->voltageOut)/10;
-//data_tele[1] = (s->voltageIn)/10;
-//data_tele[2] = (s->currentOut)/10;
-//data_tele[3] = (s->currentIn)/10;
 
 FDCAN_TxHeaderTypeDef txHeader_state;
 txHeader_state.Identifier = 0x198;

@@ -14,6 +14,7 @@
 
 #include "config.h"
 
+
 /**
  * @brief Инициализация преобразователя
  *
@@ -48,5 +49,15 @@ void converterProcess(SystemState_t state);
  * @return Текущее состояние системы (SystemState_t)
  */
 SystemState_t ConverterGetState(void);
+
+/**
+ * @brief Получение текущего состояния ошибки
+ *
+ * Возвращает текущее состояние ошибки.
+ * 0 - если ошибок нет
+ * 1 - если ошибки есть
+ */
+int getErrorState(void);
+
 
 #endif /* INC_CONVERTER_H_ */

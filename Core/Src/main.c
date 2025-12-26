@@ -27,6 +27,10 @@
 #include "can.h"
 #include "flash.h"
 #include "precharge.h"
+
+#ifndef TEST_UNITY
+#include "uart.h"
+#endif
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -70,14 +74,6 @@ volatile uint8_t flag_irq = 0;
 volatile uint32_t time_irq = 0;
 
 
-
-////// Переменные в RAM
-//FlashVars_t vars1;
-//FlashVars_t varsFromFlash1;
-
-
-
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -97,44 +93,11 @@ static void MX_FDCAN1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-// Простая задержка на N тактов
-void delay_cycles(uint32_t cycles) {
-    while(cycles--) {
-        __NOP(); // No Operation
-    }
-}
-
-void ledTick2 ()
-{
-	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
-	  HAL_Delay(80);
-	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
-	  HAL_Delay(80);
-	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
-	  HAL_Delay(80);
-	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
-	  HAL_Delay(1000);
-}
-
-void ledTick1 ()
-{
-	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
-	  HAL_Delay(80);
-	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
-	  HAL_Delay(80);
-	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
-	  HAL_Delay(80);
-	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
-	  HAL_Delay(1000);
-}
 
 void HAL_TIM_OC_DelayElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM1 && htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4)
     {
-//		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-
-// This used for adding offset to adc calculation in case if it is unnecessary to get data every pwm period
     	if (tickADC == ADC_DIVIDER)
     	{
     		sensorRead();
@@ -151,29 +114,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM6)
     {
-//    	converterProcess(ConverterGetState());
     	converterProcess(getRequestedMode());
-
-//    	converterProcess(debug);
-    	processRun = !processRun;
     }
     if (htim->Instance == TIM7)
     {
-//    	canCheckStatus();
     	canProcessPeriodic();
-    	if (getPrechargeStart())
-    	{
-    		HAL_GPIO_TogglePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin);
-    		delay_cycles(10000000);
-    		HAL_GPIO_TogglePin(RELAY_GATE_GPIO_Port, RELAY_GATE_Pin);
-    		setPrechargeDone(1);
-    	}
-//    	canHeartbeat();
-//    	HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+    	doPrecharge();
     }
 }
-
-
 
 /* USER CODE END 0 */
 
@@ -214,44 +162,11 @@ int main(void)
   MX_TIM7_Init();
   MX_FDCAN1_Init();
   /* USER CODE BEGIN 2 */
-
-
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
-  HAL_TIMEx_PWMN_Start(&htim1, TIM_CHANNEL_1);
-
-
-
-
-//  vars1.calCur1 = 1000;
-//  vars1.calCur2 = 1100;
-//  vars1.calCur3 = 1200;
-//  vars1.calVol1 = 1300;
-//  vars1.calVol2 = 1400;
-//  vars1.calPerf = 1500;
-//
-//
-//  // Стираем страницу FLASH
-//  if (Flash_Erase() != HAL_OK)
-//  {
-//	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-//      // обработка ошибки
-//  }
-//
-//  // Записываем в FLASH
-//  if (Flash_WriteVars(&vars1) != HAL_OK)
-//  {
-//      // обработка ошибки
-//	  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-//
-//  }
-//
-//  // Читаем обратно из FLASH
-//  Flash_ReadVars(&varsFromFlash1);
-  HAL_Delay(1000);
+  HAL_Delay(200);
   canInit();
-  HAL_TIM_OC_Start_IT(&htim1, TIM_CHANNEL_4); // adc interrupt
-  HAL_TIM_Base_Start_IT(&htim6); // main process interrupt
-  HAL_TIM_Base_Start_IT(&htim7);
+  HAL_TIM_OC_Start_IT(&htim1, TIM_CHANNEL_4); // Прерывание для АЦП
+  HAL_TIM_Base_Start_IT(&htim6); // Прерывание для converterProcess()
+  HAL_TIM_Base_Start_IT(&htim7); // Прерывание для canProcessPeriodic()
   sensorInit();
   /* USER CODE END 2 */
 
@@ -259,34 +174,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-//	  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-//	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
-	  TIM1->CCR1 = 2000;
+//	  TIM1->CCR1 = 2000;
 	  ledTick2();
-
-//	  printf("a=%lu, b=%lu, c=%d, d=%d, e=%u, f=%u\r\n",
-//	         varsFromFlash.a,
-//	         varsFromFlash.b,
-//	         varsFromFlash.c,
-//	         varsFromFlash.d,
-//	         varsFromFlash.e,
-//	         varsFromFlash.f);
-
-	  if(flag_irq && (HAL_GetTick() - time_irq) > 200)
-	  {
-	    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_9);  // очищаем бит EXTI_PR
-	    NVIC_ClearPendingIRQ(EXTI9_5_IRQn); // очищаем бит NVIC_ICPRx
-	    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);   // включаем внешнее прерывание
-
-	    flag_irq = 0;
-	  }
-
-
+	  buttonDebounce();
 
   }
   /* USER CODE END 3 */
@@ -804,14 +697,41 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-PUTCHAR_PROTOTYPE
+void ledTick2 ()
 {
-  /* Place your implementation of fputc here */
-  /* e.g. write a character to the USART1 and Loop until the end of transmission */
-  HAL_UART_Transmit(&huart3, (uint8_t *)&ch, 1, 0xFFFF);
-
-  return ch;
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED2_GPIO_Port, LED2_Pin, 0);
+	  HAL_Delay(1000);
 }
+
+void ledTick1 ()
+{
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 1);
+	  HAL_Delay(80);
+	  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, 0);
+	  HAL_Delay(1000);
+}
+
+void buttonDebounce()
+{
+	  if(flag_irq && (HAL_GetTick() - time_irq) > 200)
+	  {
+	    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_PIN_9);  // очищаем бит EXTI_PR
+	    NVIC_ClearPendingIRQ(EXTI9_5_IRQn); // очищаем бит NVIC_ICPRx
+	    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);   // включаем внешнее прерывание
+	    flag_irq = 0;
+	  }
+}
+
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 

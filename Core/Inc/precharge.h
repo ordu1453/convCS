@@ -5,7 +5,7 @@
  * Этот файл содержит объявления функций для управления схемой предзаряда
  * входных конденсаторов преобразователя.
  *
- * @author ordum
+ * @author A.Ordu
  * @date Oct 16, 2025
  */
 
@@ -44,6 +44,10 @@ void setPrechargeDone(uint8_t state);
 int getPrechargeState(void);
 
 int getPrechargeStart(void);
+
+void doPrecharge(void);
+
+void delay_cycles(uint32_t cycles);
 
 
 

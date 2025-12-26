@@ -35,7 +35,8 @@ Core/Src/converter.o: ../Core/Src/converter.c ../Core/Inc/converter.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
  ../Core/Inc/types.h ../Core/Inc/diag.h ../Core/Inc/pid.h \
  ../Core/Inc/pwmHandler.h ../Core/Inc/precharge.h ../Core/Inc/pwm.h \
- ../Core/Inc/config.h ../Core/Inc/types.h ../Core/Inc/can.h
+ ../Core/Inc/config.h ../Core/Inc/types.h ../Core/Inc/can.h \
+ ../Core/Inc/uart.h
 ../Core/Inc/converter.h:
 ../Core/Inc/config.h:
 ../Core/Inc/sensor.h:
@@ -82,3 +83,4 @@ Core/Src/converter.o: ../Core/Src/converter.c ../Core/Inc/converter.h \
 ../Core/Inc/config.h:
 ../Core/Inc/types.h:
 ../Core/Inc/can.h:
+../Core/Inc/uart.h:

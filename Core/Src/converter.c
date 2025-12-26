@@ -5,7 +5,6 @@
  *      Author: ordum
  */
 
-
 #include "converter.h"
 #include "sensor.h"
 #include "diag.h"
@@ -16,17 +15,19 @@
 #include "config.h"
 #include "types.h"
 #include "can.h"
-#include <stdio.h>
 
 
 #include <stdint.h>
 
 #ifdef TEST_UNITY
+#include <stdio.h>
 // Заглушки для юнит-тестов
 SensorValues_t unitTestSensorValues;
 uint32_t unitTestErrorMask;
 uint8_t unitTestHasError;
 extern PWMState_t currentPWMState;
+#else
+#include "uart.h"
 #endif
 
 #ifdef TEST_UNITY
@@ -42,21 +43,24 @@ extern uint8_t prechargeDone;
 
 
 
+uint8_t hasErr = 1;
+
+int getErrorState()
+{
+	return hasErr;
+}
+
 #ifndef TEST_UNITY
 void converterInit(void)
 {
-
 sensorInit();
 diagInit();
 prechargeInit();
 
-
-// load PWM ARR
 uint32_t arr = pwmGetArr();
 piInit(&currentPid, 0.01f, 0.001f, CONTROL_DT_MS, 0.0f, (float)arr);
+printf("ARR: %lu\n", arr);
 
-
-// call pwm disable until safe
 pwmDisable();
 }
 #endif
@@ -76,7 +80,7 @@ void converterProcess(SystemState_t state)
 #ifndef TEST_UNITY
     const SensorValues_t* s = sensorGetValues();
     uint32_t errMask = ERR_NONE;
-    uint8_t hasErr = diagCheck(s, &errMask);
+    hasErr = diagCheck(s, &errMask);
 #else
 	printf("Variable setting\n");
     // Заглушка для юнит-тестов
@@ -179,4 +183,5 @@ void converterProcess(SystemState_t state)
     canPublishTelemetry(currentState, errMask, s);
 #endif
 }
+
 

@@ -41,6 +41,7 @@ extern "C" {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
+extern UART_HandleTypeDef huart3;
 
 /* USER CODE END EC */
 
@@ -55,7 +56,9 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void buttonDebounce(void);
+void ledTick1();
+void ledTick2();
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

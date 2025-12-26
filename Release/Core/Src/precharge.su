@@ -1,6 +1,7 @@
-../Core/Src/precharge.c:23:6:prechargeInit	0	static
-../Core/Src/precharge.c:29:6:setPrechargeDone	0	static
-../Core/Src/precharge.c:35:6:setPrechargeStart	0	static
-../Core/Src/precharge.c:41:5:getPrechargeStart	0	static
-../Core/Src/precharge.c:45:5:getPrechargeState	0	static
-../Core/Src/precharge.c:49:6:prechargeStartFunc	8	static
+../Core/Src/precharge.c:17:6:prechargeInit	0	static
+../Core/Src/precharge.c:22:6:delay_cycles	0	static,ignoring_inline_asm
+../Core/Src/precharge.c:28:6:setPrechargeDone	0	static
+../Core/Src/precharge.c:33:6:setPrechargeStart	0	static
+../Core/Src/precharge.c:38:5:getPrechargeStart	0	static
+../Core/Src/precharge.c:42:5:getPrechargeState	0	static
+../Core/Src/precharge.c:46:6:doPrecharge	8	static
